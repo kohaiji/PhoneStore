@@ -15,12 +15,11 @@ class AdminProductController extends Controller
 
         // SELECT * FROM product
         // ON product.category_id = category.id
-        $products = DB::table("product")
-            ->join("category", "product.category_id", "=", "category.id")
-            ->join("publisher", "product.publisher_id", "=", "publisher.id")
-            ->join("author", "product.author_id", "=", "author.id")
-            ->select("product.*", "category.category_name", "publisher.publisher_name", "author.author_name")
-            ->orderBy("id")
+        $products = DB::table("products")
+            ->join("brands", "products.brand_id", "=", "brands.id")
+            ->join("product_variants", "products.id", "=", "product_variants.product_id")
+            ->select("products.*", "brands.brand_name", "product_variants.*")
+            ->orderBy("products.id")
             ->paginate(10);
 
 
