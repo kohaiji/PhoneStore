@@ -17,8 +17,8 @@ class AdminProductController extends Controller
         // ON product.category_id = category.id
         $products = DB::table("products")
             ->join("brands", "products.brand_id", "=", "brands.id")
-            ->join("product_variants", "products.id", "=", "product_variants.product_id")
-            ->select("products.*", "brands.brand_name", "product_variants.*")
+            ->leftJoin("product_variants", "products.id", "=", "product_variants.product_id")
+            ->select("products.*", "brands.brand_name", "product_variants.id as variant_id", "product_variants.color", "product_variants.storage", "product_variants.price_adjustment", "product_variants.stock")
             ->orderBy("products.id")
             ->paginate(10);
 
@@ -32,7 +32,7 @@ class AdminProductController extends Controller
     }
 
     public function delete($id){
-        DB::table("product")
+        DB::table("products")
             ->where("id", $id)
             ->delete();
 
