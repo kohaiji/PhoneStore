@@ -6,20 +6,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
-class AdminCategoryController extends Controller
+class AdminBrandController extends Controller
 {
     public function getAll(): View
     {
         $activeMenu = "category";
         $data = "";
-        $categories = DB::table("category")
+        $brands = DB::table("brands")
             ->orderBy("id")
             ->paginate(10);
 
 
-        return view("admin/category-list",
+        return view("admin/brand-list",
             [
-                "categories" => $categories,
+                "brands" => $brands,
                 "data" => $data,
                 "activeMenu" => $activeMenu,
             ]);

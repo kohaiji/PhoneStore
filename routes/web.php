@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientIndexController;
 use App\Http\Controllers\AdminIndexController;
-use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\AdminBrandController;
 use App\Http\Controllers\AdminProductController;
 //use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
@@ -32,13 +32,13 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('/', [AdminIndexController::class, "adminIndex"]);
 
 // ADMIN CATEGORY
-    Route::get('/category-list', [AdminCategoryController::class, "getAll"]);
-    Route::get('/category-delete/{id}', [AdminCategoryController::class, "delete"]);
-    Route::get('/category-add', [AdminCategoryController::class, "add"]);
-    Route::post('/category-save', [AdminCategoryController::class, "save"]);
-    Route::get('/category-edit/{id}', [AdminCategoryController::class, "edit"]);
-    Route::post("/category-update/{id}", [AdminCategoryController::class, "update"]);
-    Route::get("/category-search", [AdminCategoryController::class, "categorySearch"]);
+    Route::get('/brand-list', [AdminBrandController::class, "getAll"]);
+    Route::get('/brand-delete/{id}', [AdminBrandController::class, "delete"]);
+    Route::get('/brand-add', [AdminBrandController::class, "add"]);
+    Route::post('/brand-save', [AdminBrandController::class, "save"]);
+    Route::get('/brand-edit/{id}', [AdminBrandController::class, "edit"]);
+    Route::post("/brand-update/{id}", [AdminBrandController::class, "update"]);
+    Route::get("/brand-search", [AdminBrandController::class, "categorySearch"]);
 
 // ADMIN AUTHOR
     Route::get('/author-list', [AdminAuthorController::class, "getAll"]);

@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientIndexController;
 use App\Http\Controllers\AdminIndexController;
-use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\AdminBrandController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AuthController;
 

@@ -29,22 +29,51 @@
                 <div class="page-title">
                     <div class="row">
                         <div class="col-12 col-md-6 order-md-1 order-last">
-                            <h3>Welcome Back!</h3>
-                            <p class="text-subtitle text-muted">Mr/Mrs {{\Illuminate\Support\Facades\Auth::user()->name}}.</p>
+                            <h3>List Brand</h3>
                         </div>
-
                         <div class="col-12 col-md-6 order-md-2 order-first">
                             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Home
+                                    <li class="breadcrumb-item active" aria-current="page">Brand List
                                     </li>
                                 </ol>
                             </nav>
                         </div>
-
                     </div>
                 </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-light mb-0">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Brand Name</th>
+                        <th>Logo</th>
+                        <th class="text-center" colspan="3">ACTION</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    @foreach($brands as $obj)
+                        <tr>
+                            <td>{{$obj->id}}</td>
+                            <td>{{$obj->brand_name}}</td>
+                            <td>{{$obj->logo_url}}</td>
+                            <td class="text-center">
+                                <a href="/admin/product-details/{{$obj->id}}" class="btn btn-outline-success btn-sm">Details</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="/admin/product-edit/{{$obj->id}}" class="btn btn-outline-primary btn-sm">Edit</a>
+                            </td>
+                            <td class="text-center">
+                                <a onclick="return confirm('Are you sure?')" href="/admin/product-delete/{{$obj->id}}" class="btn btn-outline-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
 
         </div>
