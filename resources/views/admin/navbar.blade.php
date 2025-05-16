@@ -1,112 +1,74 @@
-
-<link rel="stylesheet" href="/css/hamster.css">
-
-<nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-    <a href="/admin/index" class="navbar-brand d-flex d-lg-none me-4">
-        <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
-    </a>
-    <a href="#" class="sidebar-toggler flex-shrink-0">
-        <i class="fa fa-bars"></i>
-    </a>
-    {{--            <form class="d-none d-md-flex ms-4">--}}
-    {{--                <input class="form-control border-0" type="search" placeholder="Search">--}}
-    {{--            </form>--}}
-
-    <div aria-label="Orange and tan hamster running in a metal wheel" role="img" class="wheel-and-hamster ms-4">
-        <div class="wheel"></div>
-        <div class="hamster">
-            <div class="hamster__body">
-                <div class="hamster__head">
-                    <div class="hamster__ear"></div>
-                    <div class="hamster__eye"></div>
-                    <div class="hamster__nose"></div>
-                </div>
-                <div class="hamster__limb hamster__limb--fr"></div>
-                <div class="hamster__limb hamster__limb--fl"></div>
-                <div class="hamster__limb hamster__limb--br"></div>
-                <div class="hamster__limb hamster__limb--bl"></div>
-                <div class="hamster__tail"></div>
-            </div>
-        </div>
-        <div class="spoke"></div>
-    </div>
-
-    <div class="navbar-nav align-items-center ms-auto">
-{{--        <div class="nav-item dropdown">--}}
-{{--            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">--}}
-{{--                <i class="fa fa-envelope me-lg-2"></i>--}}
-{{--                <span class="d-none d-lg-inline-flex">Message</span>--}}
-{{--            </a>--}}
-{{--            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">--}}
-{{--                <a href="#" class="dropdown-item">--}}
-{{--                    <div class="d-flex align-items-center">--}}
-{{--                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">--}}
-{{--                        <div class="ms-2">--}}
-{{--                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>--}}
-{{--                            <small>15 minutes ago</small>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </a>--}}
-{{--                <hr class="dropdown-divider">--}}
-{{--                <a href="#" class="dropdown-item">--}}
-{{--                    <div class="d-flex align-items-center">--}}
-{{--                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">--}}
-{{--                        <div class="ms-2">--}}
-{{--                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>--}}
-{{--                            <small>15 minutes ago</small>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </a>--}}
-{{--                <hr class="dropdown-divider">--}}
-{{--                <a href="#" class="dropdown-item">--}}
-{{--                    <div class="d-flex align-items-center">--}}
-{{--                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">--}}
-{{--                        <div class="ms-2">--}}
-{{--                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>--}}
-{{--                            <small>15 minutes ago</small>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </a>--}}
-{{--                <hr class="dropdown-divider">--}}
-{{--                <a href="#" class="dropdown-item text-center">See all message</a>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--        <div class="nav-item dropdown">--}}
-{{--            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">--}}
-{{--                <i class="fa fa-bell me-lg-2"></i>--}}
-{{--                <span class="d-none d-lg-inline-flex">Notification</span>--}}
-{{--            </a>--}}
-{{--            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">--}}
-{{--                <a href="#" class="dropdown-item">--}}
-{{--                    <h6 class="fw-normal mb-0">Profile updated</h6>--}}
-{{--                    <small>15 minutes ago</small>--}}
-{{--                </a>--}}
-{{--                <hr class="dropdown-divider">--}}
-{{--                <a href="#" class="dropdown-item">--}}
-{{--                    <h6 class="fw-normal mb-0">New user added</h6>--}}
-{{--                    <small>15 minutes ago</small>--}}
-{{--                </a>--}}
-{{--                <hr class="dropdown-divider">--}}
-{{--                <a href="#" class="dropdown-item">--}}
-{{--                    <h6 class="fw-normal mb-0">Password changed</h6>--}}
-{{--                    <small>15 minutes ago</small>--}}
-{{--                </a>--}}
-{{--                <hr class="dropdown-divider">--}}
-{{--                <a href="#" class="dropdown-item text-center">See all notifications</a>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-        <a href="/">Go Back</a>
-        <div class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-{{--                <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">--}}
-                <span class="d-none d-lg-inline-flex">{{\Illuminate\Support\Facades\Auth::user()->name}}</span>
+<header class='mb-3'>
+    <nav class="navbar navbar-expand navbar-light ">
+        <div class="container-fluid">
+            <a href="#" class="burger-btn d-block">
+                <i class="bi bi-justify fs-3"></i>
             </a>
-            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-{{--                <a href="#" class="dropdown-item">My Profile</a>--}}
-{{--                <a href="#" class="dropdown-item">Settings</a>--}}
 
-                <a href="/signout" class="dropdown-item">Log Out</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown me-1">
+                        <a class="nav-link active dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            <i class='bi bi-envelope bi-sub fs-4 text-gray-600'></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <h6 class="dropdown-header">Mail</h6>
+                            </li>
+                            <li><a class="dropdown-item" href="#">No new mail</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown me-3">
+                        <a class="nav-link active dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            <i class='bi bi-bell bi-sub fs-4 text-gray-600'></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <h6 class="dropdown-header">Notifications</h6>
+                            </li>
+                            <li><a class="dropdown-item">No notification available</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="dropdown">
+                    <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="user-menu d-flex">
+                            <div class="user-name text-end me-3">
+                                <h6 class="mb-0 text-gray-600">John Ducky</h6>
+                                <p class="mb-0 text-sm text-gray-600">Administrator</p>
+                            </div>
+                            <div class="user-img d-flex align-items-center">
+                                <div class="avatar avatar-md">
+                                    <img src="/assets/images/faces/1.jpg">
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                        <li>
+                            <h6 class="dropdown-header">Hello, John!</h6>
+                        </li>
+                        <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-person me-2"></i> My
+                                Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-gear me-2"></i>
+                                Settings</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-wallet me-2"></i>
+                                Wallet</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#"><i
+                                    class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-</nav>
+    </nav>
+</header>
