@@ -14,7 +14,7 @@ class ClientIndexController extends Controller
     {
         $cart = Session::get("cart");
 
-        $products = DB::table("product")
+        $products = DB::table("products")
             ->get();
         return view("client/ClientIndex",[
             "products" => $products,
@@ -51,7 +51,7 @@ class ClientIndexController extends Controller
         $data = $request->data;
         $cart = Session::get("cart");
 
-        $products = DB::table("product")
+        $products = DB::table("products")
             ->where("product_name", "LIKE", "%$data%")
             ->join("category", "product.category_id", "=", "category.id")
             ->join("publisher", "product.publisher_id", "=", "publisher.id")
@@ -70,7 +70,7 @@ class ClientIndexController extends Controller
     public function productDetails($id) {
         $cart = Session::get("cart");
 
-        $products = DB::table("product")
+        $products = DB::table("products")
             ->where("product.id",$id)
             ->join("category", "product.category_id", "=", "category.id")
             ->join("publisher", "product.publisher_id", "=", "publisher.id")
@@ -80,7 +80,7 @@ class ClientIndexController extends Controller
 //        $products->quantity = $quantity;
 
 
-        $productRelated = DB::table("product")
+        $productRelated = DB::table("products")
             ->where("id","!=", $id)
             ->get();
         return view("client/product-details",[
@@ -107,7 +107,7 @@ class ClientIndexController extends Controller
         $author = DB::table("author")
             ->get();
 
-        $products = DB::table("product")
+        $products = DB::table("products")
             ->join("category", "product.category_id", "=", "category.id")
             ->join("publisher", "product.publisher_id", "=", "publisher.id")
             ->join("author", "product.author_id", "=", "author.id")
@@ -207,7 +207,7 @@ class ClientIndexController extends Controller
 
         switch($status){
             case "priceAsc":
-                $products = DB::table("product")
+                $products = DB::table("products")
                     ->join("category", "product.category_id", "=", "category.id")
                     ->join("publisher", "product.publisher_id", "=", "publisher.id")
                     ->join("author", "product.author_id", "=", "author.id")
@@ -216,7 +216,7 @@ class ClientIndexController extends Controller
                     ->paginate(8);
                 break;
             case "priceDesc":
-                $products = DB::table("product")
+                $products = DB::table("products")
                     ->join("category", "product.category_id", "=", "category.id")
                     ->join("publisher", "product.publisher_id", "=", "publisher.id")
                     ->join("author", "product.author_id", "=", "author.id")
@@ -225,7 +225,7 @@ class ClientIndexController extends Controller
                     ->paginate(8);
                 break;
             case "az":
-                $products = DB::table("product")
+                $products = DB::table("products")
                     ->join("category", "product.category_id", "=", "category.id")
                     ->join("publisher", "product.publisher_id", "=", "publisher.id")
                     ->join("author", "product.author_id", "=", "author.id")
@@ -234,7 +234,7 @@ class ClientIndexController extends Controller
                     ->paginate(8);
                 break;
             case "za":
-                $products = DB::table("product")
+                $products = DB::table("products")
                     ->join("category", "product.category_id", "=", "category.id")
                     ->join("publisher", "product.publisher_id", "=", "publisher.id")
                     ->join("author", "product.author_id", "=", "author.id")
@@ -243,7 +243,7 @@ class ClientIndexController extends Controller
                     ->paginate(8);
                 break;
             case $status;
-                $products =  DB::table("product")
+                $products =  DB::table("products")
                     ->where("category.category_name", "=", $status)
                     ->orWhere("publisher.publisher_name", "=", $status)
                     ->orWhere("author.author_name", "=", $status)

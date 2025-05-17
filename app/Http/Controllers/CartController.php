@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Session;
 class CartController extends Controller
 {
     public function addToCart($id, $quantity) {
-        $product = DB::table("product")
+        $product = DB::table("products")
             ->where("id", $id)
             ->first();
 
@@ -50,7 +50,7 @@ class CartController extends Controller
     }
 
     public function cart(Request $request) {
-        $product = DB::table("product")
+        $product = DB::table("products")
             ->join("category", "product.category_id", "=", "category.id")
             ->join("publisher", "product.publisher_id", "=", "publisher.id")
             ->join("author", "product.author_id", "=", "author.id")
@@ -233,7 +233,7 @@ class CartController extends Controller
     }
 
     public function test () {
-        $product = DB::table('product')
+        $product = DB::table('products')
             ->get();
         $data = Session::get('cart');
 //        Session::forget("cart");
