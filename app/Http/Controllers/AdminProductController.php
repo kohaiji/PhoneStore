@@ -17,8 +17,7 @@ class AdminProductController extends Controller
         // ON product.category_id = category.id
         $products = DB::table("products")
             ->join("brands", "products.brand_id", "=", "brands.id")
-            ->leftJoin("product_variants", "products.id", "=", "product_variants.product_id")
-            ->select("products.*", "brands.brand_name", "product_variants.id as variant_id", "product_variants.color", "product_variants.storage", "product_variants.price_adjustment", "product_variants.stock")
+            ->select("products.*", "brands.brand_name")
             ->orderBy("products.id")
             ->paginate(10);
 
@@ -195,15 +194,13 @@ class AdminProductController extends Controller
         $activeMenu = "product";
         $data = $request->data;
 
-        $products = DB::table("product")
+        $products = DB::table("products")
             ->where("product_name", "LIKE", "%$data%")
-            ->join("category", "product.category_id", "=", "category.id")
-            ->join("publisher", "product.publisher_id", "=", "publisher.id")
-            ->join("author", "product.author_id", "=", "author.id")
-            ->select("product.*", "category.category_name", "publisher.publisher_name", "author.author_name")
-            ->orderBy("id")
-            ->paginate(10);
-
+            ->join("brands", "products.brand_id", "=", "brands.id")
+            ->select("products.*", "brands.brand_name")
+            ->orderBy("products.id")
+            ->paginate(10)
+            ->appends(['data' => $data]);
 
 //        dd($products);
 

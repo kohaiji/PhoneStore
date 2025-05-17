@@ -8,12 +8,11 @@ use App\Http\Controllers\AdminProductController;
 //use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\AdminAuthorController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\AdminStatsController;
 use App\Http\Controllers\AdminAccountController;
-use App\Http\Controllers\AdminPublisherController;
+
 
 Route::get('/test', [CartController::class, "test"]);
 
@@ -31,7 +30,7 @@ Route::prefix('admin')->middleware('admin')->group(function(){
 // ADMIN
     Route::get('/', [AdminIndexController::class, "adminIndex"]);
 
-// ADMIN CATEGORY
+// ADMIN BRAND
     Route::get('/brand-list', [AdminBrandController::class, "getAll"]);
     Route::get('/brand-delete/{id}', [AdminBrandController::class, "delete"]);
     Route::get('/brand-add', [AdminBrandController::class, "add"]);
@@ -39,24 +38,6 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('/brand-edit/{id}', [AdminBrandController::class, "edit"]);
     Route::post("/brand-update/{id}", [AdminBrandController::class, "update"]);
     Route::get("/brand-search", [AdminBrandController::class, "categorySearch"]);
-
-// ADMIN AUTHOR
-    Route::get('/author-list', [AdminAuthorController::class, "getAll"]);
-    Route::get('/author-delete/{id}', [AdminAuthorController::class, "delete"]);
-    Route::get('/author-add', [AdminAuthorController::class, "add"]);
-    Route::post('/author-save', [AdminAuthorController::class, "save"]);
-    Route::get('/author-edit/{id}', [AdminAuthorController::class, "edit"]);
-    Route::post("/author-update/{id}", [AdminAuthorController::class, "update"]);
-    Route::get("/author-search", [AdminAuthorController::class, "authorSearch"]);
-
-// ADMIN PUBLISHER
-    Route::get('/publisher-list', [AdminPublisherController::class, "getAll"]);
-    Route::get('/publisher-delete/{id}', [AdminPublisherController::class, "delete"]);
-    Route::get('/publisher-add', [AdminPublisherController::class, "add"]);
-    Route::post('/publisher-save', [AdminPublisherController::class, "save"]);
-    Route::get('/publisher-edit/{id}', [AdminPublisherController::class, "edit"]);
-    Route::post("/publisher-update/{id}", [AdminPublisherController::class, "update"]);
-    Route::get("/publisher-search", [AdminPublisherController::class, "publisherSearch"]);
 
 // ADMIN PRODUCT
     Route::get('/product-list', [AdminProductController::class, "getAll"]);

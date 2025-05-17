@@ -27,6 +27,7 @@
         <div id="main-content">
             <div class="page-heading">
                 <div class="page-title">
+
                     <div class="row">
                         <div class="col-12 col-md-6 order-md-1 order-last">
                             <h3>List Brand</h3>
@@ -41,6 +42,21 @@
                             </nav>
                         </div>
                     </div>
+
+                    <form action="/admin/product-search" method="get">
+                        <div class="row">
+                            <div class="col-10">
+                                <input placeholder="Search Something......" class="form-control" type="text" name="data" value="{{$data}}">
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-secondary btn-sm rounded-pill" type="submit"><i class="bi bi-search" aria-hidden="true" ></i></button>
+                            </div>
+                            <div class="col-auto"><span><a class="btn btn-success btn-sm rounded-pill" href="/admin/product-list">View All</a></span></div>
+                        </div>
+                    </form>
+
+                    <a href="/admin/product-add" class="btn btn-primary rounded-pill mt-3 mb-1">Add Product</a>
+
                 </div>
             </div>
 
@@ -74,6 +90,9 @@
                     @endforeach
                     </tbody>
                 </table>
+                <div class="mt-1">
+                    {{$brands->links()}}
+                </div>
             </div>
 
         </div>
