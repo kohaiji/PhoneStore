@@ -29,7 +29,7 @@
             To keep connected with us please login <br />with your personal info
         </p>
         <span class="text-blue-700 text-lg text-center max-w-[280px]">
-        If you don't have an account, please <button class="text-blue-900 font-bold underline hover:text-blue-700 transition">Sign Up</button>
+        If you don't have an account, please <a class="text-blue-900 font-bold underline hover:text-blue-700 transition" href="/register">Sign Up</a>
       </span>
 
         <!-- Top circle -->
@@ -49,20 +49,25 @@
         <h2 class="text-blue-900 font-extrabold text-2xl mb-6">Sign In</h2>
         <p class="text-blue-700 text-sm mb-8">Sign in with your email and password</p>
 
-        <form class="space-y-6 max-w-lg">
+        <form class="space-y-6 max-w-lg" action="" method="post">
+            @csrf
             <div>
                 <input
+                    name="email"
                     type="email"
                     placeholder="Email"
                     class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                    required
                 />
             </div>
             <div class="relative">
                 <input
+                    name="password"
                     id="password"
                     type="password"
                     placeholder="Password"
                     class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 pr-12 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                    required
                 />
                 <button
                     type="button"
@@ -82,6 +87,11 @@
             >
                 SIGN IN
             </button>
+            <div>
+                @if ($message = Session::get('error'))
+                    <strong style="color: red">{{ $message }}</strong>
+                @endif
+            </div>
         </form>
     </div>
 </div>
