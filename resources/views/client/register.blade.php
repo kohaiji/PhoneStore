@@ -127,7 +127,6 @@
             <button
                 type="submit"
                 class="bg-blue-500 bg-opacity-80 text-white text-sm font-extrabold px-12 py-3 rounded-full shadow-md hover:bg-blue-600 transition"
-                disabled
             >
                 SIGN UP
             </button>
