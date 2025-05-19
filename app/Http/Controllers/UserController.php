@@ -26,12 +26,14 @@ class UserController extends Controller
             'email'    => 'required|string|email|unique:users,email',
             'phone'    => 'required|string|max:10|unique:users,phone',
             'password' => 'required|string|min:3|confirmed',
+            'gender' => 'required|in:Male,Female,Other'
         ]);
 
         try {
             $fullName = $request->fullName;
             $email = $request->email;
             $phone = $request->phone;
+            $gender = $request->gender;
             $password = Hash::make($request->password);
 
             DB::table("users")
@@ -39,7 +41,8 @@ class UserController extends Controller
                     "name" => $fullName,
                     "email" => $email,
                     "phone" => $phone,
-                    "password" => $password
+                    "password" => $password,
+                    "gender" => $gender
                 ]);
 
         } catch (\Throwable $e) {

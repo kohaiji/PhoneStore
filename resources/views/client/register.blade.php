@@ -84,72 +84,79 @@
             <div>
                 <label class="block mb-1 text-blue-700 text-sm font-semibold" for="gender">Choose Gender</label>
                 <select
+                    required
                     id="gender"
                     name="gender"
                     class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400"
                 >
                     <option value="" disabled selected>Select gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
                 </select>
             </div>
-            <div class="relative mb-4">
-                <input class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400" name="password" placeholder="Password" type="password"/>
-                <span aria-label="Toggle password visibility" class="absolute inset-y-0 right-3 flex items-center text-[#7ea1ff] cursor-pointer">
-      <i class="fas fa-eye">
-      </i>
-     </span>
-            </div>
-            <div class="relative mb-1">
-                <input class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400" name="confirm-password" placeholder="Confirm Password" type="password" value="•••••••••••••"/>
-                <span aria-label="Toggle password visibility" class="absolute inset-y-0 right-3 flex items-center text-[#7ea1ff] cursor-pointer">
-      <i class="fas fa-eye">
-      </i>
-     </span>
-
-{{--            <div class="relative mb">--}}
-{{--                <input--}}
-{{--                    name="password"--}}
-{{--                    id="password"--}}
-{{--                    type="password"--}}
-{{--                    placeholder="Password"--}}
-{{--                    class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 pr-12 focus:outline-none focus:ring-1 focus:ring-blue-400"--}}
-{{--                    required onkeyup='check();'--}}
-{{--                />--}}
-{{--                <button--}}
-{{--                    type="button"--}}
-{{--                    id="togglePassword"--}}
-{{--                    class="absolute right-4 top-1/2 -translate-y-1/2 text-blue-700 hover:text-blue-900 focus:outline-none"--}}
-{{--                    aria-label="Toggle password visibility"--}}
-{{--                >--}}
-{{--                    <i class="fas fa-eye"></i>--}}
-{{--                </button>--}}
+{{--            <div class="relative mb-4">--}}
+{{--                <input class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400" id="password" name="password" placeholder="Password" type="password" required onkeyup='check();'/>--}}
+{{--                <span aria-label="Toggle password visibility" class="absolute inset-y-0 right-3 flex items-center text-[#7ea1ff] cursor-pointer" id="togglePassword" type="button">--}}
+{{--      <i class="fas fa-eye">--}}
+{{--      </i>--}}
+{{--     </span>--}}
 {{--            </div>--}}
-{{--            <div class="relative mb-5">--}}
-{{--                <input--}}
-{{--                    name="password_confirmation"--}}
-{{--                    id="password_confirmation"--}}
-{{--                    type="password"--}}
-{{--                    placeholder="Confirm Password"--}}
-{{--                    class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 pr-12 focus:outline-none focus:ring-1 focus:ring-blue-400"--}}
-{{--                    required onkeyup='check();'--}}
-{{--                />--}}
-{{--                <button--}}
-{{--                    type="button"--}}
-{{--                    id="togglecPassword"--}}
-{{--                    class="absolute right-4 top-1/2 -translate-y-1/2 text-blue-700 hover:text-blue-900 focus:outline-none"--}}
-{{--                    aria-label="Toggle password visibility"--}}
-{{--                >--}}
-{{--                    <i class="fas fa-eye"></i>--}}
-{{--                </button>--}}
+{{--            <div class="relative mb-1">--}}
+{{--                <input class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password" type="password" required onkeyup='check();'/>--}}
+{{--                <span aria-label="Toggle password visibility" class="absolute inset-y-0 right-3 flex items-center text-[#7ea1ff] cursor-pointer" id="togglecPassword" type="button">--}}
+{{--      <i class="fas fa-eye">--}}
+{{--      </i>--}}
+{{--     </span>--}}
+{{--            </div>--}}
+{{--            <div>--}}
+{{--                <span id='message'></span>--}}
+{{--            </div>--}}
 
-                <span id='message'></span>
+
+            <div class="relative mb">
+                <input
+                    name="password"
+                    id="password"
+                    type="password"
+                    placeholder="Password"
+                    class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 pr-12 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                    required onkeyup='check();'
+                />
+                <button
+                    type="button"
+                    id="togglePassword"
+                    class="absolute right-4 top-1/2 -translate-y-1/2 text-blue-700 hover:text-blue-900 focus:outline-none"
+                    aria-label="Toggle password visibility"
+                >
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+            <div class="relative mb-5">
+                <input
+                    name="password_confirmation"
+                    id="password_confirmation"
+                    type="password"
+                    placeholder="Confirm Password"
+                    class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 pr-12 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                    required onkeyup='check();'
+                />
+                <button
+                    type="button"
+                    id="togglecPassword"
+                    class="absolute right-4 top-1/2 -translate-y-1/2 text-blue-700 hover:text-blue-900 focus:outline-none"
+                    aria-label="Toggle password visibility"
+                >
+                    <i class="fas fa-eye"></i>
+                </button>
             </div>
 
             @if ($errors->has('password'))
                 <span class="text-danger">{{ $errors->first('password') }}</span>
             @endif
+            <div>
+                <span id='message'></span>
+            </div>
 
             <button
                 type="submit"
