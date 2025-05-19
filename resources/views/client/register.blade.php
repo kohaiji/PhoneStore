@@ -81,6 +81,19 @@
                     required
                 />
             </div>
+            <div>
+                <label class="block mb-1 text-blue-700 text-sm font-semibold" for="gender">Choose Gender</label>
+                <select
+                    id="gender"
+                    name="gender"
+                    class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                >
+                    <option value="" disabled selected>Select gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
             <div class="relative">
                 <input
                     name="password"
