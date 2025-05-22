@@ -42,32 +42,33 @@ class AdminProductController extends Controller
     public function add(){
 
         $activeMenu = "product";
-        // lay list category tu DB roi truyen ra view
-        $categories = DB::table("category")
-            ->get();
-        $publisher = DB::table("publisher")
-            ->get();
-        $author = DB::table("author")
+        // lay list brand tu DB roi truyen ra view
+        $brands = DB::table("brands")
             ->get();
 
         return view("admin/product-add",
             [
-                "categories" => $categories,
-                "activeMenu" => $activeMenu,
-                "publisher" => $publisher,
-                "author" => $author,
+                "brands" => $brands,
+                "activeMenu" => $activeMenu
             ]);
     }
 
     public function save(Request $request){
         $productName = $request->productName;
-        $price = $request->price;
         $description = $request->description;
-        $stock = $request->stock;
-        $isbn = $request->isbn;
-        $categoryId = $request->categoryId;
-        $publisherId = $request->publisherId;
-        $authorId = $request->authorId;
+        $price = $request->price;
+        $screenSize = $request->screenSize;
+        $resolution = $request->resolution;
+        $ram = $request->ram;
+        $batteryCap = $request->batteryCap;
+        $os = $request->os;
+        $chipset = $request->chipset;
+        $sim = $request->sim;
+        $camera = $request->camera;
+        $refreshRate = $request->refreshRate;
+        $releaseDate = $request->releaseDate;
+        $brandId = $request->brandId;
+
 
         $imageName = "";
         if($request->image != null){
@@ -77,21 +78,26 @@ class AdminProductController extends Controller
             $request->image->move(public_path("image_product"), $imageName);
         }
 
-        if($productName == "" || $price == "" || $categoryId == 0 || $publisherId == 0 || $authorId == 0){
+        if($productName == "" || $price == "" || $brandId == 0){
             return redirect("/admin/product-add");
         }
         else {
-            DB::table("product")
+            DB::table("products")
                 ->insert([
+                    "brand_id" => $brandId,
                     "product_name" => $productName,
-                    "price" => $price,
                     "description" => $description,
-                    "image" => $imageName,
-                    "stock" => $stock,
-                    "isbn_code" => $isbn,
-                    "category_id" => $categoryId,
-                    "publisher_id" => $publisherId,
-                    "author_id" => $authorId
+                    "price" => $price,
+                    "screen_size" => $screenSize,
+                    "resolution" => $resolution,
+                    "ram" => $ram,
+                    "battery_cap" => $batteryCap,
+                    "os" => $os,
+                    "chipset" => $chipset,
+                    "sim" => $sim,
+                    "camera" => $camera,
+                    "refresh_rate" => $refreshRate,
+                    "release_date" => $releaseDate
                 ]);
 
             return redirect("/admin/product-list");
@@ -100,36 +106,36 @@ class AdminProductController extends Controller
 
     public function edit($id){
         $activeMenu = "product";
-        $category = DB::table("category")
-            ->get();
-        $publisher = DB::table("publisher")
-            ->get();
-        $author = DB::table("author")
+        $brands = DB::table("brands")
             ->get();
 
-        $product = DB::table("product")
+        $products = DB::table("products")
             ->where("id", "=", $id)
             ->first();
 
 
         return view("admin/product-edit", [
-            "product" => $product,
-            "category" => $category,
+            "products" => $products,
+            "brands" => $brands,
             "activeMenu" => $activeMenu,
-            "publisher" => $publisher,
-            "author" => $author,
         ]);
     }
 
     public function update($id, Request $request){
         $productName = $request->productName;
-        $price = $request->price;
         $description = $request->description;
-        $stock = $request->stock;
-        $isbn = $request->isbn;
-        $categoryId = $request->categoryId;
-        $publisherId = $request->publisherId;
-        $authorId = $request->authorId;
+        $price = $request->price;
+        $screenSize = $request->screenSize;
+        $resolution = $request->resolution;
+        $ram = $request->ram;
+        $batteryCap = $request->batteryCap;
+        $os = $request->os;
+        $chipset = $request->chipset;
+        $sim = $request->sim;
+        $camera = $request->camera;
+        $refreshRate = $request->refreshRate;
+        $releaseDate = $request->releaseDate;
+        $brandId = $request->brandId;
 
         $imageName = "";
         if($request->image != null){
@@ -139,23 +145,28 @@ class AdminProductController extends Controller
             $request->image->move(public_path("image_product"), $imageName);
         }
 
-        if($productName == "" || $price == "" || $categoryId == 0 || $publisherId == 0 || $authorId == 0) {
+        if($productName == "" || $price == "" || $brandId == 0) {
             return redirect("/admin/product-edit/$id");
         }
         else{
-            DB::table("product")
+            DB::table("products")
 
                 ->where("id", "=", $id)
                 ->update([
+                    "brand_id" => $brandId,
                     "product_name" => $productName,
-                    "price" => $price,
                     "description" => $description,
-                    "image" => $imageName,
-                    "stock" => $stock,
-                    "isbn_code" => $isbn,
-                    "category_id" => $categoryId,
-                    "publisher_id" => $publisherId,
-                    "author_id" => $authorId
+                    "price" => $price,
+                    "screen_size" => $screenSize,
+                    "resolution" => $resolution,
+                    "ram" => $ram,
+                    "battery_cap" => $batteryCap,
+                    "os" => $os,
+                    "chipset" => $chipset,
+                    "sim" => $sim,
+                    "camera" => $camera,
+                    "refresh_rate" => $refreshRate,
+                    "release_date" => $releaseDate
                 ]);
             return redirect("/admin/product-list");
         }

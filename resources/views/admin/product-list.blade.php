@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Mazer Admin Dashboard</title>
+    <title>Admin Dashboard</title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -68,7 +68,8 @@
                         <th>ID</th>
                         <th>Product Name</th>
                         <th>Price</th>
-                        <th class="text-center" colspan="3">ACTION</th>
+                        <th>Brand</th>
+                        <th class="text-center" colspan="4">ACTION</th>
                     </tr>
                     </thead>
 
@@ -78,8 +79,12 @@
                         <td>{{$obj->id}}</td>
                         <td>{{$obj->product_name}}</td>
                         <td>{{$obj->price}}</td>
+                        <td>{{$obj->brand_name}}</td>
                         <td class="text-center">
                             <a href="/admin/product-details/{{$obj->id}}" class="btn btn-outline-success btn-sm">Details</a>
+                        </td>
+                        <td class="text-center">
+                            <a href="/admin/product-details/{{$obj->id}}" class="btn btn-outline-info btn-sm">Variants</a>
                         </td>
                         <td class="text-center">
                             <a href="/admin/product-edit/{{$obj->id}}" class="btn btn-outline-primary btn-sm">Edit</a>
