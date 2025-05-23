@@ -14,7 +14,6 @@ class AdminProductController extends Controller
         $activeMenu = "product";
 
         // SELECT * FROM product
-        // ON product.category_id = category.id
         $products = DB::table("products")
             ->join("brands", "products.brand_id", "=", "brands.id")
             ->select("products.*", "brands.brand_name")
@@ -175,28 +174,17 @@ class AdminProductController extends Controller
 
     public function details($id){
         $activeMenu = "product";
-//        $category = DB::table("category")
-//            ->get();
-//        $publisher = DB::table("publisher")
-//            ->get();
-//        $author = DB::table("author")
-//            ->get();
 
-        $product = DB::table("product")
-            ->where("product.id", "=", $id)
-            ->join("category", "product.category_id", "=", "category.id")
-            ->join("publisher", "product.publisher_id", "=", "publisher.id")
-            ->join("author", "product.author_id", "=", "author.id")
-            ->select("product.*", "category.category_name", "publisher.publisher_name", "author.author_name")
+        $products = DB::table("products")
+            ->where("products.id", "=", $id)
+            ->join("brands", "products.brand_id", "=", "brands.id")
+            ->select("products.*", "brands.brand_name")
             ->first();
 
 
         return view("admin/product-details", [
             "activeMenu" => $activeMenu,
-            "product" => $product,
-//            "category" => $category,
-//            "publisher" => $publisher,
-//            "author" => $author,
+            "products" => $products,
         ]);
     }
 
