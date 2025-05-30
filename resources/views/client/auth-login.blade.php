@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Sign In</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
@@ -56,6 +57,7 @@
                     name="email"
                     type="email"
                     placeholder="Email"
+                    value="{{ old('email') }}"
                     class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400"
                     required
                 />
@@ -95,6 +97,18 @@
         </form>
     </div>
 </div>
+
+@if(session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: '{{ session('success') }}',
+            confirmButtonText: 'OK'
+        });
+    </script>
+@endif
+
 
 <script>
     const togglePassword = document.getElementById('togglePassword');

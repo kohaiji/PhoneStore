@@ -48,6 +48,16 @@
     <div class="flex flex-col w-2/3 p-14">
         <h2 class="text-blue-900 font-extrabold text-2xl mb-6">Create Account</h2>
 
+        @if ($errors->any())
+            <div class="mb-4 p-4 rounded-md bg-red-100 border border-red-300 text-red-700 text-sm">
+                <ul class="list-disc pl-5 space-y-1">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
 
         <form class="space-y-6 max-w-lg" action="" method="post">
             @csrf
