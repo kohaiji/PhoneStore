@@ -43,7 +43,7 @@
                         </div>
                     </div>
 
-                    <form action="/admin/product-search" method="get">
+                    <form action="/admin/brand-search" method="get">
                         <div class="row">
                             <div class="col-10">
                                 <input placeholder="Search Something......" class="form-control" type="text" name="data" value="{{$data}}">
@@ -51,7 +51,7 @@
                             <div class="col-auto">
                                 <button class="btn btn-secondary btn-sm rounded-pill" type="submit"><i class="bi bi-search" aria-hidden="true" ></i></button>
                             </div>
-                            <div class="col-auto"><span><a class="btn btn-success btn-sm rounded-pill" href="/admin/product-list">View All</a></span></div>
+                            <div class="col-auto"><span><a class="btn btn-success btn-sm rounded-pill" href="/admin/brand-list">View All</a></span></div>
                         </div>
                     </form>
 

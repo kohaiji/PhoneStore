@@ -37,7 +37,7 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::post('/brand-save', [AdminBrandController::class, "save"]);
     Route::get('/brand-edit/{id}', [AdminBrandController::class, "edit"]);
     Route::post("/brand-update/{id}", [AdminBrandController::class, "update"]);
-    Route::get("/brand-search", [AdminBrandController::class, "categorySearch"]);
+    Route::get("/brand-search", [AdminBrandController::class, "brandSearch"]);
 
 // ADMIN PRODUCT
     Route::get('/product-list', [AdminProductController::class, "getAll"]);
