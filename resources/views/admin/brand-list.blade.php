@@ -55,7 +55,7 @@
                         </div>
                     </form>
 
-                    <a href="/admin/product-add" class="btn btn-primary rounded-pill mt-3 mb-1">Add Product</a>
+                    <a href="/admin/brand-add" class="btn btn-primary rounded-pill mt-3 mb-1">Add Brand</a>
 
                 </div>
             </div>
@@ -67,7 +67,7 @@
                         <th>ID</th>
                         <th>Brand Name</th>
                         <th>Logo</th>
-                        <th class="text-center" colspan="3">ACTION</th>
+                        <th class="text-center" colspan="2">ACTION</th>
                     </tr>
                     </thead>
 
@@ -76,15 +76,12 @@
                         <tr>
                             <td>{{$obj->id}}</td>
                             <td>{{$obj->brand_name}}</td>
-                            <td>{{$obj->logo_url}}</td>
+                            <td><img height="100" src="/brand_logo/{{$obj->logo_url}}" alt="logo"></td>
                             <td class="text-center">
-                                <a href="/admin/product-details/{{$obj->id}}" class="btn btn-outline-success btn-sm">Details</a>
+                                <a href="/admin/brand-edit/{{$obj->id}}" class="btn btn-outline-primary btn-sm">Edit</a>
                             </td>
                             <td class="text-center">
-                                <a href="/admin/product-edit/{{$obj->id}}" class="btn btn-outline-primary btn-sm">Edit</a>
-                            </td>
-                            <td class="text-center">
-                                <a onclick="return confirm('Are you sure?')" href="/admin/product-delete/{{$obj->id}}" class="btn btn-outline-danger btn-sm">Delete</a>
+                                <a onclick="return confirm('Are you sure?')" href="/admin/brand-delete/{{$obj->id}}" class="btn btn-outline-danger btn-sm">Delete</a>
                             </td>
                         </tr>
                     @endforeach

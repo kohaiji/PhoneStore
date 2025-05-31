@@ -26,64 +26,79 @@ class AdminBrandController extends Controller
     }
 
     public function delete($id){
-        DB::table("category")
+        DB::table("brands")
             ->where("id", $id)
             ->delete();
 
-        return redirect("/admin/category-list");
+        return redirect("/admin/brand-list");
 
     }
 
     public function add(){
         $activeMenu = "category";
-        return view("admin/category-add",
+        return view("admin/brand-add",
             [
                 "activeMenu" => $activeMenu,
             ]);
     }
 
     public function save(Request $request){
-        $categories = DB::table("category")
-            ->first();
-        $categoryName = $request->categoryName;
+//        $categories = DB::table("category")
+//            ->first();
+        $brandName = $request->brandName;
 //        $this->validate($request, [
 //            'categoryName'=>'unique:category,categoryName',
 //        ]);
+        $logo = null;
+        if($request->logo != null){
+            $logo = $request->logo->getClientOriginalName();
+
+            // upload image to image_product
+            $request->logo->move(public_path("brand_logo"), $logo);
+        }
 
 
-        DB::table("category")
+        DB::table("brands")
             ->insert([
-                "category_name" => $categoryName
+                "brand_name" => $brandName,
+                "logo_url" => $logo
             ]);
 
-        return redirect("/admin/category-list");
+        return redirect("/admin/brand-list");
 
     }
 
     public function edit($id){
         $activeMenu = "category";
-        $category = DB::table("category")
+        $brands = DB::table("brands")
             ->where("id", "=", $id)
             ->first();
 
-        return view("admin/category-edit", [
-            "category" => $category,
+        return view("admin/brand-edit", [
+            "brands" => $brands,
             "activeMenu" => $activeMenu
         ]);
     }
 
     public function update($id, Request $request){
-        $categoryName = $request->categoryName;
-        if ($categoryName == ""){
-            return redirect("/admin/category-edit/$id");
+        $brandName= $request->brandName;
+        $logo = $request->oldLogo;
+        if($request->hasFile('logo')){
+            $file = $request->file('logo');
+            $logo = $file->getClientOriginalName();
+            $file->move(public_path("brand_logo"), $logo);
+        }
+        if ($brandName == ""){
+            return redirect("/admin/brand-edit/$id");
         }
         else{
-            DB::table("category")
+            DB::table("brands")
                 ->where("id", "=", $id)
                 ->update([
-                    "category_name" => $categoryName,
+                    "brand_name" => $brandName,
+                    "logo_url" => $logo
                 ]);
-            return redirect("/admin/category-list");
+            return redirect("/admin/brand-list");
         }
     }
 
