@@ -24,7 +24,7 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'fullName' => 'required|string',
             'email'    => 'required|string|email|unique:users,email',
-            'phone'    => 'required|string|max:10|unique:users,phone',
+            'phone'    => 'required|string|max:10|min:10|unique:users,phone',
             'password' => 'required|string|min:3|confirmed',
             'gender'   => 'required|in:Male,Female,Other'
         ], [
@@ -34,6 +34,7 @@ class UserController extends Controller
             'email.unique'        => 'This email is already registered.',
             'phone.required'      => 'Phone number is required.',
             'phone.max'           => 'Phone number cannot be longer than 10 digits.',
+            'phone.min'           => 'Phone number cannot be shorter than 10 digits.',
             'phone.unique'        => 'This phone number is already registered.',
             'password.required'   => 'Password is required.',
             'password.min'        => 'Password must be at least 3 characters.',
