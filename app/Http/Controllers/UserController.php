@@ -63,7 +63,7 @@ class UserController extends Controller
                 ->with('error', 'System error: ' . $e->getMessage());
         }
 
-        return redirect('/login')->with('success', 'Registration successful! Please login.');
+        return redirect('/register')->with('success', 'Registration successful! Please login.');
     }
 
 
