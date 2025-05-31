@@ -48,6 +48,12 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::post("/product-update/{id}", [AdminProductController::class, "update"]);
     Route::get('/product-details/{id}', [AdminProductController::class, "details"]);
     Route::get("/product-search", [AdminProductController::class, "productSearch"]);
+    Route::get('/product-variant/{id}', [AdminProductController::class, "variants"]);
+    Route::get('/product-variant-add/{id}', [AdminProductController::class, "variantAdd"]);
+    Route::post('/product-variant-save/{id}', [AdminProductController::class, "variantSave"]);
+    Route::get('/product-variant-delete/{id}', [AdminProductController::class, "variantDelete"]);
+    Route::get('/product-variant-edit/{id}', [AdminProductController::class, "variantEdit"]);
+    Route::post("/product-variant-update/{id}", [AdminProductController::class, "variantUpdate"]);
 
 // ADMIN ORDER
     Route::get('/order-list', [AdminOrderController::class, "getAll"]);

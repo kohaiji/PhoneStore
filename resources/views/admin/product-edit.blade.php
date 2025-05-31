@@ -66,7 +66,7 @@
 
                 <div class="input-group mb-3">
                     <span class="input-group-text"><b>Product Name</b></span>
-                    <input type="text" name="productName" value="{{$products->product_name}}" class="form-control form-control-sm">
+                    <input type="text" name="productName" value="{{$products->product_name}}" class="form-control form-control-sm" required>
                 </div>
 
                 <div class="input-group mb-3">
@@ -76,7 +76,7 @@
 
                 <div class="input-group mb-3">
                     <span class="input-group-text"><b>Price</b></span>
-                    <input type="text" name="price" value="{{$products->price}}" class="form-control form-control-sm">
+                    <input type="text" name="price" value="{{$products->price}}" class="form-control form-control-sm" required>
                 </div>
 
                 <div class="input-group mb-3">

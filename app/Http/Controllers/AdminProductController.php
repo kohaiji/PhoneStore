@@ -209,4 +209,124 @@ class AdminProductController extends Controller
             "activeMenu" => $activeMenu,
         ]);
     }
+
+    public function variants($id){
+        $activeMenu = "product";
+
+        $productId = DB::table("products")
+            ->where("products.id", "=", $id)
+            ->join("product_variants as pv", "products.id", "=", "pv.product_id")
+            ->select("products.product_name", "pv.*")
+            ->first();
+
+        $products = DB::table("products")
+            ->where("products.id", "=", $id)
+            ->join("product_variants as pv", "products.id", "=", "pv.product_id")
+            ->select("products.product_name", "pv.*")
+            ->paginate(10);
+
+        if (!$productId || $products->isEmpty()) {
+            return redirect("/admin/product-list")
+                ->with("no_variant", true)
+                ->with("product_id", $id);
+        }
+
+        return view("admin/product-variant", [
+            "activeMenu" => $activeMenu,
+            "products" => $products,
+            "productId" => $productId
+        ]);
+    }
+
+    public function variantDelete($id){
+        DB::table("product_variants")
+            ->where("id", $id)
+            ->delete();
+
+        return back();
+    }
+
+    public function variantEdit($id){
+        $activeMenu = "product";
+
+        $product_variants = DB::table("product_variants as pv")
+            ->where("pv.id", "=", $id)
+            ->join("products", "pv.product_id", "=", "products.id")
+            ->select("products.product_name", "pv.*")
+            ->first();
+
+
+        return view("admin/product-variant-edit", [
+            "product_variants" => $product_variants,
+            "activeMenu" => $activeMenu,
+        ]);
+    }
+
+    public function variantUpdate($id, Request $request){
+        $color = $request->color;
+        $storage = $request->storage;
+        $priceAdjustment = $request->priceAdjustment;
+        $stock = $request->stock;
+
+        $oldId = DB::table("product_variants as pv")
+            ->where("pv.id", "=", $id)
+            ->join("products", "pv.product_id", "=", "products.id")
+            ->select("products.id")
+            ->first();
+
+        if($color == "" || $storage == "" || $priceAdjustment == 0) {
+            return redirect("/admin/product-variant-edit/$id");
+        }
+        else{
+            DB::table("product_variants")
+                ->where("id", "=", $id)
+                ->update([
+                    "color" => $color,
+                    "storage" => $storage,
+                    "price_adjustment" => $priceAdjustment,
+                    "stock" => $stock,
+                ]);
+
+            return redirect("/admin/product-variant/$oldId->id");
+        }
+    }
+
+    public function variantAdd($id){
+        $activeMenu = "product";
+
+        $products = DB::table("products")
+            ->where("id", "=", $id)
+            ->select("id", "product_name")
+            ->first();
+
+        return view("admin/product-variant-add",
+            [
+                "products" => $products,
+                "activeMenu" => $activeMenu
+            ]);
+    }
+
+    public function variantSave($id, Request $request){
+        $color = $request->color;
+        $storage = $request->storage;
+        $price = $request->priceAdjustment;
+        $stock = $request->stock;
+
+        if($color == "" || $storage == "" || $price == 0){
+            return redirect("/admin/product-add/{$id}");
+        }
+        else {
+            DB::table("product_variants")
+                ->insert([
+                    "product_id" => $id,
+                    "color" => $color,
+                    "storage" => $storage,
+                    "price_adjustment" => $price,
+                    "stock" => $stock,
+                ]);
+
+            return redirect("/admin/product-variant/{$id}");
+        }
+    }
+
 }
