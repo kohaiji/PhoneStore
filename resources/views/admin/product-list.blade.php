@@ -69,7 +69,7 @@
                         <th>Product Name</th>
                         <th>Base Price</th>
                         <th>Brand</th>
-                        <th class="text-center" colspan="4">ACTION</th>
+                        <th class="text-center" colspan="5">ACTION</th>
                     </tr>
                     </thead>
 
@@ -85,6 +85,9 @@
                         </td>
                         <td class="text-center">
                             <a href="/admin/product-variant/{{$obj->id}}" class="btn btn-outline-info btn-sm">Variants</a>
+                        </td>
+                        <td class="text-center">
+                            <a href="/admin/product-images/{{$obj->id}}" class="btn btn-outline-warning btn-sm">Images</a>
                         </td>
                         <td class="text-center">
                             <a href="/admin/product-edit/{{$obj->id}}" class="btn btn-outline-primary btn-sm">Edit</a>
@@ -111,9 +114,9 @@
 <script src="/assets/js/pages/dashboard.js"></script>
 
 <script src="/assets/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 @if(session('no_variant'))
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         Swal.fire({
             title: 'No Variants Found!',
@@ -123,6 +126,21 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 window.location.href = "/admin/product-variant-add/{{ session('product_id') }}";
+            }
+        });
+    </script>
+@endif
+
+@if(session('no_image'))
+    <script>
+        Swal.fire({
+            title: 'No Images Found!',
+            text: 'This product has no images yet. Please add one.',
+            icon: 'info',
+            confirmButtonText: 'Add Image'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/admin/product-image-add/{{ session('product_id') }}";
             }
         });
     </script>

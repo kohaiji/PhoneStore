@@ -329,4 +329,74 @@ class AdminProductController extends Controller
         }
     }
 
+    public function images($id)
+    {
+        $activeMenu = "product";
+
+        $productId = DB::table("products")
+            ->where("products.id", "=", $id)
+            ->join("product_images as pi", "products.id", "=", "pi.product_id")
+            ->select("products.product_name", "pi.*")
+            ->first();
+
+        $products = DB::table("products")
+            ->where("products.id", "=", $id)
+            ->join("product_images as pi", "products.id", "=", "pi.product_id")
+            ->select("products.product_name", "pi.*")
+            ->paginate(10);
+
+        if (!$productId || $products->isEmpty()) {
+            return redirect("/admin/product-list")
+                ->with("no_image", true)
+                ->with("product_id", $id);
+        }
+
+        return view("admin/product-images", [
+            "activeMenu" => $activeMenu,
+            "products" => $products,
+            "productId" => $productId
+        ]);
+    }
+
+    public function imageDelete($id){
+        DB::table("product_images")
+            ->where("id", $id)
+            ->delete();
+
+        return back();
+    }
+
+    public function imageAdd($id){
+        $activeMenu = "product";
+
+        $products = DB::table("products")
+            ->where("id", "=", $id)
+            ->select("id", "product_name")
+            ->first();
+
+        return view("admin/product-image-add",
+            [
+                "products" => $products,
+                "activeMenu" => $activeMenu
+            ]);
+    }
+
+    public function imageSave($id, Request $request){
+        if($request->imageUrl != null){
+            $image = $request->imageUrl->getClientOriginalName();
+
+            // upload image to image_product
+            $request->imageUrl->move(public_path("image_product"), $image);
+
+            DB::table("product_images")
+                ->insert([
+                    "product_id" => $id,
+                    "image_url" => $image
+                ]);
+            return redirect("/admin/product-images/{$id}");
+        }
+
+        return redirect("/admin/product-images/{$id}");
+
+    }
 }

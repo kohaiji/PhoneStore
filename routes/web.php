@@ -54,6 +54,10 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('/product-variant-delete/{id}', [AdminProductController::class, "variantDelete"]);
     Route::get('/product-variant-edit/{id}', [AdminProductController::class, "variantEdit"]);
     Route::post("/product-variant-update/{id}", [AdminProductController::class, "variantUpdate"]);
+    Route::get('/product-images/{id}', [AdminProductController::class, "images"]);
+    Route::get('/product-image-delete/{id}', [AdminProductController::class, "imageDelete"]);
+    Route::get('/product-image-add/{id}', [AdminProductController::class, "imageAdd"]);
+    Route::post('/product-image-save/{id}', [AdminProductController::class, "imageSave"]);
 
 // ADMIN ORDER
     Route::get('/order-list', [AdminOrderController::class, "getAll"]);
