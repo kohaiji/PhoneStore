@@ -19,25 +19,96 @@
 <!-- Header -->
 @include('client.header')
 <!-- Hero Blue Bar -->
-<div class="bg-gradient-to-r from-[#3b82f6] to-[#60a5fa] h-36 mb-6 flex items-end">
+<div class="bg-gradient-to-r from-[#3b82f6] to-[#60a5fa] h-30 mb-6 flex items-end">
     <h2 class="text-white font-bold text-3xl px-10 pb-4">
-        Our Products
+        Products
     </h2>
 </div>
-<!-- Search bar below blue bar -->
+<!-- Search bar centered and bigger with button -->
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
-    <div class="flex justify-end">
-        <div class="flex items-center space-x-4 w-full sm:w-auto">
-            <input aria-label="Search products" class="w-full sm:w-64 px-3 py-2 border border-gray-300 rounded text-xs focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Search product..." type="search"/>
+    <div class="flex justify-center">
+        <form class="flex w-full sm:w-3/4 md:w-1/2">
+            <input aria-label="Search products" class="flex-grow px-4 py-3 border border-gray-300 rounded-l text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Search product..." type="search"/>
+            <button class="bg-[#2563eb] text-white px-6 py-3 rounded-r text-sm font-semibold hover:bg-[#1e40af]" type="submit">
+                Search
+            </button>
+        </form>
+    </div>
+</section>
+<!-- Main content with sidebar on left and products on right -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 flex flex-col md:flex-row md:space-x-6">
+    <!-- Sidebar -->
+    <aside class="w-full md:w-64 mb-10 md:mb-0 bg-white border border-gray-200 rounded-lg p-6 shadow-md flex flex-col">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold text-gray-900">
+                Filter Phones
+            </h3>
             <a class="text-sm text-[#2563eb] hover:underline whitespace-nowrap" href="#">
                 View All
             </a>
         </div>
-    </div>
-</section>
-<!-- Products Section -->
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        <!-- Price Filter -->
+        <div class="mb-6">
+            <label class="block text-sm font-semibold mb-2 text-gray-700" for="price-range">
+                Price Range
+            </label>
+            <select class="w-full border border-gray-300 rounded px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500" id="price-range" name="price-range">
+                <option value="">
+                    Select Price
+                </option>
+                <option value="under-500">
+                    Under $500
+                </option>
+                <option value="500-1000">
+                    $500 - $1000
+                </option>
+                <option value="1000-1500">
+                    $1000 - $1500
+                </option>
+                <option value="1500-plus">
+                    $1500+
+                </option>
+            </select>
+        </div>
+        <!-- Brand Filter -->
+        <div class="mb-6">
+            <label class="block text-sm font-semibold mb-2 text-gray-700">
+                Brand
+            </label>
+            <div class="flex flex-col space-y-2 text-xs text-gray-700">
+                <label class="inline-flex items-center">
+                    <input class="form-checkbox" type="checkbox" value="Samsung"/>
+                    <span class="ml-2">
+        Samsung
+       </span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input class="form-checkbox" type="checkbox" value="Apple"/>
+                    <span class="ml-2">
+        Apple
+       </span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input class="form-checkbox" type="checkbox" value="Redmi"/>
+                    <span class="ml-2">
+        Redmi
+       </span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input class="form-checkbox" type="checkbox" value="OnePlus"/>
+                    <span class="ml-2">
+        OnePlus
+       </span>
+                </label>
+            </div>
+        </div>
+        <!-- Other filters can be added similarly -->
+        <button class="w-full bg-[#2563eb] text-white text-xs font-semibold py-2 rounded hover:bg-[#1e40af] mt-auto">
+            Apply Filters
+        </button>
+    </aside>
+    <!-- Products grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 flex-1">
         <!-- Product 1 -->
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
             <img alt="Front view of Galaxy X Pro smartphone with colorful app icons on screen" class="w-full object-contain" height="250" src="https://storage.googleapis.com/a1aa/image/e72cf40c-a28d-43e4-c773-8026180fb5a0.jpg" width="250"/>

@@ -17,85 +17,7 @@
 </head>
 <body class="bg-[#f8fafc] text-[#1e293b]">
 <!-- Header -->
-<header class="fixed top-0 left-0 w-full bg-white shadow-md z-50">
-    <div class="container mx-auto flex items-center justify-between px-6 py-4 max-w-7xl">
-        <a class="flex items-center space-x-2" href="#">
-            <img alt="Company logo, stylized phone icon in blue and white" class="w-10 h-10" height="40" src="https://storage.googleapis.com/a1aa/image/3b8cf454-20ca-4227-3813-fb32e614492d.jpg" width="40"/>
-            <span class="text-2xl font-bold text-blue-600">
-      PhoneStore
-     </span>
-        </a>
-        <nav class="hidden md:flex space-x-8 font-semibold text-gray-700 text-sm uppercase tracking-wide">
-            <a class="hover:text-blue-600 transition" href="#">
-                Home
-            </a>
-            <a class="hover:text-blue-600 transition" href="#products">
-                Products
-            </a>
-            <a class="hover:text-blue-600 transition" href="#about">
-                About
-            </a>
-            <a class="hover:text-blue-600 transition" href="#services">
-                Services
-            </a>
-            <a class="hover:text-blue-600 transition" href="#news">
-                News
-            </a>
-            <a class="hover:text-blue-600 transition" href="#contact">
-                Contact
-            </a>
-        </nav>
-        <div class="hidden md:flex items-center space-x-6">
-            <a class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition" href="tel:+18001234567">
-                <i class="fas fa-phone-alt">
-                </i>
-                <span>
-       +1 234 567 890
-      </span>
-            </a>
-            <a class="bg-blue-600 text-white px-5 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="#contact">
-                Sign in
-            </a>
-            <a class="bg-green-600 text-white px-5 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="#contact">
-                Sign up
-            </a>
-        </div>
-        <button aria-label="Open menu" class="md:hidden text-gray-700 focus:outline-none" id="mobile-menu-button">
-            <i class="fas fa-bars fa-lg">
-            </i>
-        </button>
-    </div>
-    <nav class="md:hidden bg-white shadow-md hidden flex-col space-y-4 px-6 py-6" id="mobile-menu">
-        <a class="block font-semibold text-gray-700 hover:text-blue-600 transition uppercase tracking-wide text-sm" href="#">
-            Home
-        </a>
-        <a class="block font-semibold text-gray-700 hover:text-blue-600 transition uppercase tracking-wide text-sm" href="#products">
-            Products
-        </a>
-        <a class="block font-semibold text-gray-700 hover:text-blue-600 transition uppercase tracking-wide text-sm" href="#about">
-            About
-        </a>
-        <a class="block font-semibold text-gray-700 hover:text-blue-600 transition uppercase tracking-wide text-sm" href="#services">
-            Services
-        </a>
-        <a class="block font-semibold text-gray-700 hover:text-blue-600 transition uppercase tracking-wide text-sm" href="#news">
-            News
-        </a>
-        <a class="block font-semibold text-gray-700 hover:text-blue-600 transition uppercase tracking-wide text-sm" href="#contact">
-            Contact
-        </a>
-        <a class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition" href="tel:+18001234567">
-            <i class="fas fa-phone-alt">
-            </i>
-            <span>
-      +1 800 123 4567
-     </span>
-        </a>
-        <a class="bg-blue-600 text-white px-5 py-2 rounded-md font-semibold hover:bg-blue-700 transition text-center" href="#contact">
-            Order Now
-        </a>
-    </nav>
-</header>
+@include('client.header')
 <!-- Hero background bar -->
 <div class="w-full h-36 bg-gradient-to-r from-[#3B82F6] to-[#60A5FA]">
 </div>
@@ -128,6 +50,7 @@
                             <span>
          6.7-inch OLED Super Retina XDR display
         </span>
+
                         </li>
                         <li class="flex items-center">
                             <i class="fas fa-check-circle text-[#2563EB] mr-3">
@@ -159,11 +82,22 @@
                         </li>
                     </ul>
                 </div>
-                <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-6">
-      <span class="text-2xl font-extrabold text-gray-900 mb-4 sm:mb-0">
+                <div class="mt-6 flex items-center justify-center md:justify-start space-x-6">
+      <span class="font-extrabold text-lg">
        $1099
       </span>
-                    <button class="bg-[#2563EB] text-white text-sm font-semibold px-6 py-3 rounded-md hover:bg-[#1e4bb8] transition w-full sm:w-auto">
+                    <div class="flex items-center border border-gray-300 rounded">
+                        <button aria-label="Decrease quantity" class="px-3 py-2 text-gray-600 hover:text-gray-900 focus:outline-none" id="decreaseQty" type="button">
+                            <i class="fas fa-minus">
+                            </i>
+                        </button>
+                        <input aria-label="Quantity" class="w-16 text-center border-l border-r border-gray-300 focus:outline-none" id="quantityInput" max="99" min="1" type="number" value="1"/>
+                        <button aria-label="Increase quantity" class="px-3 py-2 text-gray-600 hover:text-gray-900 focus:outline-none" id="increaseQty" type="button">
+                            <i class="fas fa-plus">
+                            </i>
+                        </button>
+                    </div>
+                    <button class="bg-[#2563eb] text-white font-semibold px-5 py-2 rounded hover:bg-[#1e40af]">
                         Buy Now
                     </button>
                 </div>
@@ -314,31 +248,7 @@
     </section>
 </section>
 <!-- Footer -->
-<footer class="bg-blue-600 text-white py-10">
-    <div class="container mx-auto px-6 max-w-7xl flex flex-col md:flex-row justify-between items-center">
-        <p class="mb-4 md:mb-0">
-            © 2024 PhoneStore. All rights reserved.
-        </p>
-        <div class="flex space-x-6 text-xl">
-            <a aria-label="Facebook" class="hover:text-gray-300 transition" href="#">
-                <i class="fab fa-facebook-f">
-                </i>
-            </a>
-            <a aria-label="Twitter" class="hover:text-gray-300 transition" href="#">
-                <i class="fab fa-twitter">
-                </i>
-            </a>
-            <a aria-label="Instagram" class="hover:text-gray-300 transition" href="#">
-                <i class="fab fa-instagram">
-                </i>
-            </a>
-            <a aria-label="LinkedIn" class="hover:text-gray-300 transition" href="#">
-                <i class="fab fa-linkedin-in">
-                </i>
-            </a>
-        </div>
-    </div>
-</footer>
+@include('client.footer')
 
 </body>
 </html>
