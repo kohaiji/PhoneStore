@@ -7,10 +7,10 @@
      </span>
         </a>
         <nav class="hidden md:flex space-x-8 font-semibold text-gray-700 text-sm uppercase tracking-wide">
-            <a class="hover:text-blue-600 transition" href="#">
+            <a class="hover:text-blue-600 transition" href="/ClientIndex">
                 Home
             </a>
-            <a class="hover:text-blue-600 transition" href="#products">
+            <a class="hover:text-blue-600 transition" href="/shop">
                 Products
             </a>
             <a class="hover:text-blue-600 transition" href="#about">

@@ -39,6 +39,7 @@
                 <div>
                     <h1 class="text-3xl font-extrabold text-[#2563EB] mb-4">
                         iPhone Ultra
+{{--                        {{dd($product)}}--}}
                     </h1>
                     <p class="text-gray-700 text-base mb-6 leading-relaxed">
                         The new iPhone Ultra offers incredible camera quality and smooth user experience. Featuring a stunning OLED display, powerful A15 Bionic chip, and advanced dual-camera system, it is designed to deliver the best smartphone experience.

@@ -30,7 +30,7 @@
                 deals.
             </p>
             <div class="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
-                <a class="bg-white text-blue-600 font-semibold px-8 py-3 rounded-md shadow-md hover:bg-gray-100 transition" href="#products">
+                <a class="bg-white text-blue-600 font-semibold px-8 py-3 rounded-md shadow-md hover:bg-gray-100 transition" href="/shop">
                     Shop Now
                 </a>
                 <a class="border border-white text-white font-semibold px-8 py-3 rounded-md hover:bg-white hover:text-blue-600 transition" href="#contact">
@@ -46,22 +46,22 @@
 <!-- Products Section -->
 <section aria-label="Smartphone products available for sale" class="container mx-auto px-6 py-20 max-w-7xl" id="products">
     <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">
-        Our Products
+        Featured Products
     </h2>
     <div class="view-all-container" style="text-align: right; margin-top: -24px;margin-bottom: 20px; ">
-        <a href="/all-products" class="view-all-button" style="font-size: 1.125rem; font-weight: 600; color: #3b82f6; text-decoration: underline; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transition: color 0.3s ease;">View All</a>
+        <a href="/shop" class="view-all-button" style="font-size: 1.125rem; font-weight: 600; color: #3b82f6; text-decoration: underline; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transition: color 0.3s ease;">View All</a>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+        @foreach($products as $obj)
         <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition flex flex-col">
-            <img alt="Smartphone model 1 with black body and large screen showing colorful app icons" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/aa88dfbe-ab80-4fca-db94-141b7c08ed91.jpg" width="400"/>
+            <a href="/product-details/{{$obj->id}}"><img alt="{{$obj->product_name}}" class="w-full h-48 object-cover" height="300" src="{{ $obj->image_url ? '/image_product/' . $obj->image_url : 'https://storage.googleapis.com/a1aa/image/aa88dfbe-ab80-4fca-db94-141b7c08ed91.jpg' }}" width="400"/></a>
             <div class="p-6 flex flex-col flex-grow">
-                <h3 class="text-xl font-semibold mb-2 text-blue-600">
-                    Galaxy X Pro
-                </h3>
+                <a class="text-xl font-semibold mb-2 text-blue-600" href="/product-details/{{$obj->id}}">
+                    {{$obj->product_name}}
+                </a>
                 <p class="text-gray-600 flex-grow">
-                    Experience the power of the latest Galaxy X Pro with stunning
-                    display and fast performance.
+                    {{$obj->description}}
                 </p>
                 <div class="mt-4 flex items-center justify-between">
        <span class="text-lg font-bold text-gray-900">
@@ -73,146 +73,147 @@
                 </div>
             </div>
         </article>
-        <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition flex flex-col">
-            <img alt="Smartphone model 2 with white body and edge-to-edge screen displaying colorful wallpaper" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/3a4fcd2b-f173-4832-62ee-224585cf5397.jpg" width="400"/>
-            <div class="p-6 flex flex-col flex-grow">
-                <h3 class="text-xl font-semibold mb-2 text-blue-600">
-                    iPhone Ultra
-                </h3>
-                <p class="text-gray-600 flex-grow">
-                    The new iPhone Ultra offers incredible camera quality and smooth
-                    user experience.
-                </p>
-                <div class="mt-4 flex items-center justify-between">
-       <span class="text-lg font-bold text-gray-900">
-        $1099
-       </span>
-                    <a class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="#contact">
-                        Buy Now
-                    </a>
-                </div>
-            </div>
-        </article>
-        <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition flex flex-col">
-            <img alt="Smartphone model 2 with white body and edge-to-edge screen displaying colorful wallpaper" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/3a4fcd2b-f173-4832-62ee-224585cf5397.jpg" width="400"/>
-            <div class="p-6 flex flex-col flex-grow">
-                <h3 class="text-xl font-semibold mb-2 text-blue-600">
-                    iPhone Ultra
-                </h3>
-                <p class="text-gray-600 flex-grow">
-                    The new iPhone Ultra offers incredible camera quality and smooth
-                    user experience.
-                </p>
-                <div class="mt-4 flex items-center justify-between">
-       <span class="text-lg font-bold text-gray-900">
-        $1099
-       </span>
-                    <a class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="#contact">
-                        Buy Now
-                    </a>
-                </div>
-            </div>
-        </article>
-        <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition flex flex-col">
-            <img alt="Smartphone model 2 with white body and edge-to-edge screen displaying colorful wallpaper" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/3a4fcd2b-f173-4832-62ee-224585cf5397.jpg" width="400"/>
-            <div class="p-6 flex flex-col flex-grow">
-                <h3 class="text-xl font-semibold mb-2 text-blue-600">
-                    iPhone Ultra
-                </h3>
-                <p class="text-gray-600 flex-grow">
-                    The new iPhone Ultra offers incredible camera quality and smooth
-                    user experience.
-                </p>
-                <div class="mt-4 flex items-center justify-between">
-       <span class="text-lg font-bold text-gray-900">
-        $1099
-       </span>
-                    <a class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="#contact">
-                        Buy Now
-                    </a>
-                </div>
-            </div>
-        </article>
-        <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition flex flex-col">
-            <img alt="Smartphone model 2 with white body and edge-to-edge screen displaying colorful wallpaper" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/3a4fcd2b-f173-4832-62ee-224585cf5397.jpg" width="400"/>
-            <div class="p-6 flex flex-col flex-grow">
-                <h3 class="text-xl font-semibold mb-2 text-blue-600">
-                    iPhone Ultra
-                </h3>
-                <p class="text-gray-600 flex-grow">
-                    The new iPhone Ultra offers incredible camera quality and smooth
-                    user experience.
-                </p>
-                <div class="mt-4 flex items-center justify-between">
-       <span class="text-lg font-bold text-gray-900">
-        $1099
-       </span>
-                    <a class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="#contact">
-                        Buy Now
-                    </a>
-                </div>
-            </div>
-        </article>
-        <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition flex flex-col">
-            <img alt="Smartphone model 2 with white body and edge-to-edge screen displaying colorful wallpaper" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/3a4fcd2b-f173-4832-62ee-224585cf5397.jpg" width="400"/>
-            <div class="p-6 flex flex-col flex-grow">
-                <h3 class="text-xl font-semibold mb-2 text-blue-600">
-                    iPhone Ultra
-                </h3>
-                <p class="text-gray-600 flex-grow">
-                    The new iPhone Ultra offers incredible camera quality and smooth
-                    user experience.
-                </p>
-                <div class="mt-4 flex items-center justify-between">
-       <span class="text-lg font-bold text-gray-900">
-        $1099
-       </span>
-                    <a class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="#contact">
-                        Buy Now
-                    </a>
-                </div>
-            </div>
-        </article>
-        <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition flex flex-col">
-            <img alt="Smartphone model 3 with blue body and curved screen showing app icons" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/e8d5ecba-2be0-40f6-e5c5-ebfa350c003a.jpg" width="400"/>
-            <div class="p-6 flex flex-col flex-grow">
-                <h3 class="text-xl font-semibold mb-2 text-blue-600">
-                    Pixel Nova
-                </h3>
-                <p class="text-gray-600 flex-grow">
-                    Pixel Nova delivers pure Android experience with excellent camera
-                    and battery life.
-                </p>
-                <div class="mt-4 flex items-center justify-between">
-       <span class="text-lg font-bold text-gray-900">
-        $799
-       </span>
-                    <a class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="#contact">
-                        Buy Now
-                    </a>
-                </div>
-            </div>
-        </article>
-        <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition flex flex-col">
-            <img alt="Smartphone model 4 with red body and large screen displaying colorful wallpaper" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/1942aee6-08c2-4798-9f47-87061f639b52.jpg" width="400"/>
-            <div class="p-6 flex flex-col flex-grow">
-                <h3 class="text-xl font-semibold mb-2 text-blue-600">
-                    OnePlus Flash
-                </h3>
-                <p class="text-gray-600 flex-grow">
-                    OnePlus Flash offers blazing fast charging and smooth performance
-                    at a great price.
-                </p>
-                <div class="mt-4 flex items-center justify-between">
-       <span class="text-lg font-bold text-gray-900">
-        $699
-       </span>
-                    <a class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="#contact">
-                        Buy Now
-                    </a>
-                </div>
-            </div>
-        </article>
+        @endforeach
+{{--        <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition flex flex-col">--}}
+{{--            <img alt="Smartphone model 2 with white body and edge-to-edge screen displaying colorful wallpaper" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/3a4fcd2b-f173-4832-62ee-224585cf5397.jpg" width="400"/>--}}
+{{--            <div class="p-6 flex flex-col flex-grow">--}}
+{{--                <h3 class="text-xl font-semibold mb-2 text-blue-600">--}}
+{{--                    iPhone Ultra--}}
+{{--                </h3>--}}
+{{--                <p class="text-gray-600 flex-grow">--}}
+{{--                    The new iPhone Ultra offers incredible camera quality and smooth--}}
+{{--                    user experience.--}}
+{{--                </p>--}}
+{{--                <div class="mt-4 flex items-center justify-between">--}}
+{{--       <span class="text-lg font-bold text-gray-900">--}}
+{{--        $1099--}}
+{{--       </span>--}}
+{{--                    <a class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="#contact">--}}
+{{--                        Buy Now--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </article>--}}
+{{--        <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition flex flex-col">--}}
+{{--            <img alt="Smartphone model 2 with white body and edge-to-edge screen displaying colorful wallpaper" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/3a4fcd2b-f173-4832-62ee-224585cf5397.jpg" width="400"/>--}}
+{{--            <div class="p-6 flex flex-col flex-grow">--}}
+{{--                <h3 class="text-xl font-semibold mb-2 text-blue-600">--}}
+{{--                    iPhone Ultra--}}
+{{--                </h3>--}}
+{{--                <p class="text-gray-600 flex-grow">--}}
+{{--                    The new iPhone Ultra offers incredible camera quality and smooth--}}
+{{--                    user experience.--}}
+{{--                </p>--}}
+{{--                <div class="mt-4 flex items-center justify-between">--}}
+{{--       <span class="text-lg font-bold text-gray-900">--}}
+{{--        $1099--}}
+{{--       </span>--}}
+{{--                    <a class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="#contact">--}}
+{{--                        Buy Now--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </article>--}}
+{{--        <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition flex flex-col">--}}
+{{--            <img alt="Smartphone model 2 with white body and edge-to-edge screen displaying colorful wallpaper" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/3a4fcd2b-f173-4832-62ee-224585cf5397.jpg" width="400"/>--}}
+{{--            <div class="p-6 flex flex-col flex-grow">--}}
+{{--                <h3 class="text-xl font-semibold mb-2 text-blue-600">--}}
+{{--                    iPhone Ultra--}}
+{{--                </h3>--}}
+{{--                <p class="text-gray-600 flex-grow">--}}
+{{--                    The new iPhone Ultra offers incredible camera quality and smooth--}}
+{{--                    user experience.--}}
+{{--                </p>--}}
+{{--                <div class="mt-4 flex items-center justify-between">--}}
+{{--       <span class="text-lg font-bold text-gray-900">--}}
+{{--        $1099--}}
+{{--       </span>--}}
+{{--                    <a class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="#contact">--}}
+{{--                        Buy Now--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </article>--}}
+{{--        <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition flex flex-col">--}}
+{{--            <img alt="Smartphone model 2 with white body and edge-to-edge screen displaying colorful wallpaper" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/3a4fcd2b-f173-4832-62ee-224585cf5397.jpg" width="400"/>--}}
+{{--            <div class="p-6 flex flex-col flex-grow">--}}
+{{--                <h3 class="text-xl font-semibold mb-2 text-blue-600">--}}
+{{--                    iPhone Ultra--}}
+{{--                </h3>--}}
+{{--                <p class="text-gray-600 flex-grow">--}}
+{{--                    The new iPhone Ultra offers incredible camera quality and smooth--}}
+{{--                    user experience.--}}
+{{--                </p>--}}
+{{--                <div class="mt-4 flex items-center justify-between">--}}
+{{--       <span class="text-lg font-bold text-gray-900">--}}
+{{--        $1099--}}
+{{--       </span>--}}
+{{--                    <a class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="#contact">--}}
+{{--                        Buy Now--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </article>--}}
+{{--        <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition flex flex-col">--}}
+{{--            <img alt="Smartphone model 2 with white body and edge-to-edge screen displaying colorful wallpaper" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/3a4fcd2b-f173-4832-62ee-224585cf5397.jpg" width="400"/>--}}
+{{--            <div class="p-6 flex flex-col flex-grow">--}}
+{{--                <h3 class="text-xl font-semibold mb-2 text-blue-600">--}}
+{{--                    iPhone Ultra--}}
+{{--                </h3>--}}
+{{--                <p class="text-gray-600 flex-grow">--}}
+{{--                    The new iPhone Ultra offers incredible camera quality and smooth--}}
+{{--                    user experience.--}}
+{{--                </p>--}}
+{{--                <div class="mt-4 flex items-center justify-between">--}}
+{{--       <span class="text-lg font-bold text-gray-900">--}}
+{{--        $1099--}}
+{{--       </span>--}}
+{{--                    <a class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="#contact">--}}
+{{--                        Buy Now--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </article>--}}
+{{--        <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition flex flex-col">--}}
+{{--            <img alt="Smartphone model 3 with blue body and curved screen showing app icons" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/e8d5ecba-2be0-40f6-e5c5-ebfa350c003a.jpg" width="400"/>--}}
+{{--            <div class="p-6 flex flex-col flex-grow">--}}
+{{--                <h3 class="text-xl font-semibold mb-2 text-blue-600">--}}
+{{--                    Pixel Nova--}}
+{{--                </h3>--}}
+{{--                <p class="text-gray-600 flex-grow">--}}
+{{--                    Pixel Nova delivers pure Android experience with excellent camera--}}
+{{--                    and battery life.--}}
+{{--                </p>--}}
+{{--                <div class="mt-4 flex items-center justify-between">--}}
+{{--       <span class="text-lg font-bold text-gray-900">--}}
+{{--        $799--}}
+{{--       </span>--}}
+{{--                    <a class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="#contact">--}}
+{{--                        Buy Now--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </article>--}}
+{{--        <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition flex flex-col">--}}
+{{--            <img alt="Smartphone model 4 with red body and large screen displaying colorful wallpaper" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/1942aee6-08c2-4798-9f47-87061f639b52.jpg" width="400"/>--}}
+{{--            <div class="p-6 flex flex-col flex-grow">--}}
+{{--                <h3 class="text-xl font-semibold mb-2 text-blue-600">--}}
+{{--                    OnePlus Flash--}}
+{{--                </h3>--}}
+{{--                <p class="text-gray-600 flex-grow">--}}
+{{--                    OnePlus Flash offers blazing fast charging and smooth performance--}}
+{{--                    at a great price.--}}
+{{--                </p>--}}
+{{--                <div class="mt-4 flex items-center justify-between">--}}
+{{--       <span class="text-lg font-bold text-gray-900">--}}
+{{--        $699--}}
+{{--       </span>--}}
+{{--                    <a class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="#contact">--}}
+{{--                        Buy Now--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </article>--}}
     </div>
 </section>
 <!-- About Section -->

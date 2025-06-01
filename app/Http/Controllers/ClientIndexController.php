@@ -14,8 +14,22 @@ class ClientIndexController extends Controller
     {
         $cart = Session::get("cart");
 
-        $products = DB::table("products")
+        $products = DB::table('products')
+            ->leftJoin(DB::raw('
+            (
+                SELECT product_id, image_url
+                FROM product_images
+                WHERE id IN (
+                    SELECT MIN(id)
+                    FROM product_images
+                    GROUP BY product_id
+                )
+            ) AS pi
+        '), 'products.id', '=', 'pi.product_id')
+            ->select('products.*', 'pi.image_url')
+            ->limit(12)
             ->get();
+
         return view("client/ClientIndex",[
             "products" => $products,
             "cart" => $cart
@@ -70,24 +84,94 @@ class ClientIndexController extends Controller
     public function productDetails($id) {
         $cart = Session::get("cart");
 
-        $products = DB::table("products")
-            ->where("product.id",$id)
-            ->join("category", "product.category_id", "=", "category.id")
-            ->join("publisher", "product.publisher_id", "=", "publisher.id")
-            ->join("author", "product.author_id", "=", "author.id")
-            ->select("product.*", "category.category_name", "publisher.publisher_name", "author.author_name")
-            ->first();
+        $products = DB::table('products')
+            ->leftJoin('product_variants', 'products.id', '=', 'product_variants.product_id')
+            ->leftJoin('brands', 'products.brand_id', '=', 'brands.id')
+            ->select(
+                'products.*',
+                'brands.brand_name',
+                'product_variants.id as variant_id',
+                'product_variants.color',
+                'product_variants.storage',
+                'product_variants.price_adjustment',
+                'product_variants.stock'
+            )
+            ->where('products.id', $id)
+            ->get();
+
+        if ($products->isEmpty()) {
+            abort(404, 'Product not found');
+        }
+
+        // Tách thông tin sản phẩm và biến thể
+        $product = null;
+        $variants = [];
+
+        foreach ($products as $row) {
+            if (!$product) {
+                $product = (object)[
+                    'id' => $row->id,
+                    'product_name' => $row->product_name,
+                    'description' => $row->description,
+                    'price' => $row->price,
+                    'screen_size' => $row->screen_size,
+                    'resolution' => $row->resolution,
+                    'ram' => $row->ram,
+                    'battery_cap' => $row->battery_cap,
+                    'os' => $row->os,
+                    'chipset' => $row->chipset,
+                    'sim' => $row->sim,
+                    'camera' => $row->camera,
+                    'refresh_rate' => $row->refresh_rate,
+                    'release_date' => $row->release_date,
+                    'brand_name' => $row->brand_name
+                ];
+            }
+
+            if ($row->variant_id) {
+                $variants[] = (object)[
+                    'id' => $row->variant_id,
+                    'color' => $row->color,
+                    'storage' => $row->storage,
+                    'price_adjustment' => $row->price_adjustment,
+                    'stock' => $row->stock
+                ];
+            }
+        }
+
+        // Lấy tất cả ảnh của sản phẩm
+        $images = DB::table('product_images')
+            ->where('product_id', $id)
+            ->pluck('image_url');
+
 //        $products->quantity = $quantity;
 
 
-        $productRelated = DB::table("products")
-            ->where("id","!=", $id)
+        $productRelated = DB::table('products')
+            ->leftJoin(DB::raw('
+        (
+            SELECT product_id, image_url
+            FROM product_images
+            WHERE id IN (
+                SELECT MIN(id)
+                FROM product_images
+                GROUP BY product_id
+            )
+        ) AS pi
+    '), 'products.id', '=', 'pi.product_id')
+            ->select('products.*', 'pi.image_url')
+            ->where('products.id', '!=', $id) // loại trừ sản phẩm hiện tại nếu cần
+            ->inRandomOrder()
+            ->limit(4)
             ->get();
-        return view("client/product-details",[
 
+        return view("client/product-details",[
             "products" => $products,
+            "images" => $images,
+            'product' => $product,
             "productRelated" =>$productRelated,
-            "cart" => $cart
+            "cart" => $cart,
+            'variants' => $variants
 //            "quantity"=>$quantity
         ]);
     }
