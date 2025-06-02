@@ -38,18 +38,18 @@
             <div class="md:w-1/2 flex flex-col justify-between">
                 <div>
                     <h1 class="text-3xl font-extrabold text-[#2563EB] mb-4">
-                        iPhone Ultra
+                        {{$product->product_name}}
 {{--                        {{dd($product)}}--}}
                     </h1>
                     <p class="text-gray-700 text-base mb-6 leading-relaxed">
-                        The new iPhone Ultra offers incredible camera quality and smooth user experience. Featuring a stunning OLED display, powerful A15 Bionic chip, and advanced dual-camera system, it is designed to deliver the best smartphone experience.
+                        {{$product->description}}
                     </p>
                     <ul class="text-gray-700 space-y-3 mb-8">
                         <li class="flex items-center">
                             <i class="fas fa-check-circle text-[#2563EB] mr-3">
                             </i>
                             <span>
-         6.7-inch OLED Super Retina XDR display
+         Brand: {{$product->brand_name}}
         </span>
 
                         </li>
@@ -57,35 +57,70 @@
                             <i class="fas fa-check-circle text-[#2563EB] mr-3">
                             </i>
                             <span>
-         A15 Bionic chip with 6-core CPU
+         Screen Size: {{\Illuminate\Support\Str::endsWith($product->screen_size, ' inches') ? $product->screen_size : $product->screen_size . ' inches'}}
         </span>
                         </li>
                         <li class="flex items-center">
                             <i class="fas fa-check-circle text-[#2563EB] mr-3">
                             </i>
                             <span>
-         Dual 12MP camera system with Night mode
+         Resolution: {{\Illuminate\Support\Str::endsWith($product->resolution, ' pixels') ? $product->resolution : $product->resolution . ' pixels'}}
         </span>
                         </li>
                         <li class="flex items-center">
                             <i class="fas fa-check-circle text-[#2563EB] mr-3">
                             </i>
                             <span>
-         5G capable for faster downloads and streaming
+         Ram: {{\Illuminate\Support\Str::endsWith($product->ram, 'GB') ? $product->ram : $product->ram . ' GB'}}
         </span>
                         </li>
                         <li class="flex items-center">
                             <i class="fas fa-check-circle text-[#2563EB] mr-3">
                             </i>
                             <span>
-         Up to 20 hours video playback
+         Battery: {{\Illuminate\Support\Str::endsWith($product->battery_cap, ' mAh') ? $product->battery_cap : $product->battery_cap . ' mAh'}}
+        </span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-[#2563EB] mr-3">
+                            </i>
+                            <span>
+         Operating System: {{$product->os}}
+        </span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-[#2563EB] mr-3">
+                            </i>
+                            <span>
+         Chipset: {{$product->chipset}}
+        </span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-[#2563EB] mr-3">
+                            </i>
+                            <span>
+         Sim: {{$product->sim}}
+        </span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-[#2563EB] mr-3">
+                            </i>
+                            <span>
+         Camera: {{$product->camera}}
+        </span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-[#2563EB] mr-3">
+                            </i>
+                            <span>
+         Refresh Rate: {{\Illuminate\Support\Str::endsWith($product->refresh_rate, ' Hz') ? $product->refresh_rate : $product->refresh_rate . ' Hz'}}
         </span>
                         </li>
                     </ul>
                 </div>
                 <div class="mt-6 flex items-center justify-center md:justify-start space-x-6">
       <span class="font-extrabold text-lg">
-       $1099
+       Base Price: {{ number_format($product->price, 0, ',', ',') }}đ
       </span>
                     <div class="flex items-center border border-gray-300 rounded">
                         <button aria-label="Decrease quantity" class="px-3 py-2 text-gray-600 hover:text-gray-900 focus:outline-none" id="decreaseQty" type="button">

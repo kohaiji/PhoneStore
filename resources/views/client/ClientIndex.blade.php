@@ -65,9 +65,9 @@
                 </p>
                 <div class="mt-4 flex items-center justify-between">
        <span class="text-lg font-bold text-gray-900">
-        $899
+        {{ number_format($obj->price, 0, ',', ',') }}đ
        </span>
-                    <a class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="#contact">
+                    <a class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="/product-details/{{$obj->id}}">
                         Buy Now
                     </a>
                 </div>

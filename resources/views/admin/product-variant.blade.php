@@ -69,7 +69,8 @@
                         <th>Product Name</th>
                         <th>Color</th>
                         <th>Storage</th>
-                        <th>Price</th>
+                        <th>Additional Price
+                        </th>
                         <th>Stock</th>
                         <th class="text-center" colspan="2">ACTION</th>
                     </tr>
@@ -82,7 +83,7 @@
                             <td>{{$obj->product_name}}</td>
                             <td>{{$obj->color}}</td>
                             <td>{{$obj->storage}}</td>
-                            <td>{{$obj->price_adjustment}}</td>
+                            <td>{{ number_format($obj->price_adjustment, 0, ',', ',') }}đ</td>
                             <td>{{$obj->stock}}</td>
                             <td class="text-center">
                                 <a href="/admin/product-variant-edit/{{$obj->id}}" class="btn btn-outline-primary btn-sm">Edit</a>

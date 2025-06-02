@@ -78,7 +78,7 @@
                     <tr>
                         <td>{{$obj->id}}</td>
                         <td>{{$obj->product_name}}</td>
-                        <td>{{$obj->price}}</td>
+                        <td>{{ number_format($obj->price, 0, ',', ',') }}đ</td>
                         <td>{{$obj->brand_name}}</td>
                         <td class="text-center">
                             <a href="/admin/product-details/{{$obj->id}}" class="btn btn-outline-success btn-sm">Details</a>
