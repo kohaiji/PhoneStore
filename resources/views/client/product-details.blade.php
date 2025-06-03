@@ -26,20 +26,40 @@
     <div class="pt-24">
         <div class="bg-white rounded-lg shadow-lg p-8 flex flex-col md:flex-row gap-10">
             <!-- Product Images -->
-            <div class="md:w-1/2 flex flex-col space-y-4">
-                <img alt="iPhone Ultra front view with colorful wallpaper on light pink background" class="rounded-lg shadow-md object-contain w-full max-h-[400px]" src="https://storage.googleapis.com/a1aa/image/ff408632-80d6-4813-a1d4-b56d3a80488d.jpg"/>
-                <div class="flex space-x-4 overflow-x-auto">
-                    <img alt="iPhone Ultra side view with white background" class="w-20 h-20 rounded-lg border border-gray-200 cursor-pointer object-contain hover:ring-2 hover:ring-[#2563EB]" height="200" src="https://storage.googleapis.com/a1aa/image/dc8b5180-9b22-4332-21ab-0aa7ccddf34a.jpg" width="200"/>
-                    <img alt="iPhone Ultra back view with white background" class="w-20 h-20 rounded-lg border border-gray-200 cursor-pointer object-contain hover:ring-2 hover:ring-[#2563EB]" height="200" src="https://storage.googleapis.com/a1aa/image/31536188-2f94-4a6b-8ae7-e34cf014e079.jpg" width="200"/>
-                    <img alt="iPhone Ultra angled view with white background" class="w-20 h-20 rounded-lg border border-gray-200 cursor-pointer object-contain hover:ring-2 hover:ring-[#2563EB]" height="200" src="https://storage.googleapis.com/a1aa/image/5fa47fae-41d5-48e4-80f7-34b5b97cb0b5.jpg" width="200"/>
+                <div class="md:w-1/2 flex flex-col space-y-4">
+                    <img alt="iPhone Ultra front view with colorful wallpaper on light pink background"
+                         class="rounded-lg shadow-md object-contain w-full max-h-[400px]"
+                    @if(!empty($images[0]))
+                        src="{{'/image_product/' . $images[0]->image_url}}"
+                    @else
+                        src="https://storage.googleapis.com/a1aa/image/ff408632-80d6-4813-a1d4-b56d3a80488d.jpg"
+                    @endif
+                    />
+                    <div class="flex space-x-4 overflow-x-auto">
+                        <img alt="iPhone Ultra side view with white background"
+                             class="w-20 h-20 rounded-lg border border-gray-200 cursor-pointer object-contain hover:ring-2 hover:ring-[#2563EB]"
+                             height="200"
+                             src="https://storage.googleapis.com/a1aa/image/dc8b5180-9b22-4332-21ab-0aa7ccddf34a.jpg"
+                             width="200"/>
+                        <img alt="iPhone Ultra back view with white background"
+                             class="w-20 h-20 rounded-lg border border-gray-200 cursor-pointer object-contain hover:ring-2 hover:ring-[#2563EB]"
+                             height="200"
+                             src="https://storage.googleapis.com/a1aa/image/31536188-2f94-4a6b-8ae7-e34cf014e079.jpg"
+                             width="200"/>
+                        <img alt="iPhone Ultra angled view with white background"
+                             class="w-20 h-20 rounded-lg border border-gray-200 cursor-pointer object-contain hover:ring-2 hover:ring-[#2563EB]"
+                             height="200"
+                             src="https://storage.googleapis.com/a1aa/image/5fa47fae-41d5-48e4-80f7-34b5b97cb0b5.jpg"
+                             width="200"/>
+                    </div>
                 </div>
-            </div>
+
             <!-- Product Info -->
             <div class="md:w-1/2 flex flex-col justify-between">
                 <div>
                     <h1 class="text-3xl font-extrabold text-[#2563EB] mb-4">
                         {{$product->product_name}}
-{{--                        {{dd($product)}}--}}
+                        {{--                        {{dd($variants)}}--}}
                     </h1>
                     <p class="text-gray-700 text-base mb-6 leading-relaxed">
                         {{$product->description}}
@@ -123,12 +143,18 @@
        Base Price: {{ number_format($product->price, 0, ',', ',') }}đ
       </span>
                     <div class="flex items-center border border-gray-300 rounded">
-                        <button aria-label="Decrease quantity" class="px-3 py-2 text-gray-600 hover:text-gray-900 focus:outline-none" id="decreaseQty" type="button">
+                        <button aria-label="Decrease quantity"
+                                class="px-3 py-2 text-gray-600 hover:text-gray-900 focus:outline-none" id="decreaseQty"
+                                type="button">
                             <i class="fas fa-minus">
                             </i>
                         </button>
-                        <input aria-label="Quantity" class="w-16 text-center border-l border-r border-gray-300 focus:outline-none" id="quantityInput" max="99" min="1" type="number" value="1"/>
-                        <button aria-label="Increase quantity" class="px-3 py-2 text-gray-600 hover:text-gray-900 focus:outline-none" id="increaseQty" type="button">
+                        <input aria-label="Quantity"
+                               class="w-16 text-center border-l border-r border-gray-300 focus:outline-none"
+                               id="quantityInput" max="99" min="1" type="number" value="1"/>
+                        <button aria-label="Increase quantity"
+                                class="px-3 py-2 text-gray-600 hover:text-gray-900 focus:outline-none" id="increaseQty"
+                                type="button">
                             <i class="fas fa-plus">
                             </i>
                         </button>
@@ -161,7 +187,8 @@
        </span>
                 </div>
                 <p class="text-gray-700 text-sm leading-relaxed">
-                    Amazing phone with stunning display and excellent camera quality. Battery life lasts all day even with heavy use. Highly recommend!
+                    Amazing phone with stunning display and excellent camera quality. Battery life lasts all day even
+                    with heavy use. Highly recommend!
                 </p>
             </div>
             <!-- Review 2 -->
@@ -179,7 +206,8 @@
        </span>
                 </div>
                 <p class="text-gray-700 text-sm leading-relaxed">
-                    Smooth performance and very user friendly. The camera is fantastic for photos and videos. Worth every penny.
+                    Smooth performance and very user friendly. The camera is fantastic for photos and videos. Worth
+                    every penny.
                 </p>
             </div>
             <!-- Review 3 -->
@@ -208,78 +236,36 @@
             Related Products
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
-            <!-- Related Product 1 -->
-            <div class="bg-white rounded-lg shadow-md p-6 flex flex-col">
-                <img alt="Galaxy X Pro smartphone front view with colorful app icons on screen" class="w-full h-60 object-contain rounded-md mb-4" height="240" src="https://storage.googleapis.com/a1aa/image/59121169-f4f7-4d05-ac0f-053aa6faf971.jpg" width="160"/>
-                <a class="text-[#2563EB] font-semibold text-base mb-1 hover:underline" href="#">
-                    Galaxy X Pro
-                </a>
-                <p class="text-gray-600 text-sm mb-4 leading-relaxed">
-                    Experience the power of the latest Galaxy X Pro with stunning display and fast performance.
-                </p>
-                <div class="flex items-center justify-between mt-auto">
-       <span class="font-extrabold text-gray-900 text-sm">
-        $899
-       </span>
-                    <button class="bg-[#2563EB] text-white text-sm font-semibold px-4 py-2 rounded-md hover:bg-[#1e4bb8] transition">
-                        Buy Now
-                    </button>
+
+            @foreach($productRelated as $obj)
+                <!-- Related Product -->
+                <div class="bg-white rounded-lg shadow-md p-6 flex flex-col">
+                    <a href="/product-details/{{$obj->id}}">
+                        <img
+                            alt="OnePlus Flash smartphone front view with vibrant orange and purple wallpaper"
+                            class="w-full h-60 object-contain rounded-md mb-4"
+                            height="240"
+                            src="{{ $obj->image_url ? '/image_product/' . $obj->image_url : 'https://storage.googleapis.com/a1aa/image/aa88dfbe-ab80-4fca-db94-141b7c08ed91.jpg' }}"
+                            width="160"
+                        />
+                    </a>
+                    <a href="/product-details/{{$obj->id}}"
+                       class="text-[#2563EB] font-semibold text-base mb-1 hover:underline">
+                        {{$obj->product_name}}
+                    </a>
+                    <p class="text-gray-600 text-sm mb-4 leading-relaxed">
+                        {{$obj->description}}
+                    </p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <span class="font-extrabold text-gray-900 text-md">{{ number_format($obj->price, 0, ',', ',') }}đ</span>
+                        <a class="bg-[#2563EB] text-white text-sm font-semibold px-4 py-2 rounded-md hover:bg-[#1e4bb8] transition"
+                           href="/product-details/{{$obj->id}}">
+                            Buy Now
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <!-- Related Product 2 -->
-            <div class="bg-white rounded-lg shadow-md p-6 flex flex-col">
-                <img alt="Pixel Nova smartphone front view with colorful app icons on blue background" class="w-full h-60 object-contain rounded-md mb-4" height="240" src="https://storage.googleapis.com/a1aa/image/92b37009-fe97-4de3-2006-c577e2e17a85.jpg" width="160"/>
-                <a class="text-[#2563EB] font-semibold text-base mb-1 hover:underline" href="#">
-                    Pixel Nova
-                </a>
-                <p class="text-gray-600 text-sm mb-4 leading-relaxed">
-                    Pixel Nova delivers pure Android experience with excellent camera and battery life.
-                </p>
-                <div class="flex items-center justify-between mt-auto">
-       <span class="font-extrabold text-gray-900 text-sm">
-        $799
-       </span>
-                    <button class="bg-[#2563EB] text-white text-sm font-semibold px-4 py-2 rounded-md hover:bg-[#1e4bb8] transition">
-                        Buy Now
-                    </button>
-                </div>
-            </div>
-            <!-- Related Product 3 -->
-            <div class="bg-white rounded-lg shadow-md p-6 flex flex-col">
-                <img alt="OnePlus Flash smartphone front view with vibrant orange and purple wallpaper" class="w-full h-60 object-contain rounded-md mb-4" height="240" src="https://storage.googleapis.com/a1aa/image/edc33ced-1231-454e-468b-0641b1e04e59.jpg" width="160"/>
-                <a class="text-[#2563EB] font-semibold text-base mb-1 hover:underline" href="#">
-                    OnePlus Flash
-                </a>
-                <p class="text-gray-600 text-sm mb-4 leading-relaxed">
-                    OnePlus Flash offers blazing fast charging and smooth performance at a great price.
-                </p>
-                <div class="flex items-center justify-between mt-auto">
-       <span class="font-extrabold text-gray-900 text-sm">
-        $699
-       </span>
-                    <button class="bg-[#2563EB] text-white text-sm font-semibold px-4 py-2 rounded-md hover:bg-[#1e4bb8] transition">
-                        Buy Now
-                    </button>
-                </div>
-            </div>
-            <!-- Related Product 4 -->
-            <div class="bg-white rounded-lg shadow-md p-6 flex flex-col">
-                <img alt="iPhone Ultra smartphone front view on light pink background" class="w-full h-60 object-contain rounded-md mb-4" height="240" src="https://storage.googleapis.com/a1aa/image/ff408632-80d6-4813-a1d4-b56d3a80488d.jpg" width="160"/>
-                <a class="text-[#2563EB] font-semibold text-base mb-1 hover:underline" href="#">
-                    iPhone Ultra
-                </a>
-                <p class="text-gray-600 text-sm mb-4 leading-relaxed">
-                    The new iPhone Ultra offers incredible camera quality and smooth user experience.
-                </p>
-                <div class="flex items-center justify-between mt-auto">
-       <span class="font-extrabold text-gray-900 text-sm">
-        $1099
-       </span>
-                    <button class="bg-[#2563EB] text-white text-sm font-semibold px-4 py-2 rounded-md hover:bg-[#1e4bb8] transition">
-                        Buy Now
-                    </button>
-                </div>
-            </div>
+            @endforeach
+
         </div>
     </section>
 </section>

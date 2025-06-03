@@ -142,7 +142,8 @@ class ClientIndexController extends Controller
         // Lấy tất cả ảnh của sản phẩm
         $images = DB::table('product_images')
             ->where('product_id', $id)
-            ->pluck('image_url');
+            ->select('image_url')
+            ->get();
 
 //        $products->quantity = $quantity;
 
@@ -160,7 +161,7 @@ class ClientIndexController extends Controller
         ) AS pi
     '), 'products.id', '=', 'pi.product_id')
             ->select('products.*', 'pi.image_url')
-            ->where('products.id', '!=', $id) // loại trừ sản phẩm hiện tại nếu cần
+            ->where('products.id', '!=', $id) // loại trừ sản phẩm hiện tại
             ->inRandomOrder()
             ->limit(4)
             ->get();
@@ -184,27 +185,15 @@ class ClientIndexController extends Controller
     public function shop():View {
         $cart = Session::get("cart");
 
-        $category = DB::table("category")
-            ->get();
-        $publisher = DB::table("publisher")
-            ->get();
-        $author = DB::table("author")
-            ->get();
 
         $products = DB::table("products")
-            ->join("category", "product.category_id", "=", "category.id")
-            ->join("publisher", "product.publisher_id", "=", "publisher.id")
-            ->join("author", "product.author_id", "=", "author.id")
-            ->select("product.*", "category.category_name", "publisher.publisher_name", "author.author_name")
-            ->paginate(8);
+            ->select("products.*")
+            ->get();
 
 
         return view("client/shop", [
             "products" => $products,
             "cart" => $cart,
-            "category" => $category,
-            "publisher" => $publisher,
-            "author" => $author
         ]);
     }
 
