@@ -186,9 +186,20 @@ class ClientIndexController extends Controller
         $cart = Session::get("cart");
 
 
-        $products = DB::table("products")
-            ->select("products.*")
-            ->get();
+        $products = DB::table('products')
+            ->leftJoin(DB::raw('
+            (
+                SELECT product_id, image_url
+                FROM product_images
+                WHERE id IN (
+                    SELECT MIN(id)
+                    FROM product_images
+                    GROUP BY product_id
+                )
+            ) AS pi
+        '), 'products.id', '=', 'pi.product_id')
+            ->select('products.*', 'pi.image_url')
+            ->paginate(8);
 
 
         return view("client/shop", [

@@ -41,7 +41,7 @@
     <aside class="w-full md:w-64 mb-10 md:mb-0 bg-white border border-gray-200 rounded-lg p-6 shadow-md flex flex-col">
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-lg font-semibold text-gray-900">
-                Filter Phones
+                Filter
             </h3>
             <a class="text-sm text-[#2563eb] hover:underline whitespace-nowrap" href="#">
                 View All
@@ -108,6 +108,7 @@
         </button>
     </aside>
     <!-- Products grid -->
+    @foreach($products as $obj)
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 flex-1">
         <!-- Product 1 -->
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
@@ -129,147 +130,9 @@
                 </div>
             </div>
         </div>
-        <!-- Product 2 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <img alt="Front view of iPhone Ultra smartphone with blue and purple wallpaper on screen" class="w-full object-contain bg-[#fef0f5]" height="250" src="https://storage.googleapis.com/a1aa/image/3b2443aa-377c-40b7-cdb8-2be60f2a9b51.jpg" width="250"/>
-            <div class="p-4">
-                <h3 class="text-[#2563eb] font-semibold text-sm mb-1">
-                    iPhone Ultra
-                </h3>
-                <p class="text-gray-600 text-xs mb-4 leading-tight">
-                    The new iPhone Ultra offers incredible camera quality and smooth user experience.
-                </p>
-                <div class="flex items-center justify-between">
-       <span class="font-bold text-xs">
-        $1099
-       </span>
-                    <button class="bg-[#2563eb] text-white text-xs font-semibold px-3 py-2 rounded hover:bg-[#1e40af]">
-                        Buy Now
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- Product 3 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <img alt="Front view of iPhone Ultra smartphone with blue and purple wallpaper on screen" class="w-full object-contain bg-[#fef0f5]" height="250" src="https://storage.googleapis.com/a1aa/image/3b2443aa-377c-40b7-cdb8-2be60f2a9b51.jpg" width="250"/>
-            <div class="p-4">
-                <h3 class="text-[#2563eb] font-semibold text-sm mb-1">
-                    iPhone Ultra
-                </h3>
-                <p class="text-gray-600 text-xs mb-4 leading-tight">
-                    The new iPhone Ultra offers incredible camera quality and smooth user experience.
-                </p>
-                <div class="flex items-center justify-between">
-       <span class="font-bold text-xs">
-        $1099
-       </span>
-                    <button class="bg-[#2563eb] text-white text-xs font-semibold px-3 py-2 rounded hover:bg-[#1e40af]">
-                        Buy Now
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- Product 4 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <img alt="Front view of iPhone Ultra smartphone with blue and purple wallpaper on screen" class="w-full object-contain bg-[#fef0f5]" height="250" src="https://storage.googleapis.com/a1aa/image/3b2443aa-377c-40b7-cdb8-2be60f2a9b51.jpg" width="250"/>
-            <div class="p-4">
-                <h3 class="text-[#2563eb] font-semibold text-sm mb-1">
-                    iPhone Ultra
-                </h3>
-                <p class="text-gray-600 text-xs mb-4 leading-tight">
-                    The new iPhone Ultra offers incredible camera quality and smooth user experience.
-                </p>
-                <div class="flex items-center justify-between">
-       <span class="font-bold text-xs">
-        $1099
-       </span>
-                    <button class="bg-[#2563eb] text-white text-xs font-semibold px-3 py-2 rounded hover:bg-[#1e40af]">
-                        Buy Now
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- Product 5 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <img alt="Front view of iPhone Ultra smartphone with blue and purple wallpaper on screen" class="w-full object-contain bg-[#fef0f5]" height="250" src="https://storage.googleapis.com/a1aa/image/3b2443aa-377c-40b7-cdb8-2be60f2a9b51.jpg" width="250"/>
-            <div class="p-4">
-                <h3 class="text-[#2563eb] font-semibold text-sm mb-1">
-                    iPhone Ultra
-                </h3>
-                <p class="text-gray-600 text-xs mb-4 leading-tight">
-                    The new iPhone Ultra offers incredible camera quality and smooth user experience.
-                </p>
-                <div class="flex items-center justify-between">
-       <span class="font-bold text-xs">
-        $1099
-       </span>
-                    <button class="bg-[#2563eb] text-white text-xs font-semibold px-3 py-2 rounded hover:bg-[#1e40af]">
-                        Buy Now
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- Product 6 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <img alt="Front view of iPhone Ultra smartphone with blue and purple wallpaper on screen" class="w-full object-contain bg-[#fef0f5]" height="250" src="https://storage.googleapis.com/a1aa/image/3b2443aa-377c-40b7-cdb8-2be60f2a9b51.jpg" width="250"/>
-            <div class="p-4">
-                <h3 class="text-[#2563eb] font-semibold text-sm mb-1">
-                    iPhone Ultra
-                </h3>
-                <p class="text-gray-600 text-xs mb-4 leading-tight">
-                    The new iPhone Ultra offers incredible camera quality and smooth user experience.
-                </p>
-                <div class="flex items-center justify-between">
-       <span class="font-bold text-xs">
-        $1099
-       </span>
-                    <button class="bg-[#2563eb] text-white text-xs font-semibold px-3 py-2 rounded hover:bg-[#1e40af]">
-                        Buy Now
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- Product 7 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <img alt="Front view of Samsung Galaxy S20 smartphone with colorful app icons on screen and dark blue background" class="w-full object-contain bg-[#0a2a5a]" height="250" src="https://storage.googleapis.com/a1aa/image/6c2d3190-1201-417a-8c2b-f466ebfe60b3.jpg" width="250"/>
-            <div class="p-4">
-                <h3 class="text-[#2563eb] font-semibold text-sm mb-1">
-                    Samsung Galaxy S20
-                </h3>
-                <p class="text-gray-600 text-xs mb-4 leading-tight">
-                    The Samsung Galaxy S20 features a stunning display and powerful performance.
-                </p>
-                <div class="flex items-center justify-between">
-       <span class="font-bold text-xs">
-        $999
-       </span>
-                    <button class="bg-[#2563eb] text-white text-xs font-semibold px-3 py-2 rounded hover:bg-[#1e40af]">
-                        Buy Now
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- Product 8 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <img alt="Front view of red smartphone with colorful abstract wallpaper on screen" class="w-full object-contain" height="250" src="https://storage.googleapis.com/a1aa/image/d237103d-f683-4572-357d-a97d138bfe70.jpg" width="250"/>
-            <div class="p-4">
-                <h3 class="text-[#2563eb] font-semibold text-sm mb-1">
-                    Red Smartphone
-                </h3>
-                <p class="text-gray-600 text-xs mb-4 leading-tight">
-                    A vibrant red smartphone with excellent display and camera features.
-                </p>
-                <div class="flex items-center justify-between">
-       <span class="font-bold text-xs">
-        $799
-       </span>
-                    <button class="bg-[#2563eb] text-white text-xs font-semibold px-3 py-2 rounded hover:bg-[#1e40af]">
-                        Buy Now
-                    </button>
-                </div>
-            </div>
-        </div>
+
     </div>
+    @endforeach
 </section>
 <!-- Footer -->
 @include('client.footer')
