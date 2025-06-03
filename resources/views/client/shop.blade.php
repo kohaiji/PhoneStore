@@ -109,28 +109,24 @@
     </aside>
     <!-- Products grid -->
     @foreach($products as $obj)
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 flex-1">
-        <!-- Product 1 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <img alt="Front view of Galaxy X Pro smartphone with colorful app icons on screen" class="w-full object-contain" height="250" src="https://storage.googleapis.com/a1aa/image/e72cf40c-a28d-43e4-c773-8026180fb5a0.jpg" width="250"/>
-            <div class="p-4">
-                <h3 class="text-[#2563eb] font-semibold text-sm mb-1">
-                    Galaxy X Pro
-                </h3>
-                <p class="text-gray-600 text-xs mb-4 leading-tight">
-                    Experience the power of the latest Galaxy X Pro with stunning display and fast performance.
-                </p>
-                <div class="flex items-center justify-between">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <img alt="Front view of Samsung Galaxy S20 smartphone with colorful app icons on screen and dark blue background" class="w-full object-contain bg-[#0a2a5a]" height="250" src="https://storage.googleapis.com/a1aa/image/6c2d3190-1201-417a-8c2b-f466ebfe60b3.jpg" width="250"/>
+        <div class="p-4">
+            <h3 class="text-[#2563eb] font-semibold text-sm mb-1">
+                Samsung Galaxy S20
+            </h3>
+            <p class="text-gray-600 text-xs mb-4 leading-tight">
+                The Samsung Galaxy S20 features a stunning display and powerful performance.
+            </p>
+            <div class="flex items-center justify-between">
        <span class="font-bold text-xs">
-        $899
+        $999
        </span>
-                    <button class="bg-[#2563eb] text-white text-xs font-semibold px-3 py-2 rounded hover:bg-[#1e40af]">
-                        Buy Now
-                    </button>
-                </div>
+                <button class="bg-[#2563eb] text-white text-xs font-semibold px-3 py-2 rounded hover:bg-[#1e40af]">
+                    Buy Now
+                </button>
             </div>
         </div>
-
     </div>
     @endforeach
 </section>
