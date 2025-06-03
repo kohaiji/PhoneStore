@@ -133,7 +133,7 @@
                             <i class="fas fa-check-circle text-[#2563EB] mr-3">
                             </i>
                             <span>
-         Refresh Rate: {{\Illuminate\Support\Str::endsWith($product->refresh_rate, ' Hz') ? $product->refresh_rate : $product->refresh_rate . ' Hz'}}
+         Refresh Rate: {{\Illuminate\Support\Str::endsWith($product->refresh_rate, 'Hz') ? $product->refresh_rate : $product->refresh_rate . 'Hz'}}
         </span>
                         </li>
                     </ul>

@@ -55,7 +55,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
         @foreach($products as $obj)
         <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition flex flex-col">
-            <a href="/product-details/{{$obj->id}}"><img alt="{{$obj->product_name}}" class="w-full h-48 object-cover" height="300" src="{{ $obj->image_url ? '/image_product/' . $obj->image_url : 'https://storage.googleapis.com/a1aa/image/aa88dfbe-ab80-4fca-db94-141b7c08ed91.jpg' }}" width="400"/></a>
+            <a href="/product-details/{{$obj->id}}"><img alt="{{$obj->product_name}}" class="w-full h-full object-cover" height="300" src="{{ $obj->image_url ? '/image_product/' . $obj->image_url : 'https://storage.googleapis.com/a1aa/image/aa88dfbe-ab80-4fca-db94-141b7c08ed91.jpg' }}" width="400"/></a>
             <div class="p-6 flex flex-col flex-grow">
                 <a class="text-xl font-semibold mb-2 text-blue-600" href="/product-details/{{$obj->id}}">
                     {{$obj->product_name}}
