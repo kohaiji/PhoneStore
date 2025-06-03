@@ -87,7 +87,7 @@
                             <a href="/admin/product-variant/{{$obj->id}}" class="btn btn-outline-info btn-sm">Variants</a>
                         </td>
                         <td class="text-center">
-                            <a href="/admin/product-images/{{$obj->id}}" class="btn btn-outline-warning btn-sm">Images</a>
+                            <a href="/admin/product-images/{{$obj->id}}?return_url={{ urlencode(request()->fullUrl()) }}" class="btn btn-outline-warning btn-sm">Images</a>
                         </td>
                         <td class="text-center">
                             <a href="/admin/product-edit/{{$obj->id}}" class="btn btn-outline-primary btn-sm">Edit</a>

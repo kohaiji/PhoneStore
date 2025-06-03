@@ -346,9 +346,7 @@ class AdminProductController extends Controller
             ->paginate(10);
 
         if (!$productId || $products->isEmpty()) {
-            return redirect("/admin/product-list")
-                ->with("no_image", true)
-                ->with("product_id", $id);
+            return redirect(request()->input('return_url'))->with('no_image', true)->with('product_id', $id);
         }
 
         return view("admin/product-images", [
