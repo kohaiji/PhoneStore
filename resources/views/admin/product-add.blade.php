@@ -144,6 +144,31 @@
 <script src="/assets/js/pages/dashboard.js"></script>
 
 <script src="/assets/js/main.js"></script>
+
+<script>
+    document.forms['form1'].addEventListener('submit', function (e) {
+        const price = document.forms['form1']['price'].value.trim();
+        const screenSize = document.forms['form1']['screenSize'].value.trim();
+        const batteryCap = document.forms['form1']['batteryCap'].value.trim();
+
+        let errorMsg = '';
+
+        if (price && isNaN(price)) {
+            errorMsg += 'Price must be a number.\n';
+        }
+        if (screenSize && isNaN(screenSize)) {
+            errorMsg += 'Screen Size must be a number.\n';
+        }
+        if (batteryCap && isNaN(batteryCap)) {
+            errorMsg += 'Battery Capacity must be a number.\n';
+        }
+
+        if (errorMsg) {
+            alert(errorMsg);
+            e.preventDefault(); // Chặn submit nếu có lỗi
+        }
+    });
+</script>
 </body>
 
 </html>

@@ -87,6 +87,28 @@
 <script src="/assets/js/pages/dashboard.js"></script>
 
 <script src="/assets/js/main.js"></script>
+
+<script>
+    document.forms['form1'].addEventListener('submit', function (e) {
+        const priceAdjustment = document.forms['form1']['priceAdjustment'].value.trim();
+        const stock = document.forms['form1']['stock'].value.trim();
+
+        let errorMsg = '';
+
+        if (priceAdjustment && isNaN(priceAdjustment)) {
+            errorMsg += 'Price Adjustment must be a number.\n';
+        }
+
+        if (stock && isNaN(stock)) {
+            errorMsg += 'Stock must be a number.\n';
+        }
+
+        if (errorMsg) {
+            alert(errorMsg);
+            e.preventDefault(); // Prevent form submission if there are errors
+        }
+    });
+</script>
 </body>
 
 </html>
