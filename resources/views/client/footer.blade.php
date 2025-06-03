@@ -1,4 +1,4 @@
-<footer class="bg-blue-600 text-white py-10">
+<footer class="bg-blue-600 text-white py-10 ">
     <div class="container mx-auto px-6 max-w-7xl flex flex-col md:flex-row justify-between items-center">
         <p class="mb-4 md:mb-0">
             © 2024 PhoneStore. All rights reserved.
