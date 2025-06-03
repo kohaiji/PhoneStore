@@ -3,7 +3,7 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <title>
-        PhoneStore - Cart DeTails
+        PhoneStore - Cart Details
     </title>
     <script src="https://cdn.tailwindcss.com">
     </script>
@@ -17,60 +17,7 @@
 </head>
 <body class="bg-white text-gray-900">
 <!-- Navbar -->
-<nav class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-    <div class="flex items-center space-x-2">
-        <div class="bg-[#0a1f3f] p-2 rounded-sm">
-            <img alt="PhoneStore logo icon with letter J on dark blue background" class="w-6 h-6" height="24" src="https://storage.googleapis.com/a1aa/image/b221a0ec-f660-49c9-4237-5ad994d32aec.jpg" width="24"/>
-        </div>
-        <span class="text-blue-600 font-extrabold text-lg select-none">
-     PhoneStore
-    </span>
-    </div>
-    <ul class="hidden md:flex space-x-8 text-xs font-semibold text-gray-700 tracking-wide">
-        <li>
-            <a class="hover:text-gray-900" href="#">
-                HOME
-            </a>
-        </li>
-        <li>
-            <a class="hover:text-gray-900" href="#">
-                PRODUCTS
-            </a>
-        </li>
-        <li>
-            <a class="hover:text-gray-900" href="#">
-                ABOUT
-            </a>
-        </li>
-        <li>
-            <a class="hover:text-gray-900" href="#">
-                SERVICES
-            </a>
-        </li>
-        <li>
-            <a class="hover:text-gray-900" href="#">
-                NEWS
-            </a>
-        </li>
-        <li>
-            <a class="hover:text-gray-900" href="#">
-                CONTACT
-            </a>
-        </li>
-    </ul>
-    <div class="hidden md:flex items-center space-x-4">
-        <div class="flex items-center space-x-2 text-gray-700 text-sm font-normal">
-            <i class="fas fa-phone-alt">
-            </i>
-            <span>
-      +1 234 567 890
-     </span>
-        </div>
-        <button class="bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-md hover:bg-blue-700 transition">
-            UserName
-        </button>
-    </div>
-</nav>
+@include("client.header")
 <!-- Cart Page Content -->
 <main class="max-w-7xl mx-auto px-6 py-16">
     <h1 class="text-2xl font-extrabold text-gray-900 mb-10 text-center">

@@ -51,10 +51,7 @@ class CartController extends Controller
 
     public function cart(Request $request) {
         $product = DB::table("products")
-            ->join("category", "product.category_id", "=", "category.id")
-            ->join("publisher", "product.publisher_id", "=", "publisher.id")
-            ->join("author", "product.author_id", "=", "author.id")
-            ->select("product.*", "category.category_name", "publisher.publisher_name", "author.author_name")
+            ->select("products.*")
             ->get();
 
         $cart = Session::get("cart");
