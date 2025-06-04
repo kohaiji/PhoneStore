@@ -285,7 +285,7 @@
             let currentValue = parseInt(quantityInput.value);
             quantityInput.value = currentValue + 1;
         });
-    </script>
+    </script>   
 </section>
 <!-- Footer -->
 @include('client.footer')
