@@ -27,7 +27,7 @@
 <!-- Search bar centered and bigger with button -->
 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
     <div class="flex justify-center">
-        <form class="flex w-full sm:w-3/4 md:w-1/2">
+        <form class="flex w-full sm:w-3/4 md:w-1/2" style="margin-top: 40px">
             <input aria-label="Search products" class="flex-grow px-4 py-3 border border-gray-300 rounded-l text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Search product..." type="search"/>
             <button class="bg-[#2563eb] text-white px-6 py-3 rounded-r text-sm font-semibold hover:bg-[#1e40af]" type="submit">
                 Search

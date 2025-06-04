@@ -35,22 +35,23 @@
                         src="https://storage.googleapis.com/a1aa/image/ff408632-80d6-4813-a1d4-b56d3a80488d.jpg"
                     @endif
                     />
-                    <div class="flex space-x-4 overflow-x-auto">
-                        <img alt="iPhone Ultra side view with white background"
-                             class="w-20 h-20 rounded-lg border border-gray-200 cursor-pointer object-contain hover:ring-2 hover:ring-[#2563EB]"
-                             height="200"
-                             src="https://storage.googleapis.com/a1aa/image/dc8b5180-9b22-4332-21ab-0aa7ccddf34a.jpg"
-                             width="200"/>
-                        <img alt="iPhone Ultra back view with white background"
-                             class="w-20 h-20 rounded-lg border border-gray-200 cursor-pointer object-contain hover:ring-2 hover:ring-[#2563EB]"
-                             height="200"
-                             src="https://storage.googleapis.com/a1aa/image/31536188-2f94-4a6b-8ae7-e34cf014e079.jpg"
-                             width="200"/>
-                        <img alt="iPhone Ultra angled view with white background"
-                             class="w-20 h-20 rounded-lg border border-gray-200 cursor-pointer object-contain hover:ring-2 hover:ring-[#2563EB]"
-                             height="200"
-                             src="https://storage.googleapis.com/a1aa/image/5fa47fae-41d5-48e4-80f7-34b5b97cb0b5.jpg"
-                             width="200"/>
+                    <!-- Variants and Capacity options combined -->
+                    <div class="mt-4 grid grid-cols-3 gap-4">
+                        <!-- Variant 1 -->
+                        <button class="border border-gray-200 rounded-md flex flex-col items-center p-2 hover:border-[#2563eb] focus:outline-none focus:ring-2 focus:ring-[#2563eb]">
+                            <img alt="Phone variant in black color front view" class="object-contain mb-1" height="60" src="https://storage.googleapis.com/a1aa/image/a0c1f88c-3b66-4959-eceb-2a429ad77398.jpg" width="40"/>
+                            <span class="text-xs text-gray-700">Black - 128GB</span>
+                        </button>
+                        <!-- Variant 2 -->
+                        <button class="border border-gray-200 rounded-md flex flex-col items-center p-2 hover:border-[#2563eb] focus:outline-none focus:ring-2 focus:ring-[#2563eb]">
+                            <img alt="Phone variant in white color back view" class="object-contain mb-1" height="60" src="https://storage.googleapis.com/a1aa/image/d5e81482-a21e-410b-558e-e748fc12b892.jpg" width="60"/>
+                            <span class="text-xs text-gray-700">White - 256GB</span>
+                        </button>
+                        <!-- Variant 3 -->
+                        <button class="border border-gray-200 rounded-md flex flex-col items-center p-2 hover:border-[#2563eb] focus:outline-none focus:ring-2 focus:ring-[#2563eb]">
+                            <img alt="Phone variant in silver color side view" class="object-contain mb-1" height="30" src="https://storage.googleapis.com/a1aa/image/537dc3b9-b135-404b-5f24-a0e9f4221232.jpg" width="60"/>
+                            <span class="text-xs text-gray-700">Silver - 512GB</span>
+                        </button>
                     </div>
                 </div>
 
@@ -144,7 +145,7 @@
       </span>
                     <div class="flex items-center border border-gray-300 rounded">
                         <button aria-label="Decrease quantity"
-                                class="px-3 py-2 text-gray-600 hover:text-gray-900 focus:outline-none" id="decreaseQty"
+                                class="px-3 py-2 text-gray-600 hover:text-gray-900 focus:outline-none" id="decreaseBtn"
                                 type="button">
                             <i class="fas fa-minus">
                             </i>
@@ -153,7 +154,7 @@
                                class="w-16 text-center border-l border-r border-gray-300 focus:outline-none"
                                id="quantityInput" max="99" min="1" type="number" value="1"/>
                         <button aria-label="Increase quantity"
-                                class="px-3 py-2 text-gray-600 hover:text-gray-900 focus:outline-none" id="increaseQty"
+                                class="px-3 py-2 text-gray-600 hover:text-gray-900 focus:outline-none" id="increaseBtn"
                                 type="button">
                             <i class="fas fa-plus">
                             </i>
@@ -268,6 +269,23 @@
 
         </div>
     </section>
+    <script>
+        const decreaseBtn = document.getElementById('decreaseBtn');
+        const increaseBtn = document.getElementById('increaseBtn');
+        const quantityInput = document.getElementById('quantityInput');
+
+        decreaseBtn.addEventListener('click', () => {
+            let currentValue = parseInt(quantityInput.value);
+            if (currentValue > 1) {
+                quantityInput.value = currentValue - 1;
+            }
+        });
+
+        increaseBtn.addEventListener('click', () => {
+            let currentValue = parseInt(quantityInput.value);
+            quantityInput.value = currentValue + 1;
+        });
+    </script>
 </section>
 <!-- Footer -->
 @include('client.footer')
