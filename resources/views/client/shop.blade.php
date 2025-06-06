@@ -132,6 +132,19 @@
 </section>
 <!-- Footer -->
 @include('client.footer')
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if (session('cart_empty'))
+    <script>
+        Swal.fire({
+            icon: 'info',
+            title: 'Giỏ hàng trống',
+            text: '{{ session('cart_empty') }}',
+            confirmButtonText: 'OK'
+        });
+    </script>
+@endif
+
 </body>
 </html>
 

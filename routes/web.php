@@ -80,7 +80,7 @@ Route::get('/cart', [CartController::class, "cart"])->name('cart');
 Route::middleware(['cart'])->group(function () {
 
 Route::post('/add-to-cart', [CartController::class, "addToCart"])->name('addToCart');
-Route::get('/cartRemove/{id}/{quantity}', [CartController::class, "cartRemove"]);
+Route::post('/cartRemove', [CartController::class, "cartRemove"])->name('cart.remove');
 Route::get('/cartRemoveAll', [CartController::class, "cartRemoveAll"]);
 Route::get('/cart/update/{type}/{id}/{quantity}', [CartController::class, "cartUpdate"]);
 Route::get('/checkout', [CartController::class, "checkout"]);

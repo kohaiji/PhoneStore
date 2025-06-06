@@ -76,16 +76,34 @@ class CartController extends Controller
     public function cart(Request $request) {
         $cart = Session::get("cart");
 
-        if($cart ==null) {
-            $cart = [];
+        if ($cart == null || empty($cart)) {
+            return redirect("/shop")->with('cart_empty', 'Bạn chưa có sản phẩm nào trong giỏ hàng, hãy đi mua hàng!');
         }
 
-        $total =0;
-        foreach ($cart as $item) {
+        $total = 0;
+        foreach ($cart as &$item) {
+            $product = DB::table('products')->where('id', $item['product_id'])->first();
+
+            if ($product) {
+                $item['product_name'] = $product->product_name;
+                $item['description'] = $product->description;
+
+                $image = DB::table('product_images')
+                    ->where('product_id', $item['product_id'])
+                    ->orderBy('id')
+                    ->first();
+
+                $item['image_url'] = $image ? $image->image_url : 'https://storage.googleapis.com/a1aa/image/6ab9284f-51a6-4771-eb33-47fa955ac262.jpg';
+            } else {
+                $item['product_name'] = "";
+                $item['description'] = "";
+                $item['image_url'] = 'https://storage.googleapis.com/a1aa/image/6ab9284f-51a6-4771-eb33-47fa955ac262.jpg';
+            }
+
             $total += $item['price'] * $item['quantity'];
         }
 
-        return view("client/showcart",[
+        return view("client/showcart", [
             'cart' => $cart,
             'total' => $total
         ]);
@@ -98,20 +116,27 @@ class CartController extends Controller
         return redirect('/cart');
     }
     public function cartRemove(Request $request) {
-        $productIdToRemove = $request->id;
+        $variantId = $request->input('variant_id');
+        $cart = Session::get('cart', []);
 
-        $cart = Session::get("cart");
+        // Tìm và xóa item có variant_id tương ứng
+        $cart = array_filter($cart, function($item) use ($variantId) {
+            return $item['variant_id'] != $variantId;
+        });
 
-        foreach ($cart as $key => $product) {
-            // Kiểm tra nếu id, quantity của sản phẩm trong mảng trùng với id, quantity sản phẩm cần xoá
-            if ($product->id == $productIdToRemove) {
-                unset($cart[$key]);
-                break;
-            }
+        // Cập nhật lại session
+        Session::put('cart', $cart);
+
+        // Tính toán lại tổng tiền
+        $total = 0;
+        foreach ($cart as $item) {
+            $total += $item['price'] * $item['quantity'];
         }
 
-        session(['cart' => $cart]);
-    return redirect("cart");
+        return response()->json([
+            'success' => true,
+            'total' => number_format($total, 0, ',', ',') . 'đ',
+        ]);
     }
 
 
