@@ -47,7 +47,7 @@
                                     data-stock="{{ $obj->stock }}">
                                 <span class="text-xs text-gray-700">{{ $obj->color }} - {{ $obj->storage }}</span>
                                 <span class="text-xs text-gray-700 font-bold">
-                                    Giá: {{ number_format($product->price + $obj->price_adjustment, 0, ',', ',') }}đ
+                                    Price: {{ number_format($product->price + $obj->price_adjustment, 0, ',', ',') }}đ
                                 </span>
                                 <span class="text-xs text-gray-700">
                                     @if($obj->stock > 0)
