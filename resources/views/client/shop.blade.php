@@ -15,121 +15,126 @@
         }
     </style>
 </head>
-<body class="bg-white">
+<body class="bg-white text-gray-700 flex flex-col min-h-screen">
 <!-- Header -->
 @include('client.header')
 <!-- Hero Blue Bar -->
-<div class="bg-gradient-to-r from-[#3b82f6] to-[#60a5fa] h-30 mb-6 flex items-end">
-    <h2 class="text-white font-bold text-3xl px-10 pb-4">
+<div class="bg-gradient-to-r from-[#3b82f6] to-[#60a5fa] h-36 mb-6 flex items-end" style="margin-top: 50px;">
+    <h1 class="text-white font-bold text-3xl px-10 pb-4 text-center" >
         Products
-    </h2>
+    </h1>
 </div>
-<!-- Search bar centered and bigger with button -->
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+<!-- Search bar -->
+<section class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 mb-10">
     <div class="flex justify-center">
-        <form class="flex w-full sm:w-3/4 md:w-1/2" style="margin-top: 40px">
-            <input aria-label="Search products" class="flex-grow px-4 py-3 border border-gray-300 rounded-l text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Search product..." type="search"/>
-            <button class="bg-[#2563eb] text-white px-6 py-3 rounded-r text-sm font-semibold hover:bg-[#1e40af]" type="submit">
+        <form class="flex w-full max-w-6xl" style="margin-top: 40px">
+            <input
+                aria-label="Search products"
+                class="flex-grow px-4 py-3 border border-gray-300 rounded-l text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Search product..."
+                type="search"
+                style="width: 800px"
+            />
+            <button
+                class="bg-[#2563eb] text-white px-6 py-3 rounded-r text-sm font-semibold hover:bg-[#1e40af]"
+                type="submit"
+            >
                 Search
             </button>
         </form>
     </div>
 </section>
-<!-- Main content with sidebar on left and products on right -->
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 flex flex-col md:flex-row md:space-x-6">
-    <!-- Sidebar -->
-    <aside class="w-full md:w-64 mb-10 md:mb-0 bg-white border border-gray-200 rounded-lg p-6 shadow-md flex flex-col">
-        <div class="flex justify-between items-center mb-4">
-            <h3 class="text-lg font-semibold text-gray-900">
-                Filter
-            </h3>
-            <a class="text-sm text-[#2563eb] hover:underline whitespace-nowrap" href="#">
-                View All
-            </a>
+<!-- Main content -->
+<main class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 mt-10 flex max-w-7xl gap-6">
+    <!-- Filter box -->
+    <aside
+        class="w-72 border border-gray-200 rounded-md p-6 text-xs text-gray-700 font-normal sticky top-20 self-start"
+        style="min-height: calc(100vh - 6rem)"
+    >
+        <div class="flex justify-between items-center mb-3">
+            <span class="font-semibold text-sm">Filter</span>
+            <a class="text-xs text-[#3B8BFF] hover:underline" href="#">View All</a>
         </div>
-        <!-- Price Filter -->
-        <div class="mb-6">
-            <label class="block text-sm font-semibold mb-2 text-gray-700" for="price-range">
-                Price Range
-            </label>
-            <select class="w-full border border-gray-300 rounded px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500" id="price-range" name="price-range">
-                <option value="">
-                    Select Price
-                </option>
-                <option value="under-500">
-                    Under $500
-                </option>
-                <option value="500-1000">
-                    $500 - $1000
-                </option>
-                <option value="1000-1500">
-                    $1000 - $1500
-                </option>
-                <option value="1500-plus">
-                    $1500+
-                </option>
+        <div class="mb-3">
+            <label class="block font-semibold text-xs mb-1">Price Range</label>
+            <select
+                class="w-full border border-gray-300 rounded text-xs text-gray-700 px-2 py-1"
+            >
+                <option>Select Price</option>
             </select>
         </div>
-        <!-- Brand Filter -->
-        <div class="mb-6">
-            <label class="block text-sm font-semibold mb-2 text-gray-700">
-                Brand
-            </label>
-            <div class="flex flex-col space-y-2 text-xs text-gray-700">
-                <label class="inline-flex items-center">
-                    <input class="form-checkbox" type="checkbox" value="Samsung"/>
-                    <span class="ml-2">
-        Samsung
-       </span>
+        <div class="mb-4">
+            <label class="block font-semibold text-xs mb-1">Brand</label>
+            <div class="space-y-1 text-xs text-gray-600 font-normal">
+                <label class="flex items-center space-x-2">
+                    <input class="form-checkbox" type="checkbox" />
+                    <span>Samsung</span>
                 </label>
-                <label class="inline-flex items-center">
-                    <input class="form-checkbox" type="checkbox" value="Apple"/>
-                    <span class="ml-2">
-        Apple
-       </span>
+                <label class="flex items-center space-x-2">
+                    <input class="form-checkbox" type="checkbox" />
+                    <span>Apple</span>
                 </label>
-                <label class="inline-flex items-center">
-                    <input class="form-checkbox" type="checkbox" value="Redmi"/>
-                    <span class="ml-2">
-        Redmi
-       </span>
+                <label class="flex items-center space-x-2">
+                    <input class="form-checkbox" type="checkbox" />
+                    <span>Redmi</span>
                 </label>
-                <label class="inline-flex items-center">
-                    <input class="form-checkbox" type="checkbox" value="OnePlus"/>
-                    <span class="ml-2">
-        OnePlus
-       </span>
+                <label class="flex items-center space-x-2">
+                    <input class="form-checkbox" type="checkbox" />
+                    <span>OnePlus</span>
                 </label>
             </div>
         </div>
-        <!-- Other filters can be added similarly -->
-        <button class="w-full bg-[#2563eb] text-white text-xs font-semibold py-2 rounded hover:bg-[#1e40af] mt-auto">
+        <button
+            class="w-full bg-[#3B8BFF] text-white text-xs font-semibold py-2 rounded hover:bg-[#2a6ad1] focus:outline-none focus:ring-2 focus:ring-[#3B8BFF]"
+        >
             Apply Filters
         </button>
     </aside>
     <!-- Products grid -->
-    @foreach($products as $obj)
-    <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <img alt="Front view of Samsung Galaxy S20 smartphone with colorful app icons on screen and dark blue background" class="w-full object-contain bg-[#0a2a5a]" height="250" src="https://storage.googleapis.com/a1aa/image/6c2d3190-1201-417a-8c2b-f466ebfe60b3.jpg" width="250"/>
-        <div class="p-4">
-            <h3 class="text-[#2563eb] font-semibold text-sm mb-1">
-                Samsung Galaxy S20
-            </h3>
-            <p class="text-gray-600 text-xs mb-4 leading-tight">
-                The Samsung Galaxy S20 features a stunning display and powerful performance.
-            </p>
-            <div class="flex items-center justify-between">
-       <span class="font-bold text-xs">
-        $999
-       </span>
-                <button class="bg-[#2563eb] text-white text-xs font-semibold px-3 py-2 rounded hover:bg-[#1e40af]">
-                    Buy Now
-                </button>
-            </div>
-        </div>
-    </div>
-    @endforeach
-</section>
+    <section
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 flex-grow"
+    >
+        @foreach ($products as $obj)
+            <article
+                class="border border-gray-200 rounded-md overflow-hidden flex flex-col max-w-[240px]"
+            >
+                <a href="/product-details/{{$obj->id}}">
+                    <img
+                        alt="{{$obj->product_name}}"
+                        class="w-full h-56 object-cover"
+                        height="224"
+                        src="{{ $obj->image_url ? '/image_product/' . $obj->image_url : 'https://storage.googleapis.com/a1aa/image/aa88dfbe-ab80-4fca-db94-141b7c08ed91.jpg' }}"
+                        width="240"
+                    />
+                </a>
+                <div class="p-5 flex flex-col flex-grow">
+                    <a
+                        class="text-lg font-semibold mb-2 text-blue-600"
+                        href="/product-details/{{$obj->id}}"
+                    >
+                        {{$obj->product_name}}
+                    </a>
+                    <p class="text-gray-600 flex-grow text-xs leading-tight">
+                        {{$obj->description}}
+                    </p>
+                    <div class="mt-4 flex items-center justify-between">
+            <span class="text-base font-bold text-gray-900">
+              {{ number_format($obj->price, 0, ',', ',') }}đ
+            </span>
+                        <a
+                            class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition text-xs"
+                            href="/product-details/{{$obj->id}}"
+                        >
+                            Buy Now
+                        </a>
+                    </div>
+                </div>
+            </article>
+        @endforeach
+    </section>
+</main>
+</div>
+
 <!-- Footer -->
 @include('client.footer')
 
@@ -138,7 +143,7 @@
     <script>
         Swal.fire({
             icon: 'info',
-            title: 'Giỏ hàng trống',
+            title: 'Cart is empty',
             text: '{{ session('cart_empty') }}',
             confirmButtonText: 'OK'
         });

@@ -11,7 +11,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+<body class="bg-gray-900 flex flex-col min-h-screen">
 <!-- Header -->
 @include('client.header')
 <main class="bg-white rounded-lg shadow-lg max-w-4xl w-full p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
