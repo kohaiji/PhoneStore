@@ -77,7 +77,7 @@ class CartController extends Controller
         $cart = Session::get("cart");
 
         if ($cart == null || empty($cart)) {
-            return redirect("/shop")->with('cart_empty', 'Bạn chưa có sản phẩm nào trong giỏ hàng, hãy đi mua hàng!');
+            return redirect("/shop")->with('cart_empty', 'You have no products in your cart, go shopping!');
         }
 
         $total = 0;
@@ -115,6 +115,7 @@ class CartController extends Controller
         Session::forget("cart");
         return redirect('/cart');
     }
+
     public function cartRemove(Request $request) {
         $variantId = $request->input('variant_id');
         $cart = Session::get('cart', []);
