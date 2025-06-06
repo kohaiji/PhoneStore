@@ -60,7 +60,7 @@
             </div>
     @elseif(\Illuminate\Support\Facades\Auth::user()->role == 1)
 <!-- Status : Loginned as admin -->
-        <a href="showcart" class="relative text-[#d7ccc3] hover:text-[#0a4a9f] transition flex items-center space-x-1" aria-label="Cart details page" ">
+        <a href="/cart" class="relative text-[#d7ccc3] hover:text-[#0a4a9f] transition flex items-center space-x-1" aria-label="Cart details page" ">
             <i class="fas fa-shopping-cart text-lg"></i>
             <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center select-none">
       0

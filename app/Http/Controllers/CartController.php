@@ -9,113 +9,110 @@ use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
-    public function addToCart($id, $quantity) {
-        $product = DB::table("products")
-            ->where("id", $id)
+    public function addToCart(Request $request) {
+        if (!auth()->check()) {
+            return response()->json(['success' => false, 'message' => 'You need to log in first.'], 401);
+        }
+        $request->validate([
+            'variant_id' => 'required|integer',
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        $variantId = $request->input('variant_id');
+        $quantity = $request->input('quantity');
+
+        $variant = DB::table("product_variants")
+            ->where("id", $variantId)
             ->first();
 
+        if (!$variant) {
+            return response()->json(['success' => false, 'message' => 'Variant not found.']);
+        }
+
+        if ($variant->stock < $quantity) {
+            return response()->json(['success' => false, 'message' => 'Quantity exceeds stock.']);
+        }
+
+        $product = DB::table('products')->where('id', $variant->product_id)->first();
         if (!$product) {
-            return redirect("ClientIndex")->with('error', 'Product not found');
+            return response()->json(['success' => false, 'message' => 'Product not found.']);
         }
 
         $cart = Session::get('cart', []);
 
-        $found = false;
-
-        foreach ($cart as $item) {
-            if ($item->id == $id) {
-                $item->quantity += $quantity;
-                $found = true;
-
-                // Check if the updated quantity exceeds the product stock
-                if ($item->quantity > $product->stock) {
-                    return redirect("ClientIndex")->with('error', 'Not enough stock');
-                }
+        // Kiểm tra xem biến thể đã có trong giỏ chưa, nếu có thì cộng dồn số lượng
+        $foundIndex = null;
+        foreach ($cart as $index => $item) {
+            if ($item['variant_id'] == $variantId) {
+                $foundIndex = $index;
                 break;
             }
         }
 
-        if (!$found) {
-            if ($product->stock >= $quantity && $quantity > 0) {
-                $product->quantity = $quantity;
-                $cart[] = $product;
-            } else {
-                return redirect("ClientIndex")->with('error', 'Not enough stock or invalid quantity');
+        if ($foundIndex !== null) {
+            // Cộng dồn số lượng mới và kiểm tra tồn kho
+            $newQuantity = $cart[$foundIndex]['quantity'] + $quantity;
+            if ($newQuantity > $variant->stock) {
+                return response()->json(['success' => false, 'message' => 'Total quantity in cart exceeds stock.']);
             }
+            $cart[$foundIndex]['quantity'] = $newQuantity;
+        } else {
+            // Thêm biến thể mới vào giỏ
+            $cart[] = [
+                'variant_id' => $variant->id,
+                'product_id' => $variant->product_id,
+                'color' => $variant->color,
+                'storage' => $variant->storage,
+                'price' => $product->price + $variant->price_adjustment,
+                'quantity' => $quantity,
+            ];
         }
 
         Session::put('cart', $cart);
+        return response()->json(['success' => true, 'message' => 'Added to cart successfully!']);
 
-        return redirect("ClientIndex")->with('success', 'Product added to cart');
     }
 
     public function cart(Request $request) {
-        $product = DB::table("products")
-            ->select("products.*")
-            ->get();
-
         $cart = Session::get("cart");
 
         if($cart ==null) {
             $cart = [];
         }
-//        dd($product);
-        foreach ($cart as $obj) {
-            foreach ($product as $obj2) {
-                if($obj->category_id == $obj2->category_id)
-                {
-                    $obj->category_name = $obj2->category_name;
-                }
-
-                if($obj->publisher_id == $obj2->publisher_id)
-                {
-                    $obj->publisher_name = $obj2->publisher_name;
-                }
-
-                if($obj->author_id == $obj2->author_id)
-                {
-                    $obj->author_name = $obj2->author_name;
-                }
-            }
-        }
 
         $total =0;
-        foreach ($cart as $index => $obj) {
-            if($obj->quantity > $obj->stock){
-                $obj -> quantity = $obj->stock;
-            }
-            $total += $obj->price * $obj->quantity;
+        foreach ($cart as $item) {
+            $total += $item['price'] * $item['quantity'];
         }
 
         return view("client/showcart",[
-            "cart" => $cart,
-            "total" => $total,
-            "product" => $product
+            'cart' => $cart,
+            'total' => $total
         ]);
 
     }
 
-        public function cartRemoveAll()
-        {
-            Session::forget("cart");
-            return redirect('/cart');
-        }
-        public function cartRemove(Request $request) {
-            $productIdToRemove = $request->id;
+    public function cartRemoveAll()
+    {
+        Session::forget("cart");
+        return redirect('/cart');
+    }
+    public function cartRemove(Request $request) {
+        $productIdToRemove = $request->id;
 
-            $cart = Session::get("cart");
+        $cart = Session::get("cart");
 
-            foreach ($cart as $key => $product) {
-                // Kiểm tra nếu id, quantity của sản phẩm trong mảng trùng với id, quantity sản phẩm cần xoá
-                if ($product->id == $productIdToRemove) {
-                    unset($cart[$key]);
-                    break;
-                }
+        foreach ($cart as $key => $product) {
+            // Kiểm tra nếu id, quantity của sản phẩm trong mảng trùng với id, quantity sản phẩm cần xoá
+            if ($product->id == $productIdToRemove) {
+                unset($cart[$key]);
+                break;
             }
-
-            session(['cart' => $cart]);
-        return redirect("cart");
         }
+
+        session(['cart' => $cart]);
+    return redirect("cart");
+    }
 
 
     public function cartUpdate($type,$id, $quantity ) {

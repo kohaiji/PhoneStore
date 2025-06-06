@@ -9,6 +9,8 @@
     </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -38,20 +40,34 @@
                     <!-- Variants and Capacity options combined -->
                     <div class="mt-4 grid grid-cols-3 gap-4">
                         <!-- Variant 1 -->
-                        <button class="border border-gray-200 rounded-md flex flex-col items-center p-2 hover:border-[#2563eb] focus:outline-none focus:ring-2 focus:ring-[#2563eb]">
-                            <img alt="Phone variant in black color front view" class="object-contain mb-1" height="60" src="https://storage.googleapis.com/a1aa/image/a0c1f88c-3b66-4959-eceb-2a429ad77398.jpg" width="40"/>
-                            <span class="text-xs text-gray-700">Black - 128GB</span>
-                        </button>
-                        <!-- Variant 2 -->
-                        <button class="border border-gray-200 rounded-md flex flex-col items-center p-2 hover:border-[#2563eb] focus:outline-none focus:ring-2 focus:ring-[#2563eb]">
-                            <img alt="Phone variant in white color back view" class="object-contain mb-1" height="60" src="https://storage.googleapis.com/a1aa/image/d5e81482-a21e-410b-558e-e748fc12b892.jpg" width="60"/>
-                            <span class="text-xs text-gray-700">White - 256GB</span>
-                        </button>
-                        <!-- Variant 3 -->
-                        <button class="border border-gray-200 rounded-md flex flex-col items-center p-2 hover:border-[#2563eb] focus:outline-none focus:ring-2 focus:ring-[#2563eb]">
-                            <img alt="Phone variant in silver color side view" class="object-contain mb-1" height="30" src="https://storage.googleapis.com/a1aa/image/537dc3b9-b135-404b-5f24-a0e9f4221232.jpg" width="60"/>
-                            <span class="text-xs text-gray-700">Silver - 512GB</span>
-                        </button>
+                        @foreach($variants as $obj)
+                            <button type="button"
+                                    class="variant-btn border border-gray-200 rounded-md flex flex-col items-center p-2 hover:border-[#2563eb] focus:outline-none"
+                                    data-variant-id="{{ $obj->id }}"
+                                    data-stock="{{ $obj->stock }}">
+                                <span class="text-xs text-gray-700">{{ $obj->color }} - {{ $obj->storage }}</span>
+                                <span class="text-xs text-gray-700 font-bold">
+                                    Giá: {{ number_format($product->price + $obj->price_adjustment, 0, ',', ',') }}đ
+                                </span>
+                                <span class="text-xs text-gray-700">
+                                    @if($obj->stock > 0)
+                                        <i class="bi bi-check-lg text-green-600">In stock</i>
+                                    @else
+                                        <i class="bi bi-x-lg text-red-600">Out of stock</i>
+                                    @endif
+                                </span>
+                            </button>
+                        @endforeach
+{{--                        <!-- Variant 2 -->--}}
+{{--                        <button class="border border-gray-200 rounded-md flex flex-col items-center p-2 hover:border-[#2563eb] focus:outline-none focus:ring-2 focus:ring-[#2563eb]">--}}
+{{--                            <img alt="Phone variant in white color back view" class="object-contain mb-1" height="60" src="https://storage.googleapis.com/a1aa/image/d5e81482-a21e-410b-558e-e748fc12b892.jpg" width="60"/>--}}
+{{--                            <span class="text-xs text-gray-700">White - 256GB</span>--}}
+{{--                        </button>--}}
+{{--                        <!-- Variant 3 -->--}}
+{{--                        <button class="border border-gray-200 rounded-md flex flex-col items-center p-2 hover:border-[#2563eb] focus:outline-none focus:ring-2 focus:ring-[#2563eb]">--}}
+{{--                            <img alt="Phone variant in silver color side view" class="object-contain mb-1" height="30" src="https://storage.googleapis.com/a1aa/image/537dc3b9-b135-404b-5f24-a0e9f4221232.jpg" width="60"/>--}}
+{{--                            <span class="text-xs text-gray-700">Silver - 512GB</span>--}}
+{{--                        </button>--}}
                     </div>
                 </div>
 
@@ -152,7 +168,9 @@
                         </button>
                         <input aria-label="Quantity"
                                class="w-16 text-center border-l border-r border-gray-300 focus:outline-none"
-                               id="quantityInput" max="99" min="1" type="number" value="1"/>
+                               id="quantity" max="99" min="1" type="number" value="1" oninput="validateNumber(this)"/>
+                        <input type="hidden" id="selectedVariantId" value="">
+                        <input type="hidden" id="selectedVariantStock" value="">
                         <button aria-label="Increase quantity"
                                 class="px-3 py-2 text-gray-600 hover:text-gray-900 focus:outline-none" id="increaseBtn"
                                 type="button">
@@ -160,9 +178,104 @@
                             </i>
                         </button>
                     </div>
-                    <button class="bg-[#2563eb] text-white font-semibold px-5 py-2 rounded hover:bg-[#1e40af]">
-                        Buy Now
-                    </button>
+                    <a href="#" id="btnAddToCart"
+                       class="bg-[#2563eb] text-white font-semibold px-5 py-2 rounded hover:bg-[#1e40af] mt-3 inline-block"
+                       attrId="">
+                        Add to cart
+                    </a>
+                    <script>
+                        var isLoggedIn = @json(auth()->check());
+                    </script>
+
+                    <script src="/js/jquery.min.js"></script>
+                    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+                    <script>
+                        $(document).ready(function () {
+                            // Bắt sự kiện chọn variant
+                            $('.variant-btn').click(function () {
+                                $('.variant-btn').removeClass('border-blue-500');
+                                $(this).addClass('border-blue-500');
+
+                                let variantId = $(this).data('variant-id');
+                                let stock = $(this).data('stock');
+
+                                $('#selectedVariantId').val(variantId);
+                                $('#selectedVariantStock').val(stock);
+                            });
+
+                            // Bắt sự kiện Add to cart
+                            $('#btnAddToCart').click(function (e) {
+                                e.preventDefault();
+
+                                if (!isLoggedIn) {
+                                    swal({
+                                        title: "Warning!",
+                                        text: "You must be logged in to make a purchase.",
+                                        icon: "warning",
+                                        buttons: true,
+                                    }).then((willLogin) => {
+                                        if (willLogin) {
+                                            window.location.href = "/login";
+                                        }
+                                    });
+                                    return;
+                                }
+
+                                let variantId = $('#selectedVariantId').val();
+                                let stock = parseInt($('#selectedVariantStock').val());
+                                let quantity = parseInt($('#quantity').val());
+
+                                if (!variantId) {
+                                    swal("Please choose a variant!", {
+                                        icon: "info"
+                                    });
+                                    return;
+                                }
+
+                                if (quantity < 1 || isNaN(quantity)) {
+                                    swal("Please enter a valid quantity!", {
+                                        icon: "error"
+                                    });
+                                    return;
+                                }
+
+                                if (quantity > stock) {
+                                    swal("Quantity exceeds stock!", {
+                                        icon: "error"
+                                    });
+                                    return;
+                                }
+
+                                $.ajax({
+                                    url: '{{ route("addToCart") }}',
+                                    method: 'POST',
+                                    data: {
+                                        _token: '{{ csrf_token() }}',
+                                        variant_id: variantId,
+                                        quantity: quantity
+                                    },
+                                    success: function (response) {
+                                        if (response.success) {
+                                            swal("Success!", response.message, "success");
+                                        } else {
+                                            swal("Error!", response.message, "error");
+                                        }
+                                    },
+                                    error: function () {
+                                        swal("Error!", "An unexpected error occurred!", "error");
+                                    }
+                                });
+                            });
+                        });
+
+                        function validateNumber(input) {
+                            var value = parseInt(input.value);
+                            if (isNaN(value) || value < 1) {
+                                input.value = 1;
+                            }
+                        }
+                    </script>
                 </div>
             </div>
         </div>
@@ -171,6 +284,7 @@
     <section>
         <h2 class="text-2xl font-extrabold text-gray-900 mb-8">
             Customer Reviews
+{{--            @dd($cart)--}}
         </h2>
         <div class="space-y-8 max-w-4xl mx-auto">
             <!-- Review 1 -->
@@ -272,7 +386,7 @@
     <script>
         const decreaseBtn = document.getElementById('decreaseBtn');
         const increaseBtn = document.getElementById('increaseBtn');
-        const quantityInput = document.getElementById('quantityInput');
+        const quantityInput = document.getElementById('quantity');
 
         decreaseBtn.addEventListener('click', () => {
             let currentValue = parseInt(quantityInput.value);
@@ -285,7 +399,7 @@
             let currentValue = parseInt(quantityInput.value);
             quantityInput.value = currentValue + 1;
         });
-    </script>   
+    </script>
 </section>
 <!-- Footer -->
 @include('client.footer')
