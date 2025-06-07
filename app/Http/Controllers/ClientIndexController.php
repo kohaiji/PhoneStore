@@ -199,7 +199,7 @@ class ClientIndexController extends Controller
             ) AS pi
         '), 'products.id', '=', 'pi.product_id')
             ->select('products.*', 'pi.image_url')
-            ->paginate(8);
+            ->paginate(12);
 
 
         return view("client/shop", [
