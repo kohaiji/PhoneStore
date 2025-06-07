@@ -1,3 +1,15 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Header with Order Icon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+</head>
+<body>
 <header class="fixed top-0 left-0 w-full bg-white shadow-md z-50">
     <div class="container mx-auto flex items-center justify-between px-6 py-4 max-w-7xl">
         <a class="flex items-center space-x-2" href="#">
@@ -26,118 +38,126 @@
                 Contact
             </a>
         </nav>
-@if(\Illuminate\Support\Facades\Auth::check())
-    @if(\Illuminate\Support\Facades\Auth::user()->role == 0)
-<!-- Status : Loginned as customers -->
-        <a href="/cart" class="relative text-[#d7ccc3] hover:text-[#0a4a9f] transition flex items-center space-x-1" aria-label="Cart details page" ">
-        <i class="fas fa-shopping-cart text-lg"></i>
-        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center select-none">
+        @if(\Illuminate\Support\Facades\Auth::check())
+            @if(\Illuminate\Support\Facades\Auth::user()->role == 0)
+                <!-- Status : Loginned as customers -->
+                <a href="/cart" class="relative text-[#d7ccc3] hover:text-[#0a4a9f] transition flex items-center space-x-1" aria-label="Cart details page" ">
+                <i class="fas fa-shopping-cart text-lg"></i>
+                <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center select-none">
       {{$count = count($cart ?? [])}}
      </span>
-        </a>
-        <div class="relative cursor-pointer select-none font-semibold" id="userMenuWrapper" style="padding: 8px 12px;">
-            <div class="whitespace-nowrap" id="userMenuButton">
-                {{\Illuminate\Support\Facades\Auth::user()->name}}
-            </div>
-            <div class="absolute right-0 mt-2 w-40 bg-[#181a1c] border border-gray-700 rounded-md shadow-lg opacity-0 invisible transition-opacity z-20" id="userDropdown">
-                <ul class="py-2 text-sm text-[#d7ccc3]">
-                    <li>
-                        <a class="block px-4 py-2.5 hover:bg-[#0a4a9f] hover:text-black" href="/profile">
-                            Profile
-                        </a>
-                    </li>
-                    <li>
-                        <a class="block px-4 py-2.5 hover:bg-[#0a4a9f] hover:text-black" href="/settings">
-                            Settings
-                        </a>
-                    </li>
-                    <li>
-                        <a class="block px-4 py-2.5 hover:bg-[#f41406] hover:text-black" href="/logout">
-                            Logout
-                        </a>
-                    </li>
-                </ul>
-            </div>
-    @elseif(\Illuminate\Support\Facades\Auth::user()->role == 1)
-<!-- Status : Loginned as admin -->
-        <a href="/cart" class="relative text-[#d7ccc3] hover:text-[#0a4a9f] transition flex items-center space-x-1" aria-label="Cart details page" ">
-            <i class="fas fa-shopping-cart text-lg"></i>
-            <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center select-none">
+                </a>
+                <a href="/orders" class="ml-4 flex items-center hover:text-[#0a4a9f] transition" aria-label="Order history page">
+                    <img src="https://img.icons8.com/?size=100&id=VeUo27LTyt8A&format=png&color=000000" alt="Black order history icon" class="w-6 h-6" />
+                </a>
+                <div class="relative cursor-pointer select-none font-semibold" id="userMenuWrapper" style="padding: 8px 12px;">
+                    <div class="whitespace-nowrap" id="userMenuButton">
+                        {{\Illuminate\Support\Facades\Auth::user()->name}}
+                    </div>
+                    <div class="absolute right-0 mt-2 w-40 bg-[#181a1c] border border-gray-700 rounded-md shadow-lg opacity-0 invisible transition-opacity z-20" id="userDropdown">
+                        <ul class="py-2 text-sm text-[#d7ccc3]">
+                            <li>
+                                <a class="block px-4 py-2.5 hover:bg-[#0a4a9f] hover:text-black" href="/profile">
+                                    Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a class="block px-4 py-2.5 hover:bg-[#0a4a9f] hover:text-black" href="/settings">
+                                    Settings
+                                </a>
+                            </li>
+                            <li>
+                                <a class="block px-4 py-2.5 hover:bg-[#f41406] hover:text-black" href="/logout">
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    @elseif(\Illuminate\Support\Facades\Auth::user()->role == 1)
+                        <!-- Status : Loginned as admin -->
+                        <a href="/cart" class="relative text-[#d7ccc3] hover:text-[#0a4a9f] transition flex items-center space-x-1" aria-label="Cart details page" ">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center select-none">
       {{$count = count($cart ?? [])}}
      </span>
-        </a>
-            <div class="relative cursor-pointer select-none font-semibold" id="userMenuWrapper" style="padding: 8px 12px;">
-                <div class="whitespace-nowrap" id="userMenuButton">
-                    {{\Illuminate\Support\Facades\Auth::user()->name}}
-                </div>
-                <div class="absolute right-0 mt-2 w-36 bg-[#181a1c] border border-gray-700 rounded-md shadow-lg opacity-0 invisible transition-opacity z-20" id="userDropdown">
-                    <ul class="py-1 text-sm text-[#d7ccc3]">
-                        <li>
-                            <a class="block px-4 py-2 hover:bg-[#0a4a9f] hover:text-black" href="/profile">
-                                Profile
-                            </a>
-                        </li>
-                        <li>
-                            <a class="block px-4 py-2 hover:bg-[#0a4a9f] hover:text-black" href="/settings">
-                                Settings
-                            </a>
-                        </li>
-                        <li>
-                            <a class="block px-4 py-2 hover:bg-[#0a4a9f] hover:text-black" href="/admin">
-                                Admin
-                            </a>
-                        </li>
-                        <li>
-                            <a class="block px-4 py-2 hover:bg-[#0a4a9f] hover:text-black" href="/logout">
-                                Logout
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-    @endif
-@else
-<!-- Status : Not Loggined -->
-        <div class="hidden md:flex items-center space-x-6">
-            <a class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition" href="tel:+18001234567">
-                <i class="fas fa-phone-alt">
-                </i>
-                <span>
+                        </a>
+                        <a href="/order" class="ml-4 flex items-center hover:text-[#0a4a9f] transition" aria-label="Order history page">
+                            <img src="https://img.icons8.com/?size=100&id=VeUo27LTyt8A&format=png&color=000000" alt="Black order history icon" class="w-6 h-6" />
+                        </a>
+                        <div class="relative cursor-pointer select-none font-semibold" id="userMenuWrapper" style="padding: 8px 12px;">
+                            <div class="whitespace-nowrap" id="userMenuButton">
+                                {{\Illuminate\Support\Facades\Auth::user()->name}}
+                            </div>
+                            <div class="absolute right-0 mt-2 w-36 bg-[#181a1c] border border-gray-700 rounded-md shadow-lg opacity-0 invisible transition-opacity z-20" id="userDropdown">
+                                <ul class="py-1 text-sm text-[#d7ccc3]">
+                                    <li>
+                                        <a class="block px-4 py-2 hover:bg-[#0a4a9f] hover:text-black" href="/profile">
+                                            Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="block px-4 py-2 hover:bg-[#0a4a9f] hover:text-black" href="/settings">
+                                            Settings
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="block px-4 py-2 hover:bg-[#0a4a9f] hover:text-black" href="/admin">
+                                            Admin
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="block px-4 py-2 hover:bg-[#0a4a9f] hover:text-black" href="/logout">
+                                            Logout
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            @endif
+                            @else
+                                <!-- Status : Not Loggined -->
+                                <div class="hidden md:flex items-center space-x-6">
+                                    <a class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition" href="tel:+18001234567">
+                                        <i class="fas fa-phone-alt">
+                                        </i>
+                                        <span>
        +1 234 567 890
       </span>
-            </a>
-            <a class="bg-blue-600 text-white px-5 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="/login">
-                Sign in
-            </a>
-            <a class="bg-green-600 text-white px-5 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="/register">
-                Sign up
-            </a>
-        </div>
-        <button aria-label="Open menu" class="md:hidden text-gray-700 focus:outline-none" id="mobile-menu-button">
-            <i class="fas fa-bars fa-lg">
-            </i>
-        </button>
-@endif
+                                    </a>
+                                    <a class="bg-blue-600 text-white px-5 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="/login">
+                                        Sign in
+                                    </a>
+                                    <a class="bg-green-600 text-white px-5 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="/register">
+                                        Sign up
+                                    </a>
+                                </div>
+                                <button aria-label="Open menu" class="md:hidden text-gray-700 focus:outline-none" id="mobile-menu-button">
+                                    <i class="fas fa-bars fa-lg">
+                                    </i>
+                                </button>
+                            @endif
 
-    </div>
+                        </div>
 
-        <script>
-            // Dropdown menu logic
-            const userMenuWrapper = document.getElementById('userMenuWrapper');
-            const userDropdown = document.getElementById('userDropdown');
+                        <script>
+                            // Dropdown menu logic
+                            const userMenuWrapper = document.getElementById('userMenuWrapper');
+                            const userDropdown = document.getElementById('userDropdown');
 
-            // Show dropdown on mouse enter of wrapper (includes dropdown)
-            userMenuWrapper.addEventListener('mouseenter', () => {
-                userDropdown.classList.remove('opacity-0', 'invisible');
-                userDropdown.classList.add('opacity-100', 'visible');
-            });
+                            // Show dropdown on mouse enter of wrapper (includes dropdown)
+                            userMenuWrapper.addEventListener('mouseenter', () => {
+                                userDropdown.classList.remove('opacity-0', 'invisible');
+                                userDropdown.classList.add('opacity-100', 'visible');
+                            });
 
-            // Hide dropdown on mouse leave of wrapper (includes dropdown)
-            userMenuWrapper.addEventListener('mouseleave', () => {
-                userDropdown.classList.remove('opacity-100', 'visible');
-                userDropdown.classList.add('opacity-0', 'invisible');
-            });
+                            // Hide dropdown on mouse leave of wrapper (includes dropdown)
+                            userMenuWrapper.addEventListener('mouseleave', () => {
+                                userDropdown.classList.remove('opacity-100', 'visible');
+                                userDropdown.classList.add('opacity-0', 'invisible');
+                            });
 
-        </script>
-    </div>
+                        </script>
+                </div>
 
 </header>
+</body>
+</html>
