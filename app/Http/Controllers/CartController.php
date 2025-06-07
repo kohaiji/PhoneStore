@@ -138,34 +138,34 @@ class CartController extends Controller
     }
 
 
-    public function cartUpdate($type,$id, $quantity ) {
-        $cart = Session::get("cart");
-        $product = DB::table("product")
-            ->where('id', $id)
-            ->first();
+    public function updateQuantity(Request $request)
+    {
+        $variantId = $request->input('variant_id');
+        $quantity = (int)$request->input('quantity');
+        $cart = Session::get('cart', []);
 
-        foreach ($cart as $index => $obj) {
-
-            if ($obj->id == $id && $type == "plus" && $obj -> quantity < $product->stock) {
-                $obj->quantity = $quantity +1;
-
+        // Tìm và cập nhật số lượng
+        foreach ($cart as &$item) {
+            if ($item['variant_id'] == $variantId) {
+                $item['quantity'] = $quantity;
+                $itemTotal = $item['price'] * $quantity;
+                break;
             }
-
-            if ($obj->id == $id && $type == "sub") {
-                if ($quantity > 1){
-                    $obj->quantity = $quantity -1;
-                } elseif ($quantity == 1 && $obj -> quantity == 1){
-                    unset($cart[$index]);
-                    break;
-                }
-
-            }
-
-
         }
-        Session::put("cart",$cart);
 
-        return redirect("cart");
+        Session::put('cart', $cart);
+
+        // Tính tổng giỏ hàng mới
+        $cartTotal = 0;
+        foreach ($cart as $item) {
+            $cartTotal += $item['price'] * $item['quantity'];
+        }
+
+        return response()->json([
+            'success' => true,
+            'item_total' => number_format($itemTotal, 0, ',', ','),
+            'cart_total' => number_format($cartTotal, 0, ',', ',')
+        ]);
     }
 
     public function checkout() {

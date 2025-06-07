@@ -43,7 +43,15 @@
                         <p class="font-semibold text-sm leading-tight">Storage: {{$obj["storage"]}}</p>
                         <p class="mt-1 leading-tight text-base">{{$obj["description"]}}</p>
                         <div class="flex items-center space-x-4 mt-2 font-semibold text-gray-900 text-base">
-                            <span><span class="font-bold">{{ number_format($obj["price"], 0, ',', ',') }}đ</span></span>
+                            <span>
+                                <span
+                                    class="font-bold item-total"
+                                    id="item-total-{{ $obj['variant_id'] }}"
+                                    data-price="{{ $obj['price'] }}"
+                                >
+                                    {{ number_format($obj["price"] * $obj["quantity"], 0, ',', ',') }}đ
+                                </span>
+                            </span>
                             <span>Quantity:</span>
                             <input class="w-16 border border-gray-300 rounded px-1 py-0.5 text-base" min="1" type="number" value="{{$obj["quantity"]}}"/>
                             <a href="javascript:void(0);" class="text-red-600 font-normal text-base hover:text-blue-500 btn-remove" data-id="{{ $obj['variant_id'] }}">
@@ -84,6 +92,40 @@
 <!-- Footer -->
 @include('client.footer')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Xử lý thay đổi số lượng
+        $('input[type="number"]').on('change', function() {
+            const variantId = $(this).closest('.flex').find('.btn-remove').data('id');
+            const quantity = $(this).val();
+
+            // Validate số lượng
+            if (quantity < 1) {
+                $(this).val(1);
+                return;
+            }
+
+            $.ajax({
+                url: '{{ route("cart.updateQuantity") }}',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    variant_id: variantId,
+                    quantity: quantity
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Cập nhật tổng tiền cho sản phẩm
+                        $('#item-total-' + variantId).text(response.item_total + 'đ');
+
+                        // Cập nhật tổng giỏ hàng
+                        $('#cart-total').text(response.cart_total + 'đ');
+                    }
+                }
+            });
+        });
+    });
+</script>
 <script>
     $(document).ready(function () {
         $('.btn-remove').click(function () {
