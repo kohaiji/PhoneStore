@@ -13,6 +13,7 @@ class CartController extends Controller
         if (!auth()->check()) {
             return response()->json(['success' => false, 'message' => 'You need to log in first.'], 401);
         }
+
         $request->validate([
             'variant_id' => 'required|integer',
             'quantity' => 'required|integer|min:1',
@@ -38,10 +39,17 @@ class CartController extends Controller
             return response()->json(['success' => false, 'message' => 'Product not found.']);
         }
 
-        $cart = Session::get('cart', []);
+        // Lấy ảnh sản phẩm
+        $image = DB::table('product_images')
+            ->where('product_id', $product->id)
+            ->orderBy('id')
+            ->first();
 
-        // Kiểm tra xem biến thể đã có trong giỏ chưa, nếu có thì cộng dồn số lượng
+        $imageUrl = $image ? $image->image_url : 'https://storage.googleapis.com/a1aa/image/6ab9284f-51a6-4771-eb33-47fa955ac262.jpg';
+
+        $cart = Session::get('cart', []);
         $foundIndex = null;
+
         foreach ($cart as $index => $item) {
             if ($item['variant_id'] == $variantId) {
                 $foundIndex = $index;
@@ -50,14 +58,12 @@ class CartController extends Controller
         }
 
         if ($foundIndex !== null) {
-            // Cộng dồn số lượng mới và kiểm tra tồn kho
             $newQuantity = $cart[$foundIndex]['quantity'] + $quantity;
             if ($newQuantity > $variant->stock) {
                 return response()->json(['success' => false, 'message' => 'Total quantity in cart exceeds stock.']);
             }
             $cart[$foundIndex]['quantity'] = $newQuantity;
         } else {
-            // Thêm biến thể mới vào giỏ
             $cart[] = [
                 'variant_id' => $variant->id,
                 'product_id' => $variant->product_id,
@@ -65,11 +71,20 @@ class CartController extends Controller
                 'storage' => $variant->storage,
                 'price' => $product->price + $variant->price_adjustment,
                 'quantity' => $quantity,
+                'product_name' => $product->product_name,
+                'description' => $product->description,
+                'image_url' => $imageUrl,
+                'stock' => $variant->stock,
             ];
         }
 
         Session::put('cart', $cart);
-        return response()->json(['success' => true, 'message' => 'Added to cart successfully!']);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Added to cart successfully!',
+            'count' => count($cart),
+        ]);
 
     }
 
@@ -81,25 +96,7 @@ class CartController extends Controller
         }
 
         $total = 0;
-        foreach ($cart as &$item) {
-            $product = DB::table('products')->where('id', $item['product_id'])->first();
-
-            if ($product) {
-                $item['product_name'] = $product->product_name;
-                $item['description'] = $product->description;
-
-                $image = DB::table('product_images')
-                    ->where('product_id', $item['product_id'])
-                    ->orderBy('id')
-                    ->first();
-
-                $item['image_url'] = $image ? $image->image_url : 'https://storage.googleapis.com/a1aa/image/6ab9284f-51a6-4771-eb33-47fa955ac262.jpg';
-            } else {
-                $item['product_name'] = "";
-                $item['description'] = "";
-                $item['image_url'] = 'https://storage.googleapis.com/a1aa/image/6ab9284f-51a6-4771-eb33-47fa955ac262.jpg';
-            }
-
+        foreach ($cart as $item) {
             $total += $item['price'] * $item['quantity'];
         }
 
@@ -107,7 +104,6 @@ class CartController extends Controller
             'cart' => $cart,
             'total' => $total
         ]);
-
     }
 
     public function cartRemoveAll()
@@ -137,6 +133,7 @@ class CartController extends Controller
         return response()->json([
             'success' => true,
             'total' => number_format($total, 0, ',', ',') . 'đ',
+            'count' => count($cart),
         ]);
     }
 
@@ -184,8 +181,9 @@ class CartController extends Controller
             return redirect("/cart");
         }
 
-        foreach ($cart as $index => $obj) {
-            $total += $obj->price * $obj->quantity;
+
+        foreach ($cart as $item) {
+            $total += $item['price'] * $item['quantity'];
         }
 
         return view("client/checkout",[
@@ -196,15 +194,16 @@ class CartController extends Controller
 
     public function cartCheckout(Request $request) {
         $total = $request->total;
-        $status = "PENDING";
+        $status = "Pending";
 
-        $id = $request->id;
-        $fullName = $request->fullName;
+        $userId = $request->userId;
+        $receiverName = $request->receiverName;
         $address = $request->address;
         $phone = $request->phone;
+        $paymentMethod = $request->paymentMethod;
 
         DB::table("users")
-            ->where("id", $id)
+            ->where("id", $userId)
             ->update([
                "address" => $address,
             ]);
@@ -212,35 +211,43 @@ class CartController extends Controller
         $id = DB::table("orders")
             // insertGetId: insert de lay Id
             ->insertGetId([
-                "full_name" => $fullName,
+                "user_id" => $userId,
+                "full_name" => $receiverName,
                 "address" => $address,
                 "phone" => $phone,
                 "total" => $total,
-                "status" => "PENDING",
-                "created_at" => date("Y-m-d H:i:s"),
+                "status" => $status,
+                "payment_method" => $paymentMethod,
+                "order_date" => date("Y-m-d H:i:s"),
             ]);
 
         // them san pham, quantity, price vao order_detail
-            $cart = Session::get('cart');
-            foreach ($cart as $obj){
-                DB::table("order_details")
-                    ->insert([
-                        'order_id' => $id,
-                        'product_id' => $obj->id,
-                        'price' => $obj->price,
-                        'quantity' => $obj->quantity,
-                        "created_at" => date("Y-m-d H:i:s"),
-                    ]);
-            }
+        $cart = Session::get('cart');
+        foreach ($cart as $obj){
+            DB::table("order_details")
+                ->insert([
+                    'order_id' => $id,
+                    'product_variants_id' => $obj['variant_id'],
+                    'price' => $obj['price'],
+                    'quantity' => $obj['quantity'],
+                    "order_date" => date("Y-m-d H:i:s"),
+                ]);
+        }
 
-            // cap nhat so luong san pham trong kho
-            foreach ($cart as $obj){
-                DB::table("product")
-                    ->where("id", $obj->id)
+        // cap nhat so luong san pham trong kho
+        foreach ($cart as $obj) {
+            $variant = DB::table("product_variants")
+                ->where("id", $obj['variant_id'])
+                ->first();
+
+            if ($variant && $variant->stock >= $obj['quantity']) {
+                DB::table("product_variants")
+                    ->where("id", $obj['variant_id'])
                     ->update([
-                        "stock" => $obj->stock - $obj->quantity,
+                        "stock" => $variant->stock - $obj['quantity'],
                     ]);
             }
+        }
 
         //Xóa giỏ hàng
         {

@@ -258,6 +258,7 @@
                                     success: function (response) {
                                         if (response.success) {
                                             swal("Success!", response.message, "success");
+                                            $('#cart-count').text(response.count);
                                         } else {
                                             swal("Error!", response.message, "error");
                                         }

@@ -29,10 +29,10 @@
 @if(\Illuminate\Support\Facades\Auth::check())
     @if(\Illuminate\Support\Facades\Auth::user()->role == 0)
 <!-- Status : Loginned as customers -->
-        <a href="showcart" class="relative text-[#d7ccc3] hover:text-[#0a4a9f] transition flex items-center space-x-1" aria-label="Cart details page" ">
+        <a href="/cart" class="relative text-[#d7ccc3] hover:text-[#0a4a9f] transition flex items-center space-x-1" aria-label="Cart details page" ">
         <i class="fas fa-shopping-cart text-lg"></i>
-        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center select-none">
-      0
+        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center select-none">
+      {{$count = count($cart ?? [])}}
      </span>
         </a>
         <div class="relative cursor-pointer select-none font-semibold" id="userMenuWrapper" style="padding: 8px 12px;">
@@ -62,8 +62,8 @@
 <!-- Status : Loginned as admin -->
         <a href="/cart" class="relative text-[#d7ccc3] hover:text-[#0a4a9f] transition flex items-center space-x-1" aria-label="Cart details page" ">
             <i class="fas fa-shopping-cart text-lg"></i>
-            <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center select-none">
-      0
+            <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center select-none">
+      {{$count = count($cart ?? [])}}
      </span>
         </a>
             <div class="relative cursor-pointer select-none font-semibold" id="userMenuWrapper" style="padding: 8px 12px;">

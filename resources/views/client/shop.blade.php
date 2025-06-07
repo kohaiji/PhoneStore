@@ -9,6 +9,7 @@
     </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+{{--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">--}}
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -101,7 +102,7 @@
                 <a href="/product-details/{{$obj->id}}">
                     <img
                         alt="{{$obj->product_name}}"
-                        class="w-full h-56 object-cover"
+                        class="w-full h-full object-cover"
                         height="224"
                         src="{{ $obj->image_url ? '/image_product/' . $obj->image_url : 'https://storage.googleapis.com/a1aa/image/aa88dfbe-ab80-4fca-db94-141b7c08ed91.jpg' }}"
                         width="240"
@@ -118,9 +119,9 @@
                         {{$obj->description}}
                     </p>
                     <div class="mt-4 flex items-center justify-between">
-            <span class="text-base font-bold text-gray-900">
-              {{ number_format($obj->price, 0, ',', ',') }}đ
-            </span>
+                        <span class="text-base font-bold text-gray-900">
+                            {{ number_format($obj->price, 0, ',', ',') }}đ
+                        </span>
                         <a
                             class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition text-xs"
                             href="/product-details/{{$obj->id}}"
@@ -131,10 +132,9 @@
                 </div>
             </article>
         @endforeach
+        {{$products->links('pagination::tailwind')}}
     </section>
 </main>
-</div>
-
 <!-- Footer -->
 @include('client.footer')
 
@@ -143,7 +143,7 @@
     <script>
         Swal.fire({
             icon: 'info',
-            title: 'Cart is empty',
+            title: 'Cart is empty!',
             text: '{{ session('cart_empty') }}',
             confirmButtonText: 'OK'
         });

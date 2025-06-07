@@ -72,9 +72,11 @@
                 <span>Total</span>
                 <span id="cart-total">{{ number_format($total, 0, ',', ',') }}đ</span>
             </div>
-            <button class="w-full bg-[#0057FF] text-white font-semibold py-2 rounded hover:bg-[#0046d1] transition text-base">
+            <a
+                href="/checkout"
+                class="w-full block text-center bg-[#0057FF] text-white font-semibold py-2 rounded hover:bg-[#0046d1] transition text-base">
                 Proceed to Checkout
-            </button>
+            </a>
         </div>
     </div>
 
@@ -99,6 +101,13 @@
                     if (response.success) {
                         itemDiv.remove();
                         $('#cart-total').text(response.total);
+                        $('#cart-count').text(response.count);
+
+                        // Kiểm tra nếu không còn sản phẩm nào
+                        if ($('.btn-remove').length === 0) {
+                            $('main h2').text('Your Shopping Cart is empty, go shopping!');
+                            $('main').children().not('h2').remove();
+                        }
                     }
                 }
             });
