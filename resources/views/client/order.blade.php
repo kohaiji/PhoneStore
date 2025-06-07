@@ -19,7 +19,7 @@
     </style>
 </head>
 <body class="bg-gray-50 flex flex-col min-h-screen text-base sm:text-lg">
-<!-- Navbar -->
+<!-- Header -->
 
 @include('client.header')
 
