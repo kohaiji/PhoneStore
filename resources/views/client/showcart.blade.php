@@ -114,5 +114,17 @@
         });
     });
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    @if(session('error'))
+    Swal.fire({
+        icon: 'error',
+        title: 'Notification',
+        text: '{{ session('error') }}',
+    });
+    @endif
+</script>
 </body>
 </html>

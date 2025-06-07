@@ -169,95 +169,99 @@ class CartController extends Controller
     }
 
     public function checkout() {
-
         $cart = Session::get("cart");
 
-        if($cart ==null) {
+        if ($cart == null) {
             $cart = [];
         }
 
-        $total =0;
-        if(empty($cart)) {
+        if (empty($cart)) {
             return redirect("/cart");
         }
 
+        $total = 0;
+        $outOfStockItems = [];
 
         foreach ($cart as $item) {
+            $variant = DB::table("product_variants")
+                ->where("id", $item['variant_id'])
+                ->first();
+
+            if (!$variant || $variant->stock < $item['quantity']) {
+                $outOfStockItems[] = $item['variant_id']; // hoặc $item['product_name'] nếu có
+            }
+
             $total += $item['price'] * $item['quantity'];
         }
 
-        return view("client/checkout",[
+        if (!empty($outOfStockItems)) {
+            return redirect("/cart")->with("error", "Some products in your cart are out of stock. Please check your shopping cart!");
+        }
+
+        return view("client/checkout", [
             "cart" => $cart,
             "total" => $total,
         ]);
     }
 
     public function cartCheckout(Request $request) {
-        $total = $request->total;
-        $status = "Pending";
-
-        $userId = $request->userId;
-        $receiverName = $request->receiverName;
-        $address = $request->address;
-        $phone = $request->phone;
-        $paymentMethod = $request->paymentMethod;
-
-        DB::table("users")
-            ->where("id", $userId)
-            ->update([
-               "address" => $address,
-            ]);
-
-        $id = DB::table("orders")
-            // insertGetId: insert de lay Id
-            ->insertGetId([
-                "user_id" => $userId,
-                "full_name" => $receiverName,
-                "address" => $address,
-                "phone" => $phone,
-                "total" => $total,
-                "status" => $status,
-                "payment_method" => $paymentMethod,
-                "order_date" => date("Y-m-d H:i:s"),
-            ]);
-
-        // them san pham, quantity, price vao order_detail
         $cart = Session::get('cart');
-        foreach ($cart as $obj){
-            DB::table("order_details")
-                ->insert([
-                    'order_id' => $id,
-                    'product_variants_id' => $obj['variant_id'],
-                    'price' => $obj['price'],
-                    'quantity' => $obj['quantity'],
-                    "order_date" => date("Y-m-d H:i:s"),
-                ]);
-        }
 
-        // cap nhat so luong san pham trong kho
-        foreach ($cart as $obj) {
+        foreach ($cart as $item) {
             $variant = DB::table("product_variants")
-                ->where("id", $obj['variant_id'])
+                ->where("id", $item['variant_id'])
+                ->lockForUpdate()
                 ->first();
 
-            if ($variant && $variant->stock >= $obj['quantity']) {
-                DB::table("product_variants")
-                    ->where("id", $obj['variant_id'])
-                    ->update([
-                        "stock" => $variant->stock - $obj['quantity'],
-                    ]);
+            if (!$variant || $variant->stock < $item['quantity']) {
+                return redirect()->back()->with("error", "Product {$item['product_name']} {$item['color']} {$item['storage']} is not enough stock!");
             }
         }
 
-        //Xóa giỏ hàng
-        {
+        DB::beginTransaction();
+        try {
+            DB::table("users")
+                ->where("id", $request->userId)
+                ->update(["address" => $request->address]);
+
+            $orderId = DB::table("orders")
+                ->insertGetId([
+                    "user_id" => $request->userId,
+                    "full_name" => $request->receiverName,
+                    "address" => $request->address,
+                    "phone" => $request->phone,
+                    "total" => $request->total,
+                    "status" => "Pending",
+                    "payment_method" => $request->paymentMethod,
+                    "order_date" => now(),
+                ]);
+
+
+            foreach ($cart as $item) {
+                DB::table("order_details")->insert([
+                    'order_id' => $orderId,
+                    'product_variants_id' => $item['variant_id'],
+                    'price' => $item['price'],
+                    'quantity' => $item['quantity'],
+                    "order_date" => now(),
+                ]);
+
+                DB::table("product_variants")
+                    ->where("id", $item['variant_id'])
+                    ->decrement("stock", $item['quantity']);
+            }
+
             Session::forget("cart");
+            DB::commit();
+            return view("client/CartCheckoutSuccess");
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with("error", "An error occurred during payment: " . $e->getMessage());
         }
-
-        return view("client/CartCheckoutSuccess",[
-
-        ]);
     }
+
+
 
     public function test () {
         $product = DB::table('products')
