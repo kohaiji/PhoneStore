@@ -15,6 +15,31 @@
         body {
             font-family: 'Inter', sans-serif;
         }
+        /* Position arrows relative to image container */
+        .image-slider-wrapper {
+            position: relative;
+        }
+        .image-slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255 255 255 / 0.7);
+            border-radius: 9999px;
+            padding: 0.5rem;
+            box-shadow: 0 2px 6px rgb(0 0 0 / 0.15);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            z-index: 10;
+        }
+        .image-slider-arrow:hover {
+            background-color: rgba(255 255 255 / 1);
+        }
+        .image-slider-arrow-left {
+            left: 0.5rem;
+        }
+        .image-slider-arrow-right {
+            right: 0.5rem;
+        }
     </style>
 </head>
 <body class="bg-[#f8fafc] text-[#1e293b]">
@@ -28,55 +53,64 @@
     <div class="pt-24">
         <div class="bg-white rounded-lg shadow-lg p-8 flex flex-col md:flex-row gap-10">
             <!-- Product Images -->
-                <div class="md:w-1/2 flex flex-col space-y-4">
+            <div class="md:w-1/2 flex flex-col space-y-4">
+                <div class="image-slider-wrapper">
                     <img alt="iPhone Ultra front view with colorful wallpaper on light pink background"
-                         class="rounded-lg shadow-md object-contain w-full max-h-[400px]"
-                    @if(!empty($images[0]))
-                        src="{{'/image_product/' . $images[0]->image_url}}"
-                    @else
-                        src="https://storage.googleapis.com/a1aa/image/ff408632-80d6-4813-a1d4-b56d3a80488d.jpg"
-                    @endif
+                         class="rounded-lg shadow-md object-contain w-full max-h-[400px]" id="mainImage"
+                         @if(!empty($images[0]))
+                             src="{{'/image_product/' . $images[0]->image_url}}"
+                         @else
+                             src="https://storage.googleapis.com/a1aa/image/ff408632-80d6-4813-a1d4-b56d3a80488d.jpg"
+                        @endif
                     />
-                    <!-- Variants and Capacity options combined -->
-                    <div class="mt-4 grid grid-cols-3 gap-4">
-                        <!-- Variant 1 -->
-                        @foreach($variants as $obj)
-                            <button type="button"
-                                    class="variant-btn border border-gray-200 rounded-md flex flex-col items-center p-2 hover:border-[#2563eb] focus:outline-none"
-                                    data-variant-id="{{ $obj->id }}"
-                                    data-stock="{{ $obj->stock }}">
-                                <span class="text-xs text-gray-700">{{ $obj->color }} - {{ $obj->storage }}</span>
-                                <span class="text-xs text-gray-700 font-bold">
+                    <!-- Left arrow -->
+                    <button
+                        aria-label="Previous image"
+                        id="prevBtn"
+                        class="image-slider-arrow image-slider-arrow-left"
+                        type="button"
+                    >
+                        <i class="fas fa-chevron-left text-gray-700"></i>
+                    </button>
+                    <!-- Right arrow -->
+                    <button
+                        aria-label="Next image"
+                        id="nextBtn"
+                        class="image-slider-arrow image-slider-arrow-right"
+                        type="button"
+                    >
+                        <i class="fas fa-chevron-right text-gray-700"></i>
+                    </button>
+                </div>
+                <!-- Variants and Capacity options combined -->
+                <div class="mt-4 grid grid-cols-3 gap-4">
+                    <!-- Variant 1 -->
+                    @foreach($variants as $obj)
+                        <button type="button"
+                                class="variant-btn border border-gray-200 rounded-md flex flex-col items-center p-2 hover:border-[#2563eb] focus:outline-none"
+                                data-variant-id="{{ $obj->id }}"
+                                data-stock="{{ $obj->stock }}">
+                            <span class="text-xs text-gray-700">{{ $obj->color }} - {{ $obj->storage }}</span>
+                            <span class="text-xs text-gray-700 font-bold">
                                     Price: {{ number_format($product->price + $obj->price_adjustment, 0, ',', ',') }}đ
                                 </span>
-                                <span class="text-xs text-gray-700">
+                            <span class="text-xs text-gray-700">
                                     @if($obj->stock > 0)
-                                        <i class="bi bi-check-lg text-green-600">In stock</i>
-                                    @else
-                                        <i class="bi bi-x-lg text-red-600">Out of stock</i>
-                                    @endif
+                                    <i class="bi bi-check-lg text-green-600">In stock</i>
+                                @else
+                                    <i class="bi bi-x-lg text-red-600">Out of stock</i>
+                                @endif
                                 </span>
-                            </button>
-                        @endforeach
-{{--                        <!-- Variant 2 -->--}}
-{{--                        <button class="border border-gray-200 rounded-md flex flex-col items-center p-2 hover:border-[#2563eb] focus:outline-none focus:ring-2 focus:ring-[#2563eb]">--}}
-{{--                            <img alt="Phone variant in white color back view" class="object-contain mb-1" height="60" src="https://storage.googleapis.com/a1aa/image/d5e81482-a21e-410b-558e-e748fc12b892.jpg" width="60"/>--}}
-{{--                            <span class="text-xs text-gray-700">White - 256GB</span>--}}
-{{--                        </button>--}}
-{{--                        <!-- Variant 3 -->--}}
-{{--                        <button class="border border-gray-200 rounded-md flex flex-col items-center p-2 hover:border-[#2563eb] focus:outline-none focus:ring-2 focus:ring-[#2563eb]">--}}
-{{--                            <img alt="Phone variant in silver color side view" class="object-contain mb-1" height="30" src="https://storage.googleapis.com/a1aa/image/537dc3b9-b135-404b-5f24-a0e9f4221232.jpg" width="60"/>--}}
-{{--                            <span class="text-xs text-gray-700">Silver - 512GB</span>--}}
-{{--                        </button>--}}
-                    </div>
+                        </button>
+                    @endforeach
                 </div>
+            </div>
 
             <!-- Product Info -->
             <div class="md:w-1/2 flex flex-col justify-between">
                 <div>
                     <h1 class="text-3xl font-extrabold text-[#2563EB] mb-4">
                         {{$product->product_name}}
-                        {{--                        {{dd($variants)}}--}}
                     </h1>
                     <p class="text-gray-700 text-base mb-6 leading-relaxed">
                         {{$product->description}}
@@ -281,6 +315,42 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const images = [
+                @if(!empty($images[0]))
+                    "{{ '/image_product/' . $images[0]->image_url }}",
+                @else
+                    "https://storage.googleapis.com/a1aa/image/ff408632-80d6-4813-a1d4-b56d3a80488d.jpg",
+                @endif
+                    "https://placehold.co/600x400/png?text=Image+2",
+                "https://placehold.co/600x400/png?text=Image+3"
+            ];
+
+            const mainImage = document.getElementById('mainImage');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            let currentIndex = 0;
+
+            function setImage(index) {
+                if (index < 0) index = images.length - 1;
+                if (index >= images.length) index = 0;
+                currentIndex = index;
+                mainImage.src = images[currentIndex];
+            }
+
+            prevBtn.addEventListener('click', () => {
+                setImage(currentIndex - 1);
+            });
+            nextBtn.addEventListener('click', () => {
+                setImage(currentIndex + 1);
+            });
+
+            setImage(0);
+        });
+    </script>
     <!-- Reviews Section -->
     <section>
         <h2 class="text-2xl font-extrabold text-gray-900 mb-8">
@@ -400,6 +470,70 @@
             let currentValue = parseInt(quantityInput.value);
             quantityInput.value = currentValue + 1;
         });
+    </script>
+
+    <script>
+        // Example images array - replace with your dynamic images from backend
+        const images = [
+            "https://storage.googleapis.com/a1aa/image/ff408632-80d6-4813-a1d4-b56d3a80488d.jpg",
+            "https://placehold.co/400x400/png?text=Color+1+Version+1",
+            "https://placehold.co/400x400/png?text=Color+2+Version+1",
+            "https://placehold.co/400x400/png?text=Color+1+Version+2",
+            "https://placehold.co/400x400/png?text=Color+2+Version+2"
+        ];
+
+        const mainImage = document.getElementById("mainImage");
+        const thumbnailsContainer = document.getElementById("thumbnails");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        let currentIndex = 0;
+
+        // Initialize thumbnails
+        function initThumbnails() {
+            images.forEach((src, index) => {
+                const thumb = document.createElement("img");
+                thumb.src = src;
+                thumb.alt = `Thumbnail image ${index + 1}`;
+                thumb.className =
+                    "w-16 h-16 object-contain rounded-md cursor-pointer border-2 border-transparent hover:border-[#0c3b8f]";
+                if (index === 0) {
+                    thumb.classList.add("border-[#0c3b8f]");
+                }
+                thumb.addEventListener("click", () => {
+                    setCurrentImage(index);
+                });
+                thumbnailsContainer.appendChild(thumb);
+            });
+        }
+
+        // Update main image and highlight thumbnail
+        function setCurrentImage(index) {
+            currentIndex = index;
+            mainImage.src = images[index];
+            // Update thumbnail borders
+            Array.from(thumbnailsContainer.children).forEach((thumb, i) => {
+                if (i === index) {
+                    thumb.classList.add("border-[#0c3b8f]");
+                } else {
+                    thumb.classList.remove("border-[#0c3b8f]");
+                }
+            });
+        }
+
+        // Prev and Next button handlers
+        prevBtn.addEventListener("click", () => {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            setCurrentImage(currentIndex);
+        });
+
+        nextBtn.addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            setCurrentImage(currentIndex);
+        });
+
+        // Initialize on page load
+        initThumbnails();
     </script>
 </section>
 <!-- Footer -->
