@@ -30,9 +30,10 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 flex flex-col min-h-screen">
+<body class="bg-gray-50 text-gray-800">
 <!-- Header -->
 @include('client.header')
+
 <!-- Main Content -->
 <main class="max-w-3xl mx-auto px-6 sm:px-8 lg:px-10 py-12">
     <h1 class="text-3xl font-extrabold text-gray-900 mb-10 select-none tracking-tight">
