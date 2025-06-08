@@ -60,9 +60,8 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::post('/product-image-save/{id}', [AdminProductController::class, "imageSave"]);
 
 // ADMIN ORDER
-    Route::get('/order-list', [AdminOrderController::class, "getAll"]);
-    Route::get('/order-list/{status}', [AdminOrderController::class, "filter"]);
-    Route::get('/order-update-status/{id}/{status}', [AdminOrderController::class, "ordersUpdateStatus"]);
+    Route::get('/order-list', [AdminOrderController::class, "getAll"])->name('admin.orders.list');
+    Route::post('/order-update-status/{id}', [AdminOrderController::class, "updateStatus"]);
     Route::get('/order-details/{id}', [AdminOrderController::class, "orderDetails"]);
 
 // ADMIN STATS
