@@ -102,7 +102,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="block px-4 py-2 hover:bg-[#0a4a9f] hover:text-black" href="/logout">
+                                        <a class="block px-4 py-2 hover:bg-[#f41406] hover:text-black" href="/logout">
                                             Logout
                                         </a>
                                     </li>
