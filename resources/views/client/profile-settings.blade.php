@@ -30,7 +30,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-100 flex flex-col min-h-screen">
 <!-- Header -->
 @include('client.header')
 <!-- Main Content -->
