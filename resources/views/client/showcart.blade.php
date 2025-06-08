@@ -61,6 +61,7 @@
                             {{$obj["product_name"]}} {{$obj["color"]}}
                         </a>
                         <p class="font-semibold text-sm leading-tight">Storage: {{$obj["storage"]}}</p>
+                        <p class="font-semibold text-sm leading-tight">In stock: {{$obj["stock"]}}</p>
                         <p class="leading-tight text-base">{{$obj["description"]}}</p>
                     </div>
 
@@ -77,9 +78,12 @@
                         <input
                             class="w-16 border border-gray-300 rounded px-1 py-0.5 text-base item-quantity text-center"
                             min="1"
+                            max="{{$obj['stock']}}"
                             type="number"
                             value="{{$obj["quantity"]}}"
-                            data-id="{{ $obj['variant_id'] }}"/>
+                            data-id="{{ $obj['variant_id'] }}"
+                            data-stock="{{ $obj['stock'] }}"
+                            oninput="validateQuantity(this)"/>
                         <a href="javascript:void(0);" class="text-red-600 font-normal text-base hover:text-blue-500 btn-remove" data-id="{{ $obj['variant_id'] }}">
                             Remove
                         </a>
@@ -117,19 +121,47 @@
 <!-- Footer -->
 @include('client.footer')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    $(document).ready(function() {
-        // Sử dụng event delegation cho các input mới được thêm sau này
-        $(document).on('change', '.item-quantity', function() {
-            const variantId = $(this).data('id');
-            const quantity = $(this).val();
+    function validateQuantity(input) {
+        const stock = parseInt(input.dataset.stock);
+        let value = parseInt(input.value) || 1;
 
-            if (quantity < 1) {
-                $(this).val(1);
-                return;
+        if (value > stock) {
+            input.value = stock;
+            Swal.fire({
+                icon: 'warning',
+                title: 'Exceeded In Stock!',
+                text: `Maximum quantity for this product is ${stock}`
+            });
+        }
+
+        if (value < 1 || isNaN(value)) {
+            input.value = 1;
+        }
+    }
+
+    $(document).ready(function () {
+        $(document).on('change', '.item-quantity', function () {
+            const variantId = $(this).data('id');
+            let quantity = parseInt($(this).val());
+            const stock = parseInt($(this).data('stock'));
+
+            if (quantity > stock) {
+                quantity = stock;
+                $(this).val(stock);
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Exceeded In Stock!',
+                    text: `Quantity not to exceed ${stock}`
+                });
             }
 
-            // Hiển thị loading
+            if (quantity < 1 || isNaN(quantity)) {
+                quantity = 1;
+                $(this).val(1);
+            }
+
             const itemElement = $(this).closest(`[data-variant="${variantId}"]`);
             itemElement.addClass('updating').css('opacity', '0.7');
 
@@ -141,19 +173,20 @@
                     variant_id: variantId,
                     quantity: quantity
                 },
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
-                        // 1. Cập nhật tổng cho SẢN PHẨM HIỆN TẠI
                         $(`#item-total-${variantId}`).text(response.item_total + 'đ');
-
-                        // 2. Cập nhật tổng CẢ GIỎ HÀNG
                         $('#cart-total').text(response.cart_total + 'đ');
                     }
                 },
-                error: function() {
-                    alert('Có lỗi xảy ra khi cập nhật số lượng');
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred while updating the quantity.'
+                    });
                 },
-                complete: function() {
+                complete: function () {
                     itemElement.removeClass('updating').css('opacity', '1');
                 }
             });
