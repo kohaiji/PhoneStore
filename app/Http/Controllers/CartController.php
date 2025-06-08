@@ -121,10 +121,8 @@ class CartController extends Controller
             return $item['variant_id'] != $variantId;
         });
 
-        // Cập nhật lại session
         Session::put('cart', $cart);
 
-        // Tính toán lại tổng tiền
         $total = 0;
         foreach ($cart as $item) {
             $total += $item['price'] * $item['quantity'];
@@ -144,22 +142,28 @@ class CartController extends Controller
         $quantity = (int)$request->input('quantity');
         $cart = Session::get('cart', []);
 
-        // Tìm và cập nhật số lượng
+        $found = false;
+        $itemTotal = 0;
+        $cartTotal = 0;
+
+        // update quantity
         foreach ($cart as &$item) {
             if ($item['variant_id'] == $variantId) {
                 $item['quantity'] = $quantity;
                 $itemTotal = $item['price'] * $quantity;
-                break;
+                $found = true;
             }
+            $cartTotal += $item['price'] * $item['quantity'];
+        }
+
+        if (!$found) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Product does not exist in cart!'
+            ]);
         }
 
         Session::put('cart', $cart);
-
-        // Tính tổng giỏ hàng mới
-        $cartTotal = 0;
-        foreach ($cart as $item) {
-            $cartTotal += $item['price'] * $item['quantity'];
-        }
 
         return response()->json([
             'success' => true,

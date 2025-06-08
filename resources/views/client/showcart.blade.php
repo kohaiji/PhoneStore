@@ -14,6 +14,23 @@
             font-family: 'Inter', sans-serif;
             font-size: 1.125rem; /* 18px, noticeably bigger */
         }
+
+        .updating {
+            position: relative;
+        }
+
+        .updating::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('gif/497.gif')
+            center center no-repeat
+            rgba(255,255,255,0.8);
+            background-size: 40px;
+        }
     </style>
 </head>
 <body class="bg-white text-gray-900 flex flex-col min-h-screen">
@@ -32,7 +49,7 @@
                 </a>
 
             @foreach($cart as $obj)
-                <div class="flex items-center space-x-4 bg-white rounded-lg p-4 shadow-sm border border-transparent hover:border-gray-100" id="item-{{ $obj['variant_id'] }}">
+                <div class="flex items-center space-x-4 bg-white rounded-lg p-4 shadow-sm border border-transparent hover:border-gray-100" id="item-{{ $obj['variant_id'] }}" data-variant="{{ $obj['variant_id'] }}">
                     <div class="flex-shrink-0 bg-[#F9F0F7] rounded-md p-2">
                         <img alt="{{$obj["product_name"]}}" class="w-16 h-16 object-contain" src="{{$obj["image_url"] ? '/image_product/' . $obj["image_url"] : $obj["image_url"]}}"/>
                     </div>
@@ -53,7 +70,12 @@
                                 </span>
                             </span>
                             <span>Quantity:</span>
-                            <input class="w-16 border border-gray-300 rounded px-1 py-0.5 text-base" min="1" type="number" value="{{$obj["quantity"]}}"/>
+                            <input
+                                class="w-16 border border-gray-300 rounded px-1 py-0.5 text-base item-quantity"
+                                min="1"
+                                type="number"
+                                value="{{$obj["quantity"]}}"
+                                data-id="{{ $obj['variant_id'] }}"/>
                             <a href="javascript:void(0);" class="text-red-600 font-normal text-base hover:text-blue-500 btn-remove" data-id="{{ $obj['variant_id'] }}">
                                 Remove
                             </a>
@@ -94,16 +116,19 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        // Xử lý thay đổi số lượng
-        $('input[type="number"]').on('change', function() {
-            const variantId = $(this).closest('.flex').find('.btn-remove').data('id');
+        // Sử dụng event delegation cho các input mới được thêm sau này
+        $(document).on('change', '.item-quantity', function() {
+            const variantId = $(this).data('id');
             const quantity = $(this).val();
 
-            // Validate số lượng
             if (quantity < 1) {
                 $(this).val(1);
                 return;
             }
+
+            // Hiển thị loading
+            const itemElement = $(this).closest(`[data-variant="${variantId}"]`);
+            itemElement.addClass('updating').css('opacity', '0.7');
 
             $.ajax({
                 url: '{{ route("cart.updateQuantity") }}',
@@ -115,12 +140,18 @@
                 },
                 success: function(response) {
                     if (response.success) {
-                        // Cập nhật tổng tiền cho sản phẩm
-                        $('#item-total-' + variantId).text(response.item_total + 'đ');
+                        // 1. Cập nhật tổng cho SẢN PHẨM HIỆN TẠI
+                        $(`#item-total-${variantId}`).text(response.item_total + 'đ');
 
-                        // Cập nhật tổng giỏ hàng
+                        // 2. Cập nhật tổng CẢ GIỎ HÀNG
                         $('#cart-total').text(response.cart_total + 'đ');
                     }
+                },
+                error: function() {
+                    alert('Có lỗi xảy ra khi cập nhật số lượng');
+                },
+                complete: function() {
+                    itemElement.removeClass('updating').css('opacity', '1');
                 }
             });
         });
