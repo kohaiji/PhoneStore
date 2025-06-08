@@ -44,42 +44,45 @@
     <div class="flex flex-col md:flex-row" style="gap: 160px;">
         <!-- Cart Items -->
         <div class="flex-1 space-y-4">
-                <a class="text-red-600 mb-4 inline-block underline hover:text-blue-500" href="/cartRemoveAll">
-                    Remove All
-                </a>
+            <a class="text-red-600 mb-4 inline-block underline hover:text-blue-500" href="/cartRemoveAll">
+                Remove All
+            </a>
 
             @foreach($cart as $obj)
-                <div class="flex items-center space-x-4 bg-white rounded-lg p-4 shadow-sm border border-transparent hover:border-gray-100" id="item-{{ $obj['variant_id'] }}" data-variant="{{ $obj['variant_id'] }}">
-                    <div class="flex-shrink-0 bg-[#F9F0F7] rounded-md p-2">
+                <div class="grid grid-cols-12 items-center bg-white rounded-lg p-4 shadow-sm border border-transparent hover:border-gray-100 gap-4" id="item-{{ $obj['variant_id'] }}" data-variant="{{ $obj['variant_id'] }}">
+                    <!-- Image -->
+                    <div class="col-span-2 flex justify-center bg-[#F9F0F7] rounded-md p-2">
                         <img alt="{{$obj["product_name"]}}" class="w-16 h-16 object-contain" src="{{$obj["image_url"] ? '/image_product/' . $obj["image_url"] : $obj["image_url"]}}"/>
                     </div>
-                    <div class="flex-1 text-gray-700">
-                        <a class="text-[#0057FF] font-semibold text-sm leading-tight" href="/product-details/{{$obj["product_id"]}}">
+
+                    <!-- Info -->
+                    <div class="col-span-4 text-gray-700 space-y-1">
+                        <a class="text-[#0057FF] font-semibold text-sm leading-tight block" href="/product-details/{{$obj["product_id"]}}">
                             {{$obj["product_name"]}} {{$obj["color"]}}
                         </a>
                         <p class="font-semibold text-sm leading-tight">Storage: {{$obj["storage"]}}</p>
-                        <p class="mt-1 leading-tight text-base">{{$obj["description"]}}</p>
-                        <div class="flex items-center space-x-4 mt-2 font-semibold text-gray-900 text-base">
-                            <span>
-                                <span
-                                    class="font-bold item-total"
-                                    id="item-total-{{ $obj['variant_id'] }}"
-                                    data-price="{{ $obj['price'] }}"
-                                >
-                                    {{ number_format($obj["price"] * $obj["quantity"], 0, ',', ',') }}đ
-                                </span>
-                            </span>
-                            <span>Quantity:</span>
-                            <input
-                                class="w-16 border border-gray-300 rounded px-1 py-0.5 text-base item-quantity"
-                                min="1"
-                                type="number"
-                                value="{{$obj["quantity"]}}"
-                                data-id="{{ $obj['variant_id'] }}"/>
-                            <a href="javascript:void(0);" class="text-red-600 font-normal text-base hover:text-blue-500 btn-remove" data-id="{{ $obj['variant_id'] }}">
-                                Remove
-                            </a>
-                        </div>
+                        <p class="leading-tight text-base">{{$obj["description"]}}</p>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="col-span-2 font-semibold text-gray-900 text-base text-center">
+                <span class="font-bold item-total" id="item-total-{{ $obj['variant_id'] }}" data-price="{{ $obj['price'] }}">
+                    {{ number_format($obj["price"] * $obj["quantity"], 0, ',', ',') }}đ
+                </span>
+                    </div>
+
+                    <!-- Quantity & Remove -->
+                    <div class="col-span-4 flex items-center justify-center space-x-2">
+                        <label class="text-sm">Quantity:</label>
+                        <input
+                            class="w-16 border border-gray-300 rounded px-1 py-0.5 text-base item-quantity text-center"
+                            min="1"
+                            type="number"
+                            value="{{$obj["quantity"]}}"
+                            data-id="{{ $obj['variant_id'] }}"/>
+                        <a href="javascript:void(0);" class="text-red-600 font-normal text-base hover:text-blue-500 btn-remove" data-id="{{ $obj['variant_id'] }}">
+                            Remove
+                        </a>
                     </div>
                 </div>
             @endforeach
