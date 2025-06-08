@@ -11,16 +11,18 @@
         }
     </style>
 </head>
-<body class="bg-gray-900 flex flex-col min-h-screen">
+<body class="bg-gray-100 flex flex-col min-h-screen">
 <!-- Header -->
 @include('client.header')
-<main class="bg-white rounded-lg shadow-lg max-w-md w-full p-8 text-center">
-    <svg class="mx-auto mb-6 w-20 h-20 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
-    </svg>
-    <h1 class="text-3xl font-bold mb-4 text-gray-900">Checkout Successful!</h1>
-    <p class="text-gray-700 mb-6">Thank you for your order. Your checkout was completed successfully.</p>
-    <a href="/" class="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded hover:bg-blue-700 transition-colors">Back to Home</a>
+<main class="flex-grow flex items-center justify-center p-8">
+    <div class="bg-white rounded-lg shadow-lg max-w-md w-full text-center p-8">
+        <svg class="mx-auto mb-6 w-20 h-20 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <h1 class="text-3xl font-bold mb-4 text-gray-900">Checkout Successful!</h1>
+        <p class="text-gray-700 mb-6">Thank you for your order. Your checkout was completed successfully.</p>
+        <a href="/" class="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded hover:bg-blue-700 transition-colors">Back to Home</a>
+    </div>
 </main>
 
 <!-- Footer -->
