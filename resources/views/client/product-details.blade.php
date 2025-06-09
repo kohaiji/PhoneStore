@@ -109,7 +109,7 @@
                                 </span>
                             <span class="text-xs text-gray-700">
                                     @if($obj->stock > 0)
-                                    <i class="bi bi-check-lg text-green-600">In stock</i>
+                                    <i class="bi bi-check-lg text-green-600">In stock: {{$obj->stock}}</i>
                                 @else
                                     <i class="bi bi-x-lg text-red-600">Out of stock</i>
                                 @endif
