@@ -69,15 +69,16 @@
             <input type="hidden" name="total" value="{{$total}}">
             <input type="hidden" name="userId" value="{{\Illuminate\Support\Facades\Auth::user()->id}}">
             <div>
-                <label for="receiverName" class="block text-sm font-semibold mb-2 text-gray-700">Receiver Name</label>
+                <label for="email" class="block text-sm font-semibold mb-2 text-gray-700">Email</label>
                 <input
-                    type="text"
-                    id="receiverName"
-                    name="receiverName"
-                    placeholder="Enter receiver's name"
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter email address"
                     required
                     class="w-full border border-gray-300 rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value="{{\Illuminate\Support\Facades\Auth::user()->name}}"
+                    value="{{\Illuminate\Support\Facades\Auth::user()->email}}"
+                    disabled
                 />
             </div>
             <div>
@@ -91,6 +92,19 @@
                     pattern="[0-9]{9,15}"
                     class="w-full border border-gray-300 rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                     value="{{\Illuminate\Support\Facades\Auth::user()->phone}}"
+                    disabled
+                />
+            </div>
+            <div>
+                <label for="receiverName" class="block text-sm font-semibold mb-2 text-gray-700">Receiver Name</label>
+                <input
+                    type="text"
+                    id="receiverName"
+                    name="receiverName"
+                    placeholder="Enter receiver's name"
+                    required
+                    class="w-full border border-gray-300 rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value="{{\Illuminate\Support\Facades\Auth::user()->name}}"
                 />
             </div>
             <div>
@@ -103,18 +117,6 @@
                     rows="3"
                     class="w-full border border-gray-300 rounded-md px-4 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >{{\Illuminate\Support\Facades\Auth::user()->address}}</textarea>
-            </div>
-            <div>
-                <label for="email" class="block text-sm font-semibold mb-2 text-gray-700">Email</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Enter email address"
-                    required
-                    class="w-full border border-gray-300 rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value="{{\Illuminate\Support\Facades\Auth::user()->email}}"
-                />
             </div>
             <fieldset class="mb-6">
                 <legend class="text-sm font-semibold mb-3 text-gray-700">Payment Method</legend>
