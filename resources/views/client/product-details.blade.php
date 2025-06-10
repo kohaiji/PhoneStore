@@ -56,16 +56,16 @@
             <div class="md:w-1/2 flex flex-col space-y-4">
                 <div class="image-slider-wrapper relative">
                     <div class="relative w-full overflow-hidden">
-                        @foreach($images as $index => $img)
-                            <img
-                                alt="Product Image"
-                                class="rounded-lg shadow-md object-contain w-full max-h-[400px] slider-image {{ $index === 0 ? '' : 'hidden' }}"
-                                src="{{ '/image_product/' . $img->image_url }}"
-                                data-index="{{ $index }}"
-                            />
-                        @endforeach
-
-                        @if(empty($images))
+                        @if($images && $images->isNotEmpty())
+                            @foreach($images as $index => $img)
+                                <img
+                                    alt="Product Image"
+                                    class="rounded-lg shadow-md object-contain w-full max-h-[400px] slider-image {{ $index === 0 ? '' : 'hidden' }}"
+                                    src="{{ '/image_product/' . $img->image_url }}"
+                                    data-index="{{ $index }}"
+                                />
+                            @endforeach
+                        @else
                             <img
                                 alt="Default Image"
                                 class="rounded-lg shadow-md object-contain w-full max-h-[400px] slider-image"
