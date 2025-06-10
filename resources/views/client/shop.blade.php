@@ -82,13 +82,15 @@
 <!-- Search bar -->
 <section class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 mb-10">
     <div class="flex justify-center">
-        <form class="flex w-full max-w-6xl" style="margin-top: 40px">
+        <form action="{{ route('shop') }}" method="GET" class="flex w-full max-w-6xl" style="margin-top: 40px">
             <input
+                name="search"
                 aria-label="Search products"
                 class="flex-grow px-4 py-3 border border-gray-300 rounded-l text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Search product..."
                 type="search"
                 style="width: 800px"
+                value="{{ request('search') }}"
             />
             <button
                 class="bg-[#2563eb] text-white px-6 py-3 rounded-r text-sm font-semibold hover:bg-[#1e40af]"
@@ -188,7 +190,7 @@
                 </article>
             @endforeach
             <div class="col-span-full flex justify-center mt-6">
-                {{$products->links('pagination::tailwind')}}
+{{--                {{$products->links('pagination::tailwind')}}--}}
             </div>
         </section>
     </div>

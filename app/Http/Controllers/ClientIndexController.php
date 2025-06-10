@@ -182,11 +182,9 @@ class ClientIndexController extends Controller
         dd($cart);
     }
 
-    public function shop():View {
-        $cart = Session::get("cart");
-
-
-        $products = DB::table('products')
+    public function shop(Request $request):View {
+        $cart = Session::get("cart", []);
+        $query = DB::table('products')
             ->leftJoin(DB::raw('
             (
                 SELECT product_id, image_url
@@ -198,9 +196,17 @@ class ClientIndexController extends Controller
                 )
             ) AS pi
         '), 'products.id', '=', 'pi.product_id')
-            ->select('products.*', 'pi.image_url')
-            ->paginate(12);
+            ->select('products.*', 'pi.image_url');
 
+
+        if ($request->has('search') && !empty(trim($request->search))) {
+            $keywords = explode(' ', trim($request->search));
+            foreach ($keywords as $word) {
+                $query->where('products.product_name', 'like', '%' . $word . '%');
+            }
+        }
+
+        $products = $query->get();
 
         return view("client/shop", [
             "products" => $products,

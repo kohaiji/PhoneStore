@@ -7,7 +7,7 @@ use App\Http\Controllers\AdminBrandController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AuthController;
 
-Route::get('/shop', [ClientIndexController::class, "shop"]);
+Route::get('/shop', [ClientIndexController::class, "shop"])->name("shop");
 Route::get('/shop/{status}', [ClientIndexController::class, "filter"]);
 Route::get('/ClientIndex', [ClientIndexController::class, "clientIndex"]);
 Route::get('/contact', [ClientIndexController::class, "contact"]);
