@@ -111,7 +111,7 @@
         >
             <div class="flex justify-between items-center mb-3">
                 <span class="font-semibold text-sm">Filter</span>
-                <a class="text-xs text-[#3B8BFF] hover:underline" href="#">View All</a>
+                <a class="text-xs text-[#3B8BFF] hover:underline" href="shop">View All</a>
             </div>
             <div class="mb-3">
                 <label class="block font-semibold text-xs mb-1">Price Range</label>
