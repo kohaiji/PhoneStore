@@ -12,7 +12,7 @@
 <body>
 <header class="fixed top-0 left-0 w-full bg-white shadow-md z-50">
     <div class="container mx-auto flex items-center justify-between px-6 py-4 max-w-7xl">
-        <a class="flex items-center space-x-2" href="#">
+        <a class="flex items-center space-x-2" href="ClientIndex">
             <img alt="Company logo, stylized phone icon in blue and white" class="w-10 h-10" height="40" src="https://storage.googleapis.com/a1aa/image/3b8cf454-20ca-4227-3813-fb32e614492d.jpg" width="40"/>
             <span class="text-2xl font-bold text-blue-600">
       PhoneStore
