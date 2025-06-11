@@ -73,7 +73,7 @@
 <body class="bg-white text-gray-700 flex flex-col min-h-screen">
 <!-- Header -->
 @include('client.header')
-<!-- Hero Blue Bar -->
+
 <div class="bg-gradient-to-r from-[#3b82f6] to-[#60a5fa] h-36 mb-6 flex items-end" style="margin-top: 50px;">
     <h1 class="products-title px-10 pb-4 text-center w-full">
         Products
@@ -103,11 +103,11 @@
 </section>
 <!-- Main content -->
 <main class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 mt-10 max-w-7xl">
-    <div class="grid grid-cols-12 gap-x-12">
-        <!-- Filter box: 3 columns -->
+    <div class="grid grid-cols-12 gap-x-12 min-h-[calc(100vh-6rem)]">
+        <!-- Filter-->
         <aside
             class="col-span-12 md:col-span-3 border border-gray-200 rounded-md p-6 text-xs text-gray-700 font-normal sticky top-20 self-start"
-            style="min-height: calc(100vh - 6rem)"
+            style="min-height: calc(100vh - 6rem); width: 280px;"
         >
             <div class="flex justify-between items-center mb-3">
                 <span class="font-semibold text-sm">Filter</span>
@@ -148,49 +148,56 @@
                 Apply Filters
             </button>
         </aside>
-        <!-- Products grid: 9 columns -->
+        <!-- Products-->
         <section
             class="col-span-12 md:col-span-9 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-14 gap-y-14"
+            style="min-height: calc(100vh - 6rem);"
         >
-            @foreach ($products as $obj)
-                <article
-                    class="border border-gray-200 rounded-md overflow-hidden flex flex-col max-w-[240px]"
-                >
-                    <a href="/product-details/{{$obj->id}}">
-                        <img
-                            alt="{{$obj->product_name}}"
-                            class="w-full h-full object-cover"
-                            height="224"
-                            src="{{ $obj->image_url ? '/image_product/' . $obj->image_url : 'https://storage.googleapis.com/a1aa/image/aa88dfbe-ab80-4fca-db94-141b7c08ed91.jpg' }}"
-                            width="240"
-                        />
-                    </a>
-                    <div class="p-5 flex flex-col flex-grow">
-                        <a
-                            class="text-lg font-semibold mb-2 text-blue-600"
-                            href="/product-details/{{$obj->id}}"
-                        >
-                            {{$obj->product_name}}
+            @if($products->count() == 0)
+                <div class="col-span-full flex justify-center items-center text-gray-500 text-lg font-semibold" style="height: calc(100vh - 6rem);">
+                    No products found.
+                </div>
+            @else
+                @foreach ($products as $obj)
+                    <article
+                        class="border border-gray-200 rounded-md overflow-hidden flex flex-col max-w-[240px]"
+                    >
+                        <a href="/product-details/{{$obj->id}}">
+                            <img
+                                alt="{{$obj->product_name}}"
+                                class="w-full h-full object-cover"
+                                height="224"
+                                src="{{ $obj->image_url ? '/image_product/' . $obj->image_url : 'https://storage.googleapis.com/a1aa/image/aa88dfbe-ab80-4fca-db94-141b7c08ed91.jpg' }}"
+                                width="240"
+                            />
                         </a>
-                        <p class="text-gray-600 flex-grow text-xs leading-tight">
-                            {{$obj->description}}
-                        </p>
-                        <div class="mt-4 flex items-center justify-between">
-                            <span class="text-base font-bold text-gray-900">
-                                {{ number_format($obj->price, 0, ',', ',') }}đ
-                            </span>
+                        <div class="p-5 flex flex-col flex-grow">
                             <a
-                                class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition text-xs"
+                                class="text-lg font-semibold mb-2 text-blue-600"
                                 href="/product-details/{{$obj->id}}"
                             >
-                                Buy Now
+                                {{$obj->product_name}}
                             </a>
+                            <p class="text-gray-600 flex-grow text-xs leading-tight">
+                                {{$obj->description}}
+                            </p>
+                            <div class="mt-4 flex items-center justify-between">
+                                <span class="text-base font-bold text-gray-900">
+                                    {{ number_format($obj->price, 0, ',', ',') }}đ
+                                </span>
+                                <a
+                                    class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition text-xs"
+                                    href="/product-details/{{$obj->id}}"
+                                >
+                                    Buy Now
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                </article>
-            @endforeach
+                    </article>
+                @endforeach
+            @endif
             <div class="col-span-full flex justify-center mt-6">
-{{--                {{$products->links('pagination::tailwind')}}--}}
+                {{--                {{$products->links('pagination::tailwind')}}--}}
             </div>
         </section>
     </div>
