@@ -38,7 +38,7 @@ class AdminOrderController extends Controller
         $allowedTransitions = [
             'Pending' => ['Confirmed', 'Cancelled'],
             'Confirmed' => ['Shipping', 'Cancelled'],
-            'Shipping' => ['Completed', 'Cancelled'],
+            'Shipping' => ['Completed'],
             'Completed' => [],
             'Cancelled' => []
         ];

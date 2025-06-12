@@ -220,8 +220,8 @@ class ClientIndexController extends Controller
         $cart = Session::get("cart");
 
         $orders = DB::table("orders")
-            ->where("orders.phone", "=", Auth::user()->phone)
-            ->paginate(8);
+            ->where("orders.user_id", "=", Auth::user()->id)
+            ->get();
 
 
         return view("client/order", [
@@ -230,60 +230,86 @@ class ClientIndexController extends Controller
         ]);
     }
 
-    public function orderDetails($id, $id2)
+    public function orderDetails($id)
     {
         $cart = Session::get("cart");
 
-        $idcus = $id2;
+        $order = DB::table('orders')->where('id', $id)->first();
+        if (!$order) {
+            abort(404);
+        }
 
-        $ordersTotal = DB::table("orders")
-            ->where("orders.id", "=", $id)
-            ->get();
+        $orderId = $id;
 
+        // Lấy chi tiết sản phẩm trong đơn hàng
         $orderDetails = DB::table("order_details")
-            ->where("orders.id", "=", $id)
-            ->join("orders", "order_details.order_id", "=", "orders.id")
-            ->join("product", "order_details.product_id", "=", "product.id")
-            ->select("product.product_name", "product.description", "product.image", "orders.id", "order_details.price", "order_details.quantity")
+            ->select(
+                'order_details.id',
+                'order_details.price',
+                'order_details.quantity',
+                'products.product_name',
+                'product_variants.color',
+                'product_variants.storage',
+                'product_variants.price_adjustment',
+                'product_images.image_url'
+            )
+            ->join('product_variants', 'order_details.product_variants_id', '=', 'product_variants.id')
+            ->join('products', 'product_variants.product_id', '=', 'products.id')
+            ->leftJoin(DB::raw('(
+            SELECT product_id, MIN(id) as min_id
+            FROM product_images
+            GROUP BY product_id
+        ) as first_image'), 'products.id', '=', 'first_image.product_id')
+            ->leftJoin('product_images', 'first_image.min_id', '=', 'product_images.id')
+            ->where('order_details.order_id', $id)
             ->get();
 
+        // Tính toán tổng tiền
+        $subtotal = 0;
+        foreach ($orderDetails as $item) {
+            $subtotal += $item->price * $item->quantity;
+        }
 
-        return view("client/order-details", [
-            "orderDetails" => $orderDetails,
-            "ordersTotal" => $ordersTotal,
-            "idcus" => $idcus,
+        return view('client.order-details', [
+            'order' => $order,
+            'orderDetails' => $orderDetails,
+            'subtotal' => $subtotal,
             "cart" => $cart,
+            "orderId" => $orderId,
         ]);
     }
 
-    public function ordersUpdateStatus($id, $status) {
+    public function updateStatus(Request $request, $id) {
         $cart = Session::get("cart");
-        $order = DB::table("orders")
-            ->get();
+        $action = $request->input('action');
 
-        foreach ($order as $obj){
-            if ($obj->id == $id && $obj->status != "RECEIVED")
-            {
-                if($status == "CANCELED" && ($obj->status == "PENDING" || $obj->status == "CONFIRMED") && $obj->status != "SHIPPING"){
-                    DB::table("orders")
-                        ->where("id", $id)
-                        ->update([
-                            "status" => $status
-                        ]);
-                }
-                else
-                {
-                    DB::table("orders")
-                        ->where("id", $id)
-                        ->update([
-                            "status" => $status
-                        ]);
-                }
-            }
+        $order = DB::table('orders')
+            ->where('id', $id)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if (!$order) {
+            return back()->with('error', 'Order not found.');
         }
 
+        $newStatus = null;
 
-        return redirect ('/order');
+        if ($action === 'cancel' && in_array($order->status, ['Pending', 'Confirmed'])) {
+            $newStatus = 'Cancelled';
+        } elseif ($action === 'complete' && $order->status === 'Shipping') {
+            $newStatus = 'Completed';
+        }
+
+        if ($newStatus) {
+            DB::table('orders')
+                ->where('id', $id)
+                ->update([
+                    'status' => $newStatus
+                ]);
+            return back()->with('success', 'Order status updated successfully.');
+        }
+
+        return back()->with('error', 'Unable to update order status.');
     }
 
     public function filter($status)

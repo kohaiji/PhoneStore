@@ -63,91 +63,54 @@
             </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
+            @foreach($orders as $index => $obj)
             <tr>
                 <td class="px-8 py-6 whitespace-nowrap text-gray-900 select-text">
-                    #1001
+                    {{$index+1}}
                 </td>
                 <td class="px-8 py-6 whitespace-nowrap text-gray-900 select-text">
-                    2024-06-01
+                    {{$obj->order_date}}
                 </td>
                 <td class="px-8 py-6 whitespace-nowrap">
-              <span
-                  class="inline-block px-3 py-1 text-sm font-semibold text-green-700 bg-green-100 rounded select-none"
-              >Delivered</span
-              >
+                    <span class="inline-block px-3 py-1 text-sm font-semibold rounded select-none
+                        {{ $obj->status == 'Completed' ? 'text-green-700 bg-green-100' :
+                           ($obj->status == 'Cancelled' ? 'text-red-700 bg-red-100' :
+                           ($obj->status == 'Shipping' ? 'text-blue-700 bg-blue-100' :
+                           ($obj->status == 'Pending' ? 'text-yellow-700 bg-yellow-100' : 'text-orange-500 bg-orange-100'))) }}">
+                        {{ $obj->status }}
+                    </span>
                 </td>
                 <td class="px-8 py-6 whitespace-nowrap font-bold text-gray-900 select-text">
-                    $320.00
+                    {{ number_format($obj->total, 0, ',', ',') }}đ
                 </td>
                 <td class="px-8 py-6 whitespace-nowrap">
-                    <a
-                        href="#"
-                        class="text-blue-600 hover:underline select-text"
-                    >View Details</a
-                    >
-                    <span class="text-gray-400 ml-6 select-none cursor-default"
-                    >Cancel</span
-                    >
+                    <a href="/order-details/{{$obj->id}}" class="text-blue-600 hover:underline select-text">
+                        View Details
+                    </a>
+
+                    @if($obj->status === 'Pending' || $obj->status === 'Confirmed')
+                        <form method="POST" action="{{ route('orders.updateStatus', $obj->id) }}" class="inline-block ml-6"
+                              onsubmit="return confirm('Are you sure you want to cancel this order?');">
+                            @csrf
+                            @method('PATCH')
+                            <input type="hidden" name="action" value="cancel">
+                            <button type="submit" class="text-red-600 hover:underline">Cancel</button>
+                        </form>
+                    @endif
+
+                    @if($obj->status === 'Shipping')
+                        <form method="POST" action="{{ route('orders.updateStatus', $obj->id) }}" class="inline-block ml-6"
+                              onsubmit="return confirm('Confirm you received the order?');">
+                            @csrf
+                            @method('PATCH')
+                            <input type="hidden" name="action" value="complete">
+                            <button type="submit" class="text-green-600 hover:underline">Mark as Received</button>
+                        </form>
+                    @endif
                 </td>
+
             </tr>
-            <tr>
-                <td class="px-8 py-6 whitespace-nowrap text-gray-900 select-text">
-                    #1002
-                </td>
-                <td class="px-8 py-6 whitespace-nowrap text-gray-900 select-text">
-                    2024-06-10
-                </td>
-                <td class="px-8 py-6 whitespace-nowrap">
-              <span
-                  class="inline-block px-3 py-1 text-sm font-semibold text-yellow-700 bg-yellow-100 rounded select-none"
-              >Processing</span
-              >
-                </td>
-                <td class="px-8 py-6 whitespace-nowrap font-bold text-gray-900 select-text">
-                    $1,099.00
-                </td>
-                <td class="px-8 py-6 whitespace-nowrap">
-                    <a
-                        href="#"
-                        class="text-blue-600 hover:underline select-text"
-                    >View Details</a
-                    >
-                    <a
-                        href="#"
-                        class="text-red-600 hover:underline ml-6 select-text"
-                    >Cancel</a
-                    >
-                </td>
-            </tr>
-            <tr>
-                <td class="px-8 py-6 whitespace-nowrap text-gray-900 select-text">
-                    #1003
-                </td>
-                <td class="px-8 py-6 whitespace-nowrap text-gray-900 select-text">
-                    2024-06-15
-                </td>
-                <td class="px-8 py-6 whitespace-nowrap">
-              <span
-                  class="inline-block px-3 py-1 text-sm font-semibold text-blue-700 bg-blue-100 rounded select-none"
-              >Shipped</span
-              >
-                </td>
-                <td class="px-8 py-6 whitespace-nowrap font-bold text-gray-900 select-text">
-                    $899.00
-                </td>
-                <td class="px-8 py-6 whitespace-nowrap">
-                    <a
-                        href="#"
-                        class="text-blue-600 hover:underline select-text"
-                    >View Details</a
-                    >
-                    <a
-                        href="#"
-                        class="text-red-600 hover:underline ml-6 select-text"
-                    >Cancel</a
-                    >
-                </td>
-            </tr>
+            @endforeach
             </tbody>
         </table>
     </div>
@@ -155,5 +118,27 @@
 
 <!-- Footer -->
 @include('client.footer')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: '{{ session('success') }}',
+            confirmButtonColor: '#3085d6'
+        });
+    </script>
+@endif
+
+@if(session('error'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: '{{ session('error') }}',
+            confirmButtonColor: '#d33'
+        });
+    </script>
+@endif
 </body>
 </html>
