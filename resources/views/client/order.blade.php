@@ -34,7 +34,7 @@
                     scope="col"
                     class="px-8 py-4 text-left font-semibold text-gray-500 uppercase tracking-wider select-none"
                 >
-                    ORDER ID
+                    FULL NAME
                 </th>
                 <th
                     scope="col"
@@ -66,7 +66,7 @@
             @foreach($orders as $index => $obj)
             <tr>
                 <td class="px-8 py-6 whitespace-nowrap text-gray-900 select-text">
-                    {{$index+1}}
+                    {{$obj->full_name}}
                 </td>
                 <td class="px-8 py-6 whitespace-nowrap text-gray-900 select-text">
                     {{$obj->order_date}}

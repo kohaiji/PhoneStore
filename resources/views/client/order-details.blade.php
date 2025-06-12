@@ -19,7 +19,6 @@
     <section class="mb-8">
         <h2 class="text-xl font-semibold mb-4 text-gray-900">Order Information</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-700">
-            <div><span class="font-semibold">Order ID:</span> {{$orderId}}</div>
             <div><span class="font-semibold">Order Date:</span> {{$order->order_date}}</div>
             <!-- THÊM THÔNG TIN KHÁCH HÀNG -->
             <div><span class="font-semibold">Customer Name:</span> {{$order->full_name}}</div>
