@@ -48,7 +48,7 @@
                             {{$count = count($cart ?? [])}}
                         </span>
                     </a>
-                    <a href="/orders" class="flex items-center hover:text-[#0a4a9f] transition" aria-label="Order history page">
+                    <a href="/order" class="flex items-center hover:text-[#0a4a9f] transition" aria-label="Order history page">
                         <img src="https://img.icons8.com/?size=100&id=VeUo27LTyt8A&format=png&color=000000" alt="Black order history icon" class="w-6 h-6" />
                     </a>
                 </div>
@@ -56,11 +56,13 @@
                     <div class="whitespace-nowrap" id="userMenuButton">
                         {{\Illuminate\Support\Facades\Auth::user()->name}}
                     </div>
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User avatar showing a man with short hair smiling" class="w-8 h-8 rounded-full object-cover" />
+                    <img src="{{ \Illuminate\Support\Facades\Auth::user()->avatar
+                            ? '/avatar_user/' . \Illuminate\Support\Facades\Auth::user()->avatar
+                            : 'https://storage.googleapis.com/a1aa/image/73729077-3a08-4714-0116-18a0a6a74e9f.jpg' }}" alt="User avatar showing a man with short hair smiling" class="w-8 h-8 rounded-full object-cover" />
                     <div class="absolute top-full right-0 mt-2 w-40 bg-[#181a1c] border border-gray-700 rounded-md shadow-lg opacity-0 invisible transition-opacity z-20" id="userDropdown">
                         <ul class="py-2 text-sm text-[#d7ccc3]">
                             <li>
-                                <a class="block px-4 py-2.5 hover:bg-[#0a4a9f] hover:text-black" href="/profile">
+                                <a class="block px-4 py-2.5 hover:bg-[#0a4a9f] hover:text-black" href="/profile-setting">
                                     Profile
                                 </a>
                             </li>
@@ -88,11 +90,13 @@
                             <div class="whitespace-nowrap" id="userMenuButton">
                                 {{\Illuminate\Support\Facades\Auth::user()->name}}
                             </div>
-                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User avatar showing a woman with short hair smiling" class="w-8 h-8 rounded-full object-cover" />
+                            <img src="{{ \Illuminate\Support\Facades\Auth::user()->avatar
+                            ? '/avatar_user/' . \Illuminate\Support\Facades\Auth::user()->avatar
+                            : 'https://storage.googleapis.com/a1aa/image/73729077-3a08-4714-0116-18a0a6a74e9f.jpg' }}" alt="User avatar showing a woman with short hair smiling" class="w-8 h-8 rounded-full object-cover" />
                             <div class="absolute top-full right-0 mt-2 w-36 bg-[#181a1c] border border-gray-700 rounded-md shadow-lg opacity-0 invisible transition-opacity z-20" id="userDropdown">
                                 <ul class="py-1 text-sm text-[#d7ccc3]">
                                     <li>
-                                        <a class="block px-4 py-2 hover:bg-[#0a4a9f] hover:text-black" href="/profile">
+                                        <a class="block px-4 py-2 hover:bg-[#0a4a9f] hover:text-black" href="/profile-setting">
                                             Profile
                                         </a>
                                     </li>

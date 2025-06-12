@@ -39,19 +39,36 @@
     <h1 class="text-3xl font-extrabold text-gray-900 mb-10 select-none tracking-tight">
         Customize Your Account Information
     </h1>
-    <form class="bg-white shadow-lg rounded-2xl p-10 space-y-8" id="accountForm" novalidate="">
+    @if(session('success'))
+        <div class="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg">
+            {{ session('success') }}
+        </div>
+    @endif
+    <form class="bg-white shadow-lg rounded-2xl p-10 space-y-8"
+          method="POST"
+          action="{{ route('profile.setting') }}"
+          enctype="multipart/form-data">
+        @csrf
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
             <label class="block text-gray-700 font-semibold select-none" for="profileImage">
                 Profile Image
             </label>
             <div class="md:col-span-3 flex items-center space-x-8">
                 <div class="w-32 h-32 rounded-xl border border-gray-300 overflow-hidden bg-gray-100 flex items-center justify-center shadow-sm">
-                    <img alt="User profile image preview" class="object-cover w-32 h-32 rounded-xl" height="128" id="profileImagePreview" src="https://storage.googleapis.com/a1aa/image/73729077-3a08-4714-0116-18a0a6a74e9f.jpg" width="128"/>
+                    <img alt="User profile image preview" class="object-cover w-32 h-32 rounded-xl" height="128" id="profileImagePreview" src="{{ \Illuminate\Support\Facades\Auth::user()->avatar
+                            ? '/avatar_user/' . \Illuminate\Support\Facades\Auth::user()->avatar
+                            : 'https://storage.googleapis.com/a1aa/image/73729077-3a08-4714-0116-18a0a6a74e9f.jpg' }}" width="128"/>
                 </div>
                 <div class="flex flex-col space-y-2">
-                    <input accept="image/*" class="block w-full text-sm text-gray-500 cursor-pointer focus:outline-none" id="profileImage" name="profileImage" type="file"/>
+                    <input
+                        accept="image/*"
+                        class="block w-full text-sm text-gray-500 cursor-pointer focus:outline-none"
+                        id="profileImage"
+                        name="profileImage"
+                        type="file"
+                    />
                     <p class="text-xs text-gray-400 max-w-xs select-none">
-                        Upload a profile picture (any size). It will be resized to fit.
+                        Upload profile picture (Max 2MB)
                     </p>
                 </div>
             </div>
@@ -60,25 +77,25 @@
             <label class="block text-gray-700 font-semibold mb-2 select-none" for="fullName">
                 Full Name
             </label>
-            <input class="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition" id="fullName" name="fullName" placeholder="Enter your full name" required="" type="text"/>
+            <input class="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition" id="fullName" name="fullName" placeholder="Enter your full name" required value="{{ old('fullName', \Illuminate\Support\Facades\Auth::user()->name) }}" type="text"/>
         </div>
         <div>
             <label class="block text-gray-700 font-semibold mb-2 select-none" for="email">
                 Email Address
             </label>
-            <input class="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition" id="email" name="email" placeholder="Enter your email address" required="" type="email"/>
+            <input class="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition" id="email" name="email" placeholder="Enter your email address" required value="{{old('email', \Illuminate\Support\Facades\Auth::user()->email) }}" type="email"/>
         </div>
         <div>
             <label class="block text-gray-700 font-semibold mb-2 select-none" for="phone">
                 Phone Number
             </label>
-            <input class="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition" id="phone" name="phone" placeholder="Enter your phone number" type="tel"/>
+            <input class="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition" id="phone" name="phone" placeholder="Enter your phone number" type="tel" required value="{{old('phone', \Illuminate\Support\Facades\Auth::user()->phone)}}"/>
         </div>
         <div>
             <label class="block text-gray-700 font-semibold mb-2 select-none" for="address">
                 Address
             </label>
-            <textarea class="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent resize-none transition" id="address" name="address" placeholder="Enter your address" rows="4"></textarea>
+            <textarea class="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent resize-none transition" id="address" name="address" placeholder="Enter your address" rows="4" required>{{ old('address', \Illuminate\Support\Facades\Auth::user()->address) }}</textarea>
         </div>
         <div class="pt-6">
             <button class="w-full bg-blue-600 text-white font-extrabold text-lg py-3 rounded-xl shadow-md hover:bg-blue-700 transition select-none" type="submit">
@@ -105,5 +122,38 @@
         reader.readAsDataURL(file);
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    @if (session('success'))
+    Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: '{{ session('success') }}',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK'
+    });
+    @endif
+
+    @if (session('error'))
+    Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: '{{ session('error') }}',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Try Again'
+    });
+    @endif
+
+    @if ($errors->any())
+    Swal.fire({
+        icon: 'warning',
+        title: 'Validation error!',
+        html: `{!! implode('<br>', $errors->all()) !!}`,
+        confirmButtonColor: '#f0ad4e',
+        confirmButtonText: 'Close'
+    });
+    @endif
+</script>
+
 </body>
 </html>

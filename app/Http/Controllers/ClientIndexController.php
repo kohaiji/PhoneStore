@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
 
 class ClientIndexController extends Controller
 {
@@ -352,6 +353,54 @@ class ClientIndexController extends Controller
             "category" => $category,
             "publisher" => $publisher,
             "author" => $author
+        ]);
+    }
+
+    public function profileSetting(Request $request){
+        if ($request->isMethod('post')) {
+            $user = Auth::user();
+
+            $request->validate([
+                'fullName' => 'required|string|max:255',
+                'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+                'phone' => 'required|string|max:10',
+                'address' => 'required|string|max:500',
+                'profileImage' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            ]);
+
+            $dataUpdate = [
+                'name' => $request->fullName,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->address,
+            ];
+
+            if ($request->hasFile('profileImage')) {
+                if ($user->avatar && file_exists(public_path('avatar_user/' . $user->avatar))) {
+                    unlink(public_path('avatar_user/' . $user->avatar));
+                }
+
+                $image = $request->file('profileImage');
+                $imageName = time() . '_' . $image->getClientOriginalName();
+
+                $image->move(public_path('avatar_user'), $imageName);
+
+                $dataUpdate['avatar'] = $imageName;
+            }
+
+            try {
+                DB::table('users')
+                    ->where('id', $user->id)
+                    ->update($dataUpdate);
+
+                return redirect()->route('profile.setting')->with('success', 'Profile updated successfully!');
+            } catch (\Exception $e) {
+                return redirect()->route('profile.setting')->with('error', 'Update failed: ' . $e->getMessage());
+            }
+        }
+
+        return view("client.profile-settings", [
+            'user' => Auth::user()
         ]);
     }
 
