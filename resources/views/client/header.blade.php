@@ -25,16 +25,16 @@
             <a class="hover:text-blue-600 transition" href="/shop">
                 Products
             </a>
-            <a class="hover:text-blue-600 transition" href="#about">
+            <a class="hover:text-blue-600 transition" href="/ClientIndex/#about">
                 About
             </a>
-            <a class="hover:text-blue-600 transition" href="#services">
+            <a class="hover:text-blue-600 transition" href="/ClientIndex/#services">
                 Services
             </a>
-            <a class="hover:text-blue-600 transition" href="#news">
+            <a class="hover:text-blue-600 transition" href="/ClientIndex/#news">
                 News
             </a>
-            <a class="hover:text-blue-600 transition" href="#contact">
+            <a class="hover:text-blue-600 transition" href="/ClientIndex/#contact">
                 Contact
             </a>
         </nav>
