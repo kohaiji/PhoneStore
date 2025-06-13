@@ -185,6 +185,7 @@ class ClientIndexController extends Controller
 
     public function shop(Request $request):View {
         $cart = Session::get("cart", []);
+
         $query = DB::table('products')
             ->leftJoin(DB::raw('
             (
@@ -199,7 +200,6 @@ class ClientIndexController extends Controller
         '), 'products.id', '=', 'pi.product_id')
             ->select('products.*', 'pi.image_url');
 
-
         if ($request->has('search') && !empty(trim($request->search))) {
             $keywords = explode(' ', trim($request->search));
             foreach ($keywords as $word) {
@@ -207,11 +207,15 @@ class ClientIndexController extends Controller
             }
         }
 
-        $products = $query->get();
+        $allProducts = $query->get();
 
-        return view("client/shop", [
-            "products" => $products,
+        $initialProducts = $allProducts->take(12);
+
+        return view("client.shop", [
+            "products" => $initialProducts,
+            "allProducts" => $allProducts,
             "cart" => $cart,
+            "perPage" => 12,
         ]);
     }
 

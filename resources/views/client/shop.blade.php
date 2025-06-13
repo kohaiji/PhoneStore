@@ -149,7 +149,7 @@
             </button>
         </aside>
         <!-- Products-->
-        <section
+        <section id="product-container"
             class="col-span-12 md:col-span-9 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-14 gap-y-14"
             style="min-height: calc(100vh - 6rem);"
         >
@@ -196,9 +196,17 @@
                     </article>
                 @endforeach
             @endif
-            <div class="col-span-full flex justify-center mt-6">
-                {{--                {{$products->links('pagination::tailwind')}}--}}
-            </div>
+                <div class="col-span-full flex justify-center mt-6">
+                    @if(count($allProducts) > $perPage)
+                        <button
+                            id="loadMoreBtn"
+                            class="bg-blue-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-blue-700 transition"
+                            data-per-page="{{ $perPage }}"
+                        >
+                            See more
+                        </button>
+                    @endif
+                </div>
         </section>
     </div>
 </main>
@@ -217,5 +225,48 @@
     </script>
 @endif
 
+<script>
+    const allProducts = @json($allProducts);
+    let perPage = parseInt(document.getElementById('loadMoreBtn')?.dataset.perPage || 12);
+    let currentIndex = perPage;
+
+    document.getElementById('loadMoreBtn')?.addEventListener('click', () => {
+        const productContainer = document.getElementById('product-container');
+        const productsToShow = allProducts.slice(currentIndex, currentIndex + perPage);
+
+        productsToShow.forEach(obj => {
+            const article = document.createElement('article');
+            article.className = "border border-gray-200 rounded-md overflow-hidden flex flex-col max-w-[240px]";
+            article.innerHTML = `
+                <a href="/product-details/${obj.id}">
+                    <img alt="${obj.product_name}" class="w-full h-full object-cover" src="${obj.image_url ? '/image_product/' + obj.image_url : 'https://storage.googleapis.com/a1aa/image/aa88dfbe-ab80-4fca-db94-141b7c08ed91.jpg'}" width="240" height="224" />
+                </a>
+                <div class="p-5 flex flex-col flex-grow">
+                    <a class="text-lg font-semibold mb-2 text-blue-600" href="/product-details/${obj.id}">
+                        ${obj.product_name}
+                    </a>
+                    <p class="text-gray-600 flex-grow text-xs leading-tight">
+                        ${obj.description}
+                    </p>
+                    <div class="mt-4 flex items-center justify-between">
+                        <span class="text-base font-bold text-gray-900">
+                            ${new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Number(obj.price))}đ
+                        </span>
+                        <a class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition text-xs" href="/product-details/${obj.id}">
+                            Buy Now
+                        </a>
+                    </div>
+                </div>
+            `;
+            productContainer.appendChild(article);
+        });
+
+        currentIndex += perPage;
+
+        if (currentIndex >= allProducts.length) {
+            document.getElementById('loadMoreBtn').style.display = 'none';
+        }
+    });
+</script>
 </body>
 </html>
