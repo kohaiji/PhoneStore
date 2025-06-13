@@ -226,7 +226,7 @@ class AdminProductController extends Controller
             ->paginate(10);
 
         if (!$productId || $products->isEmpty()) {
-            return redirect("/admin/product-list")
+            return redirect(request()->input('return_url'))
                 ->with("no_variant", true)
                 ->with("product_id", $id);
         }
