@@ -36,8 +36,8 @@
                             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Product Variant
-                                    </li>
+                                    <li class="breadcrumb-item"><a href="/admin/product-list">Product List</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Product Variant</li>
                                 </ol>
                             </nav>
                         </div>
