@@ -104,49 +104,98 @@
 <!-- Main content -->
 <main class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 mt-10 max-w-7xl">
     <div class="grid grid-cols-12 gap-x-12 min-h-[calc(100vh-6rem)]">
-        <!-- Filter-->
-        <aside
-            class="col-span-12 md:col-span-3 border border-gray-200 rounded-md p-6 text-xs text-gray-700 font-normal sticky top-20 self-start"
-            style="min-height: calc(100vh - 6rem); width: 280px;"
-        >
-            <div class="flex justify-between items-center mb-3">
-                <span class="font-semibold text-sm">Filter</span>
-                <a class="text-xs text-[#3B8BFF] hover:underline" href="shop">View All</a>
-            </div>
-            <div class="mb-3">
-                <label class="block font-semibold text-xs mb-1">Price Range</label>
-                <select
-                    class="w-full border border-gray-300 rounded text-xs text-gray-700 px-2 py-1"
-                >
-                    <option>Select Price</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label class="block font-semibold text-xs mb-1">Brand</label>
-                <div class="space-y-1 text-xs text-gray-600 font-normal">
-                    <label class="flex items-center space-x-2">
-                        <input class="form-checkbox" type="checkbox" />
-                        <span>Samsung</span>
-                    </label>
-                    <label class="flex items-center space-x-2">
-                        <input class="form-checkbox" type="checkbox" />
-                        <span>Apple</span>
-                    </label>
-                    <label class="flex items-center space-x-2">
-                        <input class="form-checkbox" type="checkbox" />
-                        <span>Redmi</span>
-                    </label>
-                    <label class="flex items-center space-x-2">
-                        <input class="form-checkbox" type="checkbox" />
-                        <span>OnePlus</span>
-                    </label>
+        <!-- Filter Sidebar -->
+        <aside class="col-span-12 md:col-span-3 border border-gray-200 rounded-md p-6 text-xs text-gray-700 font-normal sticky top-20 self-start"
+               style="min-height: calc(100vh - 6rem); width: 280px;">
+            <form action="{{ route('shop') }}" method="GET">
+                <input type="hidden" name="search" value="{{ request('search') }}">
+
+                <div class="flex justify-between items-center mb-3">
+                    <span class="font-semibold text-sm">Filter</span>
+                    <a class="text-xs text-[#3B8BFF] hover:underline" href="{{ route('shop') }}">View All</a>
                 </div>
-            </div>
-            <button
-                class="w-full bg-[#3B8BFF] text-white text-xs font-semibold py-2 rounded hover:bg-[#2a6ad1] focus:outline-none focus:ring-2 focus:ring-[#3B8BFF]"
-            >
-                Apply Filters
-            </button>
+
+                <!-- Sắp xếp giá -->
+                <div class="mb-3">
+                    <label class="block font-semibold text-xs mb-1">Sort by Price</label>
+                    <select name="sort_price" class="w-full border border-gray-300 rounded text-xs text-gray-700 px-2 py-1">
+                        <option value="">Select Price Order</option>
+                        <option value="asc" {{ request('sort_price') == 'asc' ? 'selected' : '' }}>Low to High</option>
+                        <option value="desc" {{ request('sort_price') == 'desc' ? 'selected' : '' }}>High to Low</option>
+                    </select>
+                </div>
+
+                <!-- Brand -->
+                <div class="mb-4">
+                    <label class="block font-semibold text-xs mb-1">Brand</label>
+                    <div class="space-y-1 text-xs text-gray-600 font-normal">
+                        @foreach($brands as $brand)
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" name="brands[]" value="{{ $brand->id }}"
+                                    {{ in_array($brand->id, (array)request('brands')) ? 'checked' : '' }}>
+                                <span>{{ $brand->brand_name }}</span>
+                            </label>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- Screen Size -->
+                <div class="mb-4">
+                    <label class="block font-semibold text-xs mb-1">Screen Size</label>
+                    <div class="space-y-1 text-xs text-gray-600 font-normal">
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" name="screen_size_group[]" value="under6" {{ in_array('under6', (array)request('screen_size_group')) ? 'checked' : '' }}>
+                            <span>Under 6 inches</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" name="screen_size_group[]" value="above6" {{ in_array('above6', (array)request('screen_size_group')) ? 'checked' : '' }}>
+                            <span>Above 6 inches</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Refresh Rate -->
+                <div class="mb-4">
+                    <label class="block font-semibold text-xs mb-1">Refresh Rate</label>
+                    <div class="space-y-1 text-xs text-gray-600 font-normal">
+                        @foreach($refresh_rates as $rate)
+                            @if(!is_null($rate->refresh_rate))
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" name="refresh_rates[]" value="{{ $rate->refresh_rate }}"
+                                        {{ in_array($rate->refresh_rate, (array)request('refresh_rates')) ? 'checked' : '' }}>
+                                    <span>{{ $rate->refresh_rate }}</span>
+                                </label>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- RAM -->
+                <div class="mb-4">
+                    <label class="block font-semibold text-xs mb-1">RAM</label>
+                    <div class="space-y-1 text-xs text-gray-600 font-normal">
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" name="ram_group[]" value="under4" {{ in_array('under4', (array)request('ram_group')) ? 'checked' : '' }}>
+                            <span>Under 4GB</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" name="ram_group[]" value="4to6" {{ in_array('4to6', (array)request('ram_group')) ? 'checked' : '' }}>
+                            <span>4GB - 6GB</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" name="ram_group[]" value="8to12" {{ in_array('8to12', (array)request('ram_group')) ? 'checked' : '' }}>
+                            <span>8GB - 12GB</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button
+                    type="submit"
+                    class="w-full bg-[#3B8BFF] text-white text-xs font-semibold py-2 rounded hover:bg-[#2a6ad1] focus:outline-none focus:ring-2 focus:ring-[#3B8BFF]"
+                >
+                    Apply Filters
+                </button>
+            </form>
         </aside>
         <!-- Products-->
         <section id="product-container"
@@ -226,6 +275,7 @@
 @endif
 
 <script>
+    // Lấy dữ liệu sản phẩm từ PHP
     const allProducts = @json($allProducts);
     let perPage = parseInt(document.getElementById('loadMoreBtn')?.dataset.perPage || 12);
     let currentIndex = perPage;

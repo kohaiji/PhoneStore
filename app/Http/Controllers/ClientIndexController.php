@@ -200,6 +200,7 @@ class ClientIndexController extends Controller
         '), 'products.id', '=', 'pi.product_id')
             ->select('products.*', 'pi.image_url');
 
+        // tìm kiếm
         if ($request->has('search') && !empty(trim($request->search))) {
             $keywords = explode(' ', trim($request->search));
             foreach ($keywords as $word) {
@@ -207,15 +208,76 @@ class ClientIndexController extends Controller
             }
         }
 
+        // brand
+        if ($request->has('brands')) {
+            $brands = $request->input('brands');
+            $query->whereIn('products.brand_id', $brands);
+        }
+
+        // kích thước màn hình
+        if ($request->has('screen_size_group')) {
+            $groups = (array) $request->input('screen_size_group');
+            $query->where(function ($q) use ($groups) {
+                if (in_array('under6', $groups)) {
+                    $q->orWhere('products.screen_size', '<', 6);
+                }
+                if (in_array('above6', $groups)) {
+                    $q->orWhere('products.screen_size', '>=', 6);
+                }
+            });
+        }
+
+        // refresh rate
+        if ($request->has('refresh_rates')) {
+            $refreshRates = $request->input('refresh_rates');
+            $query->whereIn('products.refresh_rate', $refreshRates);
+        }
+
+        // RAM
+        if ($request->has('ram_group')) {
+            $groups = (array) $request->input('ram_group');
+            $query->where(function ($q) use ($groups) {
+                foreach ($groups as $group) {
+                    if ($group === 'under4') {
+                        $q->orWhereRaw("CAST(REPLACE(REPLACE(LOWER(ram), 'gb', ''), ' ', '') AS UNSIGNED) < 4");
+                    } elseif ($group === '4to6') {
+                        $q->orWhereRaw("CAST(REPLACE(REPLACE(LOWER(ram), 'gb', ''), ' ', '') AS UNSIGNED) BETWEEN 4 AND 6");
+                    } elseif ($group === '8to12') {
+                        $q->orWhereRaw("CAST(REPLACE(REPLACE(LOWER(ram), 'gb', ''), ' ', '') AS UNSIGNED) BETWEEN 8 AND 12");
+                    }
+                }
+            });
+        }
+
+        // Xử lý sắp xếp giá
+        if ($request->has('sort_price')) {
+            $sortPrice = $request->input('sort_price');
+            if ($sortPrice === 'asc') {
+                $query->orderBy('products.price', 'asc');
+            } elseif ($sortPrice === 'desc') {
+                $query->orderBy('products.price', 'desc');
+            }
+        }
+
+        $brandsList = DB::table('brands')->get();
+        $screenSizesList = DB::table('products')->select('screen_size')->distinct()->get();
+        $refreshRatesList = DB::table('products')->select('refresh_rate')->distinct()->get();
+        $ramsList = DB::table('products')->select('ram')->distinct()->get();
+
         $allProducts = $query->get();
 
-        $initialProducts = $allProducts->take(12);
+        $perPage = 12;
+        $initialProducts = $allProducts->take($perPage);
 
         return view("client.shop", [
             "products" => $initialProducts,
             "allProducts" => $allProducts,
             "cart" => $cart,
-            "perPage" => 12,
+            "perPage" => $perPage,
+            "brands" => $brandsList,
+            "screen_sizes" => $screenSizesList,
+            "refresh_rates" => $refreshRatesList,
+            "rams" => $ramsList,
         ]);
     }
 
