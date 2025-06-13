@@ -191,17 +191,22 @@ class AdminProductController extends Controller
     public function productSearch(Request $request): View
     {
         $activeMenu = "product";
-        $data = $request->data;
-
-        $products = DB::table("products")
-            ->where("product_name", "LIKE", "%$data%")
+        $data = trim($request->data);
+        $query = DB::table("products")
             ->join("brands", "products.brand_id", "=", "brands.id")
-            ->select("products.*", "brands.brand_name")
+            ->select("products.*", "brands.brand_name");
+
+        if (!empty($data)) {
+            $keywords = explode(' ', $data);
+            foreach ($keywords as $word) {
+                $query->where("products.product_name", "LIKE", "%$word%");
+            }
+        }
+
+        $products = $query
             ->orderBy("products.id")
             ->paginate(10)
             ->appends(['data' => $data]);
-
-//        dd($products);
 
         return view("admin/product-list", [
             "products" => $products,

@@ -105,15 +105,21 @@ class AdminBrandController extends Controller
     public function brandSearch(Request $request): View
     {
         $activeMenu = "category";
-        $data = $request->data;
+        $data = trim($request->data);
 
-        $brands = DB::table("brands")
-            ->where("brand_name", "LIKE", "%$data%")
+        $query = DB::table("brands");
+
+        if (!empty($data)) {
+            $keywords = explode(' ', $data);
+            foreach ($keywords as $word) {
+                $query->where("brand_name", "LIKE", "%$word%");
+            }
+        }
+
+        $brands = $query
             ->orderBy("id")
             ->paginate(10)
             ->appends(['data' => $data]);
-
-//        dd($products);
 
         return view("admin/brand-list", [
             "brands" => $brands,
