@@ -11,22 +11,24 @@ class AdminOrderController extends Controller
     public function getAll(Request $request): View
     {
         $activeMenu = "order";
+        $data = "";
 
         $query = DB::table("orders")
             ->orderBy("order_date", "DESC");
 
-        // Xử lý lọc theo status
+        //lọc theo status
         if ($request->has('status') && $request->status !== 'all') {
             $query->where('status', $request->status);
         }
 
         $orders = $query->paginate(10);
 
-        // Truyền giá trị filter hiện tại ra view
+
         return view("admin.order-List", [
             "orders" => $orders,
             "activeMenu" => $activeMenu,
-            "currentFilter" => $request->input('status', 'all')
+            "currentFilter" => $request->input('status', 'all'),
+            "data" => $data,
         ]);
     }
 
@@ -34,7 +36,7 @@ class AdminOrderController extends Controller
     {
         $order = DB::table("orders")->where("id", $id)->first();
 
-        // Logic kiểm soát chuyển trạng thái
+        // Logic kiem soat chuyen status
         $allowedTransitions = [
             'Pending' => ['Confirmed', 'Cancelled'],
             'Confirmed' => ['Shipping', 'Cancelled'],
@@ -90,5 +92,38 @@ class AdminOrderController extends Controller
             "activeMenu" => $activeMenu,
         ]);
     }
+
+    public function orderSearch(Request $request): View
+    {
+        $activeMenu = "order";
+        $data = trim($request->data);
+        $status = $request->input('status', 'all');
+
+        $query = DB::table("orders")->orderBy("order_date", "DESC");
+
+        if ($status !== 'all') {
+            $query->where('status', $status);
+        }
+
+        if (!empty($data)) {
+            $keywords = explode(' ', $data);
+            foreach ($keywords as $word) {
+                $query->where('full_name', 'LIKE', "%$word%");
+            }
+        }
+
+        $orders = $query->paginate(10)->appends([
+            'data' => $data,
+            'status' => $status,
+        ]);
+
+        return view("admin.order-List", [
+            "orders" => $orders,
+            "activeMenu" => $activeMenu,
+            "currentFilter" => $status,
+            "data" => $data,
+        ]);
+    }
+
 
 }

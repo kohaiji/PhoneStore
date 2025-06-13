@@ -55,41 +55,53 @@
                         </div>
                     </div>
 
-{{--                    <form action="/admin/brand-search" method="get">--}}
-{{--                        <div class="row">--}}
-{{--                            <div class="col-10">--}}
-{{--                                <input placeholder="Search Something......" class="form-control" type="text" name="data" value="{{$data}}">--}}
-{{--                            </div>--}}
-{{--                            <div class="col-auto">--}}
-{{--                                <button class="btn btn-secondary btn-sm rounded-pill" type="submit"><i class="bi bi-search" aria-hidden="true" ></i></button>--}}
-{{--                            </div>--}}
-{{--                            <div class="col-auto"><span><a class="btn btn-success btn-sm rounded-pill" href="/admin/brand-list">View All</a></span></div>--}}
+                        <form action="{{ route('admin.order.search') }}" method="get">
+                            <div class="row">
+                                <div class="col-10">
+                                    <input placeholder="Search Something..." class="form-control" type="text" name="data" value="{{ $data }}">
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-secondary btn-sm rounded-pill" type="submit"><i class="bi bi-search"></i></button>
+                                </div>
+                                <div class="col-auto">
+                                    <a class="btn btn-success btn-sm rounded-pill" href="/admin/order-list">View All</a>
+                                </div>
+
+                                <div class="row mt-1">
+                                    <div class="col-2">
+                                        <select class="form-select" name="status" onchange="this.form.submit()">
+                                            <option value="all" {{ $currentFilter === 'all' ? 'selected' : '' }}>All Status</option>
+                                            <option value="Pending" {{ $currentFilter === 'Pending' ? 'selected' : '' }}>Pending</option>
+                                            <option value="Confirmed" {{ $currentFilter === 'Confirmed' ? 'selected' : '' }}>Confirmed</option>
+                                            <option value="Shipping" {{ $currentFilter === 'Shipping' ? 'selected' : '' }}>Shipping</option>
+                                            <option value="Completed" {{ $currentFilter === 'Completed' ? 'selected' : '' }}>Completed</option>
+                                            <option value="Cancelled" {{ $currentFilter === 'Cancelled' ? 'selected' : '' }}>Cancelled</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                </div>
+            </div>
+
+{{--            <div class="row mt-3">--}}
+{{--                <div class="col-md-3">--}}
+{{--                    <form method="GET" action="{{ route('admin.orders.list') }}">--}}
+{{--                        <div class="input-group mb-3">--}}
+{{--                            <label class="input-group-text" for="statusFilter">Status</label>--}}
+{{--                            <select class="form-select" id="statusFilter" name="status" onchange="this.form.submit()">--}}
+{{--                                <option value="all" {{ $currentFilter === 'all' ? 'selected' : '' }}>All Status</option>--}}
+{{--                                <option value="Pending" {{ $currentFilter === 'Pending' ? 'selected' : '' }}>Pending</option>--}}
+{{--                                <option value="Confirmed" {{ $currentFilter === 'Confirmed' ? 'selected' : '' }}>Confirmed</option>--}}
+{{--                                <option value="Shipping" {{ $currentFilter === 'Shipping' ? 'selected' : '' }}>Shipping</option>--}}
+{{--                                <option value="Completed" {{ $currentFilter === 'Completed' ? 'selected' : '' }}>Completed</option>--}}
+{{--                                <option value="Cancelled" {{ $currentFilter === 'Cancelled' ? 'selected' : '' }}>Cancelled</option>--}}
+{{--                            </select>--}}
 {{--                        </div>--}}
 {{--                    </form>--}}
-
-{{--                    <a href="/admin/brand-add" class="btn btn-primary rounded-pill mt-3 mb-1">Add Brand</a>--}}
-
-                </div>
-            </div>
-
-            <!-- Thêm đoạn code này sau phần breadcrumb -->
-            <div class="row mt-3">
-                <div class="col-md-3">
-                    <form method="GET" action="{{ route('admin.orders.list') }}">
-                        <div class="input-group mb-3">
-                            <label class="input-group-text" for="statusFilter">Status</label>
-                            <select class="form-select" id="statusFilter" name="status" onchange="this.form.submit()">
-                                <option value="all" {{ $currentFilter === 'all' ? 'selected' : '' }}>All Status</option>
-                                <option value="Pending" {{ $currentFilter === 'Pending' ? 'selected' : '' }}>Pending</option>
-                                <option value="Confirmed" {{ $currentFilter === 'Confirmed' ? 'selected' : '' }}>Confirmed</option>
-                                <option value="Shipping" {{ $currentFilter === 'Shipping' ? 'selected' : '' }}>Shipping</option>
-                                <option value="Completed" {{ $currentFilter === 'Completed' ? 'selected' : '' }}>Completed</option>
-                                <option value="Cancelled" {{ $currentFilter === 'Cancelled' ? 'selected' : '' }}>Cancelled</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-            </div>
+{{--                </div>--}}
+{{--            </div>--}}
 
             <div class="table-responsive">
                 <table class="table table-light mb-0">
