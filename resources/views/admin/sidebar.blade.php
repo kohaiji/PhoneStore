@@ -36,7 +36,7 @@
 
                 <li class="sidebar-item">
                     <a href="/admin/order-list" class='sidebar-link'>
-                        <i class="bi bi-grid-fill"></i>
+                        <i class="bi bi-receipt"></i>
                         <span>Orders</span>
                     </a>
                 </li>
