@@ -18,6 +18,11 @@ class CartAuthenticate
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::check()){
+            if (Auth::user()->status == 'inactive'){
+                Auth::logout();
+                Session::flush();
+                return redirect('/login')->with('error', 'Your account has been locked!');
+            }
             return $next($request);
         }
 //        Session::flash("error", "You must be logged in to make a purchase");

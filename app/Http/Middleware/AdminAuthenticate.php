@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminAuthenticate
@@ -19,7 +20,8 @@ class AdminAuthenticate
         if(Auth::check() && Auth::user()->role == 1){
             if (Auth::user()->status == 'inactive'){
                 Auth::logout();
-                return redirect('/logon')->with('error', 'Your account has been locked.');
+                Session::flush();
+                return redirect('/logon')->with('error', 'Your account has been locked!');
             }
             return $next($request);
         }

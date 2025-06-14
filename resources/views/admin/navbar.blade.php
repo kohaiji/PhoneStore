@@ -46,7 +46,8 @@
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
-                                    <img src="/assets/images/faces/1.jpg">
+                                    <img src="{{ \Illuminate\Support\Facades\Auth::user()->avatar
+                            ? '/avatar_user/' . \Illuminate\Support\Facades\Auth::user()->avatar : "/assets/images/faces/1.jpg"}}" >
                                 </div>
                             </div>
                         </div>

@@ -70,6 +70,12 @@ class UserController extends Controller
 
     public function postLogin(Request $request) {
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            if(Auth::user()->status == 'inactive'){
+                Auth::logout();
+                Session::flush();
+                return redirect()->back()
+                    ->with('error', 'Your account has been locked!');
+            }
             return redirect('/ClientIndex');
         }
         else {
