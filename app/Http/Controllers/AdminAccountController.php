@@ -12,6 +12,7 @@ class AdminAccountController extends Controller
     {
         $activeMenu = "account";
         $accounts = DB::table("users")
+            ->where("role", "=", 0)
             ->paginate(10);
 
         return view("admin.account-list",[

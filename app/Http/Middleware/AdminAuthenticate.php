@@ -17,6 +17,10 @@ class AdminAuthenticate
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::check() && Auth::user()->role == 1){
+            if (Auth::user()->status == 'inactive'){
+                Auth::logout();
+                return redirect('/logon')->with('error', 'Your account has been locked.');
+            }
             return $next($request);
         }
         return redirect("/logon");
