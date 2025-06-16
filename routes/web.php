@@ -69,8 +69,9 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('/stats', [AdminStatsController::class, "statistics"]);
 
 // ADMIN ACCOUNT MANAGEMENT
-    Route::get('/account-list', [AdminAccountController::class, "getAll"]);
-
+    Route::get('/account-list', [AdminAccountController::class, "getAll"])->name('admin.accounts.list');
+    Route::get('/admin/account-toggle/{id}', [AdminAccountController::class, 'toggleStatus'])->name('admin.accounts.toggle');
+    Route::get('/admin/account-search', [AdminAccountController::class, 'search'])->name('admin.accounts.search');
 });
 
 

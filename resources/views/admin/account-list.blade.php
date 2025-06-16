@@ -43,17 +43,21 @@
                         </div>
                     </div>
 
-{{--                    <form action="/admin/brand-search" method="get">--}}
-{{--                        <div class="row">--}}
-{{--                            <div class="col-10">--}}
-{{--                                <input placeholder="Search Something......" class="form-control" type="text" name="data" value="{{$data}}">--}}
-{{--                            </div>--}}
-{{--                            <div class="col-auto">--}}
-{{--                                <button class="btn btn-secondary btn-sm rounded-pill" type="submit"><i class="bi bi-search" aria-hidden="true" ></i></button>--}}
-{{--                            </div>--}}
-{{--                            <div class="col-auto"><span><a class="btn btn-success btn-sm rounded-pill" href="/admin/brand-list">View All</a></span></div>--}}
-{{--                        </div>--}}
-{{--                    </form>--}}
+                    <form action="{{ route('admin.accounts.search') }}" method="get" class="mb-3">
+                        <div class="row">
+                            <div class="col-10">
+                                <input placeholder="Search By User Name..." class="form-control" type="text" name="data" value="{{ $data ?? '' }}">
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-secondary btn-sm rounded-pill" type="submit">
+                                    <i class="bi bi-search" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="col-auto">
+                                <a class="btn btn-success btn-sm rounded-pill" href="{{ route('admin.accounts.list') }}">View All</a>
+                            </div>
+                        </div>
+                    </form>
 
 
                 </div>
@@ -67,10 +71,11 @@
                         <th>User Name</th>
                         <th>Email</th>
                         <th>Phone Number</th>
+                        <th>Avatar</th>
                         <th>Address</th>
                         <th>Gender</th>
-                        <th>Avatar</th>
-                        <th class="text-center" colspan="2">ACTION</th>
+                        <th>Status</th>
+                        <th class="text-center" colspan="1">ACTION</th>
                     </tr>
                     </thead>
 
@@ -81,14 +86,20 @@
                             <td>{{$obj->name}}</td>
                             <td>{{$obj->email}}</td>
                             <td>{{$obj->phone}}</td>
+                            <td><img height="100" src="/avatar_user/{{$obj->avatar}}" alt="avatar"></td>
                             <td>{{$obj->address}}</td>
                             <td>{{$obj->gender}}</td>
-                            <td><img height="100" src="/avatar_user/{{$obj->avatar}}" alt="avatar"></td>
+                            <td>{{$obj->status}}</td>
                             <td class="text-center">
-                                <a href="" class="btn btn-outline-primary btn-sm">Edit</a>
-                            </td>
-                            <td class="text-center">
-                                <a onclick="return confirm('Are you sure?')" href="" class="btn btn-outline-danger btn-sm">Delete</a>
+                                @if($obj->status == 'active')
+                                    <a onclick="return confirm('Are you sure you want to lock this account?')"
+                                       href="{{ route('admin.accounts.toggle', $obj->id) }}"
+                                       class="btn btn-outline-danger btn-sm">Lock</a>
+                                @else
+                                    <a onclick="return confirm('Are you sure you want to unlock this account?')"
+                                       href="{{ route('admin.accounts.toggle', $obj->id) }}"
+                                       class="btn btn-outline-success btn-sm">Unlock</a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -109,6 +120,19 @@
 <script src="/assets/js/pages/dashboard.js"></script>
 
 <script src="/assets/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(session('success'))
+    <script>
+        Swal.fire('Success', '{{ session('success') }}', 'success');
+    </script>
+@endif
+
+@if(session('error'))
+    <script>
+        Swal.fire('Error', '{{ session('error') }}', 'error');
+    </script>
+@endif
+
 </body>
 
 </html>
