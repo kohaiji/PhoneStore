@@ -87,7 +87,7 @@
                 name="search"
                 aria-label="Search products"
                 class="flex-grow px-4 py-3 border border-gray-300 rounded-l text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Search product..."
+                placeholder="Search By Product Name..."
                 type="search"
                 style="width: 800px"
                 value="{{ request('search') }}"
@@ -112,7 +112,7 @@
 
                 <div class="flex justify-between items-center mb-3">
                     <span class="font-semibold text-sm">Filter</span>
-                    <a class="text-xs text-[#3B8BFF] hover:underline" href="{{ route('shop') }}">View All</a>
+                    <a class="text-xs text-[#3B8BFF] hover:underline" href="{{ route('shop') }}">Reset</a>
                 </div>
 
                 <!-- Sắp xếp giá -->
