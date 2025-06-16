@@ -58,7 +58,7 @@
                         <form action="{{ route('admin.order.search') }}" method="get">
                             <div class="row">
                                 <div class="col-10">
-                                    <input placeholder="Search By Customer Name..." class="form-control" type="text" name="data" value="{{ $data }}">
+                                    <input placeholder="Search By Customer Name..." class="form-control" type="text" name="data" value="{{ $data ?? '' }}">
                                 </div>
                                 <div class="col-auto">
                                     <button class="btn btn-secondary btn-sm rounded-pill" type="submit"><i class="bi bi-search"></i></button>
