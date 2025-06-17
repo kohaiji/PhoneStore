@@ -117,11 +117,11 @@
                                 <!-- Status : Not Loggined -->
                                 <div class="hidden md:flex items-center space-x-6">
                                     <a class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition" href="tel:+18001234567">
-                                        <i class="fas fa-phone-alt">
-                                        </i>
-                                        <span>
-       +1 234 567 890
-      </span>
+{{--                                        <i class="fas fa-phone-alt">--}}
+{{--                                        </i>--}}
+{{--                                        <span>--}}
+{{--       --}}
+{{--      </span>--}}
                                     </a>
                                     <a class="bg-blue-600 text-white px-5 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="/login">
                                         Sign in

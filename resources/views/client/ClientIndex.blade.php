@@ -248,21 +248,20 @@
             <p>
                 <i class="fas fa-map-marker-alt mr-2 text-blue-600">
                 </i>
-                123 Phone St,
-                Tech City, USA
+                A17, No. 17 Ta Quang Buu
             </p>
             <p>
                 <i class="fas fa-phone-alt mr-2 text-blue-600">
                 </i>
                 <a class="hover:underline" href="tel:+18001234567">
-                    +1 800 123 4567
+                    +84 904577324
                 </a>
             </p>
             <p>
                 <i class="fas fa-envelope mr-2 text-blue-600">
                 </i>
-                <a class="hover:underline" href="mailto:info@phonestore.com">
-                    info@phonestore.com
+                <a class="hover:underline" href="mailto:ntg1611@gmail.com">
+                    ntg1611@gmail.com
                 </a>
             </p>
         </div>
