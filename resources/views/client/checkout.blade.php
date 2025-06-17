@@ -44,15 +44,15 @@
                 </div>
             @endforeach
             <!-- Subtotal -->
-            <div class="flex justify-between items-center border-t border-gray-300 pt-5 mt-5">
-                <span class="font-semibold text-gray-900 text-base">Subtotal</span>
-                <span class="font-semibold text-gray-900 text-base">{{ number_format($total, 0, ',', ',') }}đ</span>
-            </div>
+{{--            <div class="flex justify-between items-center border-t border-gray-300 pt-5 mt-5">--}}
+{{--                <span class="font-semibold text-gray-900 text-base">Subtotal</span>--}}
+{{--                <span class="font-semibold text-gray-900 text-base">{{ number_format($total, 0, ',', ',') }}đ</span>--}}
+{{--            </div>--}}
             <!-- Tax -->
-            <div class="flex justify-between items-center mt-2">
-                <span class="text-gray-700 text-sm">Tax (10%)</span>
-                <span class="text-gray-700 text-sm">$289.70</span>
-            </div>
+{{--            <div class="flex justify-between items-center mt-2">--}}
+{{--                <span class="text-gray-700 text-sm">Tax (10%)</span>--}}
+{{--                <span class="text-gray-700 text-sm">$289.70</span>--}}
+{{--            </div>--}}
             <!-- Total -->
             <div class="flex justify-between items-center mt-6 border-t border-gray-300 pt-5">
                 <span class="text-xl font-bold text-gray-900">Total</span>
@@ -130,19 +130,39 @@
                         />
                         <span>Cash on Delivery (COD)</span>
                     </label>
+
+{{--                    <label class="inline-flex items-center space-x-3 text-gray-700 text-sm cursor-pointer">--}}
+{{--                        <input--}}
+{{--                            type="radio"--}}
+{{--                            name="paymentMethod"--}}
+{{--                            value="zalopay"--}}
+{{--                            required--}}
+{{--                            class="form-radio text-blue-600 h-5 w-5"--}}
+{{--                            onchange="toggleZalopayInfo(true)"--}}
+{{--                        />--}}
+{{--                        <span>e-wallet Zalopay</span>--}}
+{{--                    </label>--}}
+
                     <label class="inline-flex items-center space-x-3 text-gray-700 text-sm cursor-pointer">
                         <input
                             type="radio"
                             name="paymentMethod"
-                            value="zalopay"
+                            value="payos"
                             required
                             class="form-radio text-blue-600 h-5 w-5"
-                            onchange="toggleZalopayInfo(true)"
+                            onchange="togglePayOSInfo(true)"
                         />
-                        <span>e-wallet Zalopay</span>
+                        <span>PayOS</span>
                     </label>
                 </div>
             </fieldset>
+
+            <div id="payosInfo" class="mb-6 hidden border border-gray-300 rounded-md p-5 bg-gray-50">
+                <h3 class="text-sm font-semibold mb-4 text-gray-700">PayOS Payment</h3>
+                <p class="text-xs text-gray-600">
+                    You will be redirected to PayOS payment gateway after placing order
+                </p>
+            </div>
             <!-- Zalopay info dropdown -->
             <div id="zalopayInfo" class="mb-6 hidden border border-gray-300 rounded-md p-5 bg-gray-50">
                 <h3 class="text-sm font-semibold mb-4 text-gray-700">Zalopay e-wallet Information</h3>
@@ -178,6 +198,15 @@
     </section>
 </main>
 <script>
+    function togglePayOSInfo(show) {
+        const payosDiv = document.getElementById('payosInfo');
+        if (show) {
+            payosDiv.classList.remove('hidden');
+        } else {
+            payosDiv.classList.add('hidden');
+        }
+    }
+
     function toggleZalopayInfo(show) {
         const zalopayDiv = document.getElementById('zalopayInfo');
         if (show) {
@@ -189,6 +218,7 @@
             // Remove required attribute when hidden
             zalopayDiv.querySelectorAll('input').forEach(input => input.required = false);
         }
+        togglePayOSInfo(false);
     }
 </script>
 <!-- Footer -->
