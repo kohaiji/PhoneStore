@@ -287,6 +287,7 @@ class ClientIndexController extends Controller
 
         $orders = DB::table("orders")
             ->where("orders.user_id", "=", Auth::user()->id)
+            ->orderBy("order_date", "desc")
             ->get();
 
 
