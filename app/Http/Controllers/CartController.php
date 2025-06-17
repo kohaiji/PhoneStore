@@ -279,7 +279,7 @@ class CartController extends Controller
                     ->first();
 
                 if (!$variant || $variant->stock < $item['quantity']) {
-                    return redirect()->back()->with("error", "Product {$item['product_name']} {$item['color']} {$item['storage']} is not enough stock!");
+                    throw new \Exception("Product {$item['product_name']} {$item['color']} {$item['storage']} is not enough stock!");
                 }
             }
 
@@ -320,7 +320,13 @@ class CartController extends Controller
                 DB::commit();
                 Session::forget("cart");
                 return view("client/CartCheckoutSuccess");
-            } elseif ($request->paymentMethod === 'payos') {
+            }
+            elseif ($request->paymentMethod === 'payos') {
+                foreach ($cart as $item) {
+                    DB::table("product_variants")
+                        ->where("id", $item['variant_id'])
+                        ->decrement("stock", $item['quantity']);
+                }
                 $payOS = new PayOS(
                     env('PAYOS_CLIENT_ID'),
                     env('PAYOS_API_KEY'),
@@ -376,11 +382,11 @@ class CartController extends Controller
             ->where('order_id', $orderId)
             ->get();
 
-        foreach ($orderDetails as $detail) {
-            DB::table('product_variants')
-                ->where('id', $detail->product_variants_id)
-                ->decrement('stock', $detail->quantity);
-        }
+//        foreach ($orderDetails as $detail) {
+//            DB::table('product_variants')
+//                ->where('id', $detail->product_variants_id)
+//                ->decrement('stock', $detail->quantity);
+//        }
 
         Session::forget("cart");
         return view("client/CartCheckoutSuccess");
@@ -394,6 +400,15 @@ class CartController extends Controller
             abort(404);
         }
 //        dd($request->all());
+        $orderDetails = DB::table('order_details')
+            ->where('order_id', $orderId)
+            ->get();
+
+        foreach ($orderDetails as $detail) {
+            DB::table('product_variants')
+                ->where('id', $detail->product_variants_id)
+                ->increment('stock', $detail->quantity);
+        }
         // Xóa đơn hàng đã tạo
         DB::table('order_details')->where('order_id', $orderId)->delete();
         DB::table('orders')->where('id', $orderId)->delete();
