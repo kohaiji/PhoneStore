@@ -80,9 +80,9 @@
                     <i class="fas fa-eye"></i>
                 </button>
             </div>
-            <div class="text-blue-700 text-xs mb-6">
-                Forgot your password? <button class="text-blue-900 font-bold underline hover:text-blue-700 transition">Reset password</button>
-            </div>
+{{--            <div class="text-blue-700 text-xs mb-6">--}}
+{{--                Forgot your password? <button class="text-blue-900 font-bold underline hover:text-blue-700 transition">Reset password</button>--}}
+{{--            </div>--}}
             <button
                 type="submit"
                 class="bg-blue-500 bg-opacity-80 text-white text-sm font-extrabold px-12 py-3 rounded-full shadow-md hover:bg-blue-600 transition"
@@ -110,5 +110,17 @@
         this.querySelector('i').classList.toggle('fa-eye-slash');
     });
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: '{{ session('success') }}',
+            confirmButtonText: 'OK'
+        })
+    </script>
+@endif
 </body>
 </html>

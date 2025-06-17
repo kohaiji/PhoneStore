@@ -118,7 +118,8 @@ class UserController extends Controller
                 ->update([
                     "password" => $newPassword,
                 ]);
-
+            Auth::logout();
+            Session::flush();
             return redirect('/login')->with('success', 'Password has been reset successfully.');
         } catch (\Throwable $e) {
             return back()->withInput()->with('error', 'System error: ' . $e->getMessage());

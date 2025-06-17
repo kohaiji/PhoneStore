@@ -29,7 +29,7 @@
             Enter your details below to reset your password
         </p>
         <span class="text-blue-700 text-lg text-center max-w-[280px]">
-        Remembered your password? <button class="text-blue-900 font-bold underline hover:text-blue-700 transition">Sign In</button>
+        Remembered your password? <a href="/login" class="text-blue-900 font-bold underline hover:text-blue-700 transition">Sign In</a>
       </span>
 
         <!-- Top circle -->
