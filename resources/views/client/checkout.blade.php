@@ -152,7 +152,7 @@
                             class="form-radio text-blue-600 h-5 w-5"
                             onchange="togglePayOSInfo(true)"
                         />
-                        <span>PayOS</span>
+                        <span>Automatic Bank Transfer</span>
                     </label>
                 </div>
             </fieldset>

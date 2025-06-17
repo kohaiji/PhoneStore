@@ -362,6 +362,16 @@ class ClientIndexController extends Controller
 
         if ($action === 'cancel' && in_array($order->status, ['Pending', 'Confirmed'])) {
             $newStatus = 'Cancelled';
+
+            $orderDetails = DB::table('order_details')
+                ->where('order_id', $id)
+                ->get();
+
+            foreach ($orderDetails as $detail) {
+                DB::table('product_variants')
+                    ->where('id', $detail->product_variants_id)
+                    ->increment('stock', $detail->quantity);
+            }
         } elseif ($action === 'complete' && $order->status === 'Shipping') {
             $newStatus = 'Completed';
         }
@@ -370,9 +380,9 @@ class ClientIndexController extends Controller
             DB::table('orders')
                 ->where('id', $id)
                 ->update([
-                    'status' => $newStatus
+                    'status' => $newStatus,
                 ]);
-            return back()->with('success', 'Order status updated successfully.');
+            return back()->with('success', 'Order status update successful.');
         }
 
         return back()->with('error', 'Unable to update order status.');
