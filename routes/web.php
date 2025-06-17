@@ -106,6 +106,12 @@ Route::post('/login', [UserController::class, "postLogin"]);
 Route::get('/register', [UserController::class, "register"]);
 Route::post('/register', [UserController::class, "postRegister"]);
 Route::get('/logout', [UserController::class, "logout"]);
+// GET: Hiển thị form đổi mật khẩu
+Route::get('/change-password', [UserController::class, 'changePassword'])->name('client.changePassword');
+
+// POST: Xử lý đổi mật khẩu
+Route::post('/change-password', [UserController::class, 'postChangePassword'])->name('client.postChangePassword');
+
 
 
 

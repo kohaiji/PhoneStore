@@ -86,6 +86,46 @@ class UserController extends Controller
 
     }
 
+    public function changePassword() {
+        return view("client.change-password");
+    }
+
+    public function postChangePassword(Request $request) {
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|string|min:3|confirmed',
+        ], [
+            'name.required' => 'Name is required.',
+            'email.required' => 'Email is required.',
+            'email.exists' => 'Email not found.',
+            'password.required' => 'Password is required.',
+            'password.confirmed' => 'Password confirmation does not match.',
+        ]);
+
+        try {
+            $user = User::where('email', $request->email)
+                ->where('name', $request->name)
+                ->first();
+
+            if (!$user) {
+                return back()->withInput()->with('error', 'User not found with the provided name and email.');
+            }
+
+            $newPassword = Hash::make($request->password);
+            DB::table('users')
+                ->where('email', $request->email)
+                ->update([
+                    "password" => $newPassword,
+                ]);
+
+            return redirect('/login')->with('success', 'Password has been reset successfully.');
+        } catch (\Throwable $e) {
+            return back()->withInput()->with('error', 'System error: ' . $e->getMessage());
+        }
+    }
+
+
     public function logout() {
         Auth::logout();
         Session::forget("cart");

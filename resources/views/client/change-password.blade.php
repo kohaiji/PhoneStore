@@ -49,37 +49,56 @@
         <h2 class="text-blue-900 font-extrabold text-2xl mb-6">Reset Password</h2>
         <p class="text-blue-700 text-sm mb-8">Please fill in all fields to reset your password</p>
 
-        <form class="space-y-6 max-w-lg">
+        <form action="{{ route('client.postChangePassword') }}" method="POST" class="space-y-6 max-w-lg">
+            @csrf
+            @if(session('error'))
+                <div class="text-red-500 text-sm">{{ session('error') }}</div>
+            @endif
+            @if(session('success'))
+                <div class="text-green-500 text-sm">{{ session('success') }}</div>
+            @endif
+
             <div>
                 <input
                     type="text"
+                    name="name"
                     placeholder="Name"
+                    value="{{ old('name') }}"
                     class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400"
                 />
+                @error('name') <div class="text-red-500 text-xs mt-1">{{ $message }}</div> @enderror
             </div>
+
             <div>
                 <input
                     type="email"
+                    name="email"
                     placeholder="Email"
+                    value="{{ old('email') }}"
                     class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400"
                 />
+                @error('email') <div class="text-red-500 text-xs mt-1">{{ $message }}</div> @enderror
             </div>
+
             <div>
                 <input
-                    id="newPassword"
+                    name="password"
                     type="password"
                     placeholder="New Password"
                     class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400"
                 />
+                @error('password') <div class="text-red-500 text-xs mt-1">{{ $message }}</div> @enderror
             </div>
+
             <div>
                 <input
-                    id="confirmPassword"
+                    name="password_confirmation"
                     type="password"
                     placeholder="Confirm Password"
                     class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400"
                 />
             </div>
+
             <button
                 type="submit"
                 class="bg-blue-500 bg-opacity-80 text-white text-sm font-extrabold px-12 py-3 rounded-full shadow-md hover:bg-blue-600 transition"
@@ -87,6 +106,7 @@
                 RESET PASSWORD
             </button>
         </form>
+
     </div>
 </div>
 </body>
