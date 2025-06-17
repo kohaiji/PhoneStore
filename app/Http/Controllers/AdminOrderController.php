@@ -24,7 +24,7 @@ class AdminOrderController extends Controller
         $orders = $query->paginate(10);
 
 
-        return view("admin.order-List", [
+        return view("admin.order-list", [
             "orders" => $orders,
             "activeMenu" => $activeMenu,
             "currentFilter" => $request->input('status', 'all'),
