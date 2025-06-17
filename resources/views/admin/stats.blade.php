@@ -179,7 +179,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Revenue last 7 days</h4>
+                            <h4>Revenue by day</h4>
                         </div>
                         <div class="card-body">
                             <div id="daily-revenue-chart"></div>

@@ -85,9 +85,13 @@ Route::post('/cartRemove', [CartController::class, "cartRemove"])->name('cart.re
 Route::get('/cartRemoveAll', [CartController::class, "cartRemoveAll"]);
 Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
 Route::get('/checkout', [CartController::class, "checkout"]);
-Route::post('/cart/checkout', [CartController::class, "cartCheckout"])->name('checkout.payos');
+Route::post('/cart/checkout', [CartController::class, "cartCheckout"])->name('checkout.process');
+
+// PayOS callback routes
 Route::get('/checkout/success', [CartController::class, "checkoutSuccess"])->name('checkout.success');
 Route::get('/checkout/cancel', [CartController::class, "checkoutCancel"])->name('checkout.cancel');
+// PayOS webhook route
+Route::post('/payos/webhook', [CartController::class, 'handlePayOSWebhook'])->name('payos.webhook');
 
 Route::get('/order', [ClientIndexController::class, "order"]);
 Route::patch('/orders/{id}/update-status', [ClientIndexController::class, 'updateStatus'])->name('orders.updateStatus');

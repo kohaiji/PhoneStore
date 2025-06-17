@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -11,49 +12,49 @@ use PayOS\PayOS;
 
 class CartController extends Controller
 {
-    public function handlePayOSCheckout(Request $request, $orderId)
-    {
-        $payOS = new PayOS(
-            env('PAYOS_CLIENT_ID'),
-            env('PAYOS_API_KEY'),
-            env('PAYOS_CHECKSUM_KEY')
-        );
-
-        $order = DB::table('orders')->find($orderId);
-        $orderDetails = DB::table('order_details')->where('order_id', $orderId)->get();
-
-        $items = [];
-        foreach ($orderDetails as $detail) {
-            $variant = DB::table('product_variants')->find($detail->product_variants_id);
-            $product = DB::table('products')->find($variant->product_id);
-
-            $items[] = [
-                'name' => $product->product_name,
-                'quantity' => (int) $detail->quantity,
-                'price' => (int) $detail->price
-            ];
-        }
-
-        $returnUrl = route('checkout.success');
-        $cancelUrl = route('checkout.cancel');
-
-        $paymentData = [
-            'orderCode' => intval($orderId),
-            'amount' => (int) $order->total,
-            'description' => 'Payment for Order #' . $orderId,
-            'items' => $items,
-            'returnUrl' => $returnUrl,
-            'cancelUrl' => $cancelUrl,
-            'expiredAt' => time() + 600
-        ];
-//        dd($paymentData);
-        try {
-            $response = $payOS->createPaymentLink($paymentData);
-            return redirect($response['checkoutUrl']);
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Payment initialization failed: ' . $e->getMessage());
-        }
-    }
+//    public function handlePayOSCheckout(Request $request, $orderId)
+//    {
+//        $payOS = new PayOS(
+//            env('PAYOS_CLIENT_ID'),
+//            env('PAYOS_API_KEY'),
+//            env('PAYOS_CHECKSUM_KEY')
+//        );
+//
+//        $order = DB::table('orders')->find($orderId);
+//        $orderDetails = DB::table('order_details')->where('order_id', $orderId)->get();
+//
+//        $items = [];
+//        foreach ($orderDetails as $detail) {
+//            $variant = DB::table('product_variants')->find($detail->product_variants_id);
+//            $product = DB::table('products')->find($variant->product_id);
+//
+//            $items[] = [
+//                'name' => $product->product_name,
+//                'quantity' => (int) $detail->quantity,
+//                'price' => (int) $detail->price
+//            ];
+//        }
+//
+//        $returnUrl = route('checkout.success');
+//        $cancelUrl = route('checkout.cancel');
+//
+//        $paymentData = [
+//            'orderCode' => intval($orderId),
+//            'amount' => (int) $order->total,
+//            'description' => 'Payment for Order #' . $orderId,
+//            'items' => $items,
+//            'returnUrl' => $returnUrl,
+//            'cancelUrl' => $cancelUrl,
+//            'expiredAt' => time() + 600
+//        ];
+////        dd($paymentData);
+//        try {
+//            $response = $payOS->createPaymentLink($paymentData);
+//            return redirect($response['checkoutUrl']);
+//        } catch (\Exception $e) {
+//            return redirect()->back()->with('error', 'Payment initialization failed: ' . $e->getMessage());
+//        }
+//    }
 
     public function addToCart(Request $request) {
         if (!auth()->check()) {
@@ -254,22 +255,35 @@ class CartController extends Controller
         ]);
     }
 
+    private function getCartItems($cart)
+    {
+        $items = [];
+        foreach ($cart as $item) {
+            $items[] = [
+                'name' => $item['product_name'] . ' ' . $item['color'] . ' - ' . $item['storage'],
+                'quantity' => intval($item['quantity']),
+                'price' => intval($item['price'])
+            ];
+        }
+        return $items;
+    }
+
     public function cartCheckout(Request $request) {
         $cart = Session::get('cart');
-
-        foreach ($cart as $item) {
-            $variant = DB::table("product_variants")
-                ->where("id", $item['variant_id'])
-                ->lockForUpdate()
-                ->first();
-
-            if (!$variant || $variant->stock < $item['quantity']) {
-                return redirect()->back()->with("error", "Product {$item['product_name']} {$item['color']} {$item['storage']} is not enough stock!");
-            }
-        }
-
         DB::beginTransaction();
         try {
+            foreach ($cart as $item) {
+                $variant = DB::table("product_variants")
+                    ->where("id", $item['variant_id'])
+                    ->lockForUpdate()
+                    ->first();
+
+                if (!$variant || $variant->stock < $item['quantity']) {
+                    return redirect()->back()->with("error", "Product {$item['product_name']} {$item['color']} {$item['storage']} is not enough stock!");
+                }
+            }
+
+
             DB::table("users")
                 ->where("id", $request->userId)
                 ->update(["address" => $request->address]);
@@ -295,37 +309,69 @@ class CartController extends Controller
                     'quantity' => $item['quantity'],
                     "order_date" => now(),
                 ]);
-
-                DB::table("product_variants")
-                    ->where("id", $item['variant_id'])
-                    ->decrement("stock", $item['quantity']);
             }
 
             if ($request->paymentMethod === 'cod') {
-                Session::forget("cart");
+                foreach ($cart as $item) {
+                    DB::table("product_variants")
+                        ->where("id", $item['variant_id'])
+                        ->decrement("stock", $item['quantity']);
+                }
                 DB::commit();
+                Session::forget("cart");
                 return view("client/CartCheckoutSuccess");
             } elseif ($request->paymentMethod === 'payos') {
+                $payOS = new PayOS(
+                    env('PAYOS_CLIENT_ID'),
+                    env('PAYOS_API_KEY'),
+                    env('PAYOS_CHECKSUM_KEY')
+                );
+                $returnUrl = route('checkout.success');
+                $cancelUrl = route('checkout.cancel');
+
+                $paymentData = [
+                    'orderCode' => intval($orderId),
+                    'amount' => intval($request->total),
+                    'description' => 'Payment for Order #' . $orderId,
+                    'items' => $this->getCartItems($cart),
+                    'returnUrl' => $returnUrl,
+                    'cancelUrl' => $cancelUrl,
+                    'expiredAt' => time() + 600
+                ];
+//                dd($paymentData);
+
+                $response = $payOS->createPaymentLink($paymentData);
+
+                if (!isset($response['checkoutUrl'])) {
+                    throw new \Exception("Payment gateway error: missing checkout URL.");
+                }
                 DB::commit();
-                return $this->handlePayOSCheckout($request, $orderId);
+                return redirect($response['checkoutUrl']);
             }
 
-        } catch (\Exception $e) {
+            }
+        catch (\Exception $e)
+        {
             DB::rollBack();
-            return redirect()->back()->with("error", "An error occurred during payment: " . $e->getMessage());
+            Log::error('Checkout error: ' . $e->getMessage());
+            return redirect()->back()->with("error", "An error occurred: " . $e->getMessage());
         }
     }
 
     public function checkoutSuccess(Request $request)
     {
-        $orderId = $request->input('orderId');
+        $orderId = $request->input('orderCode');
 
-        // Cập nhật trạng thái đơn hàng
-        DB::table('orders')
+//        dd($request->all());
+        $order = DB::table('orders')
             ->where('id', $orderId)
-            ->update(['status' => 'Pending']);
+            ->where('user_id', Auth::user()->id)
+            ->first();
 
-        // Trừ stock
+        if (!$order || $order->status !== 'Pending') {
+            abort(404);
+        }
+
         $orderDetails = DB::table('order_details')
             ->where('order_id', $orderId)
             ->get();
@@ -342,58 +388,65 @@ class CartController extends Controller
 
     public function checkoutCancel(Request $request)
     {
-        $orderId = $request->input('orderId');
-
+        $orderId = $request->input('orderCode');
+        $order = DB::table('orders')->where('id', $orderId)->first();
+        if (!$order) {
+            abort(404);
+        }
+//        dd($request->all());
         // Xóa đơn hàng đã tạo
+        DB::table('order_details')->where('order_id', $orderId)->delete();
         DB::table('orders')->where('id', $orderId)->delete();
 
         return redirect('/cart')->with('error', 'Payment was cancelled');
     }
 
-    public function handlePayOSWebhook(Request $request)
-    {
-        $webhookData = $request->all();
-        $payOS = new PayOS(
-            env('PAYOS_CLIENT_ID'),
-            env('PAYOS_API_KEY'),
-            env('PAYOS_CHECKSUM_KEY')
-        );
-
-        try {
-            // Xác minh chữ ký webhook
-            $payOS->verifyPaymentWebhookData($webhookData);
-
-            $orderId = $webhookData['data']['orderCode'];
-            $status = $webhookData['data']['status'];
-
-            if ($status === 'PAID') {
-                DB::table('orders')
-                    ->where('id', $orderId)
-                    ->update(['status' => 'Paid']);
-
-                // Trừ tồn kho
-                $orderDetails = DB::table('order_details')
-                    ->where('order_id', $orderId)
-                    ->get();
-
-                foreach ($orderDetails as $detail) {
-                    DB::table('product_variants')
-                        ->where('id', $detail->product_variants_id)
-                        ->decrement('stock', $detail->quantity);
-                }
-            }
-
-            return response()->json(['message' => 'Webhook processed']);
-
-        } catch (\Exception $e) {
-            Log::error('Webhook error: ' . $e->getMessage());
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
-    }
-
+//    public function handlePayOSWebhook(Request $request)
+//    {
+//        $webhookData = $request->all();
+//        $payOS = new PayOS(
+//            env('PAYOS_CLIENT_ID'),
+//            env('PAYOS_API_KEY'),
+//            env('PAYOS_CHECKSUM_KEY')
+//        );
+//
+//        try {
+//            // Xác minh chữ ký webhook
+//            $payOS->verifyPaymentWebhookData($webhookData);
+//
+//            $orderId = $webhookData['data']['orderCode'];
+//            $status = $webhookData['data']['status'];
+//
+//            if ($status === 'PAID') {
+//                DB::table('orders')
+//                    ->where('id', $orderId)
+//                    ->update(['status' => 'Paid']);
+//
+//                // Trừ tồn kho
+//                $orderDetails = DB::table('order_details')
+//                    ->where('order_id', $orderId)
+//                    ->get();
+//
+//                foreach ($orderDetails as $detail) {
+//                    DB::table('product_variants')
+//                        ->where('id', $detail->product_variants_id)
+//                        ->decrement('stock', $detail->quantity);
+//                }
+//            }
+//
+//            return response()->json(['message' => 'Webhook processed']);
+//
+//        } catch (\Exception $e) {
+//            Log::error('Webhook error: ' . $e->getMessage());
+//            return response()->json(['error' => $e->getMessage()], 400);
+//        }
+//    }
 
 
     public function test () {
+        if(Auth::check() && Auth::user()->role !== 1){
+            abort(404);
+        }
         $product = DB::table('products')
             ->get();
         $data = Session::get('cart');
