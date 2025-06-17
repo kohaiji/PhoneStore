@@ -41,15 +41,15 @@
 
         <!-- Slideshow with Fade Effect -->
         <div class="md:w-1/2 mt-12 md:mt-0">
-            <div class="relative w-full h-[400px] overflow-hidden rounded-lg shadow-lg">
+                <div class="relative w-full max-w-md h-[400px] mx-auto overflow-hidden rounded-lg shadow-lg">
                 <img id="slide-img-1"
-                     class="absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 opacity-100"
-                     src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-16-pro-max.png"
-                     alt="Slide 1"/>
+                     class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100"
+                     src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-16-pro-max.png" alt="Slide 1"/>
+
                 <img id="slide-img-2"
-                     class="absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 opacity-0"
-                     src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-plus_1__1.png"
-                     alt="Slide 2"/>
+                     class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0"
+                     src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/1/5/15_2_7_2_5.jpg" alt="Slide 2"/>
+
             </div>
         </div>
     </div>
