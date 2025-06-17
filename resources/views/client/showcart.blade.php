@@ -96,14 +96,14 @@
         <!-- Order Summary -->
         <div class="mt-8 md:mt-0 w-full md:w-80 bg-white rounded-lg p-6 shadow-sm border border-transparent hover:border-gray-100 text-base">
             <h3 class="font-semibold mb-4">Order Summary</h3>
-            <div class="flex justify-between text-gray-700 mb-2">
-                <span>Subtotal</span>
-                <span>$1998</span>
-            </div>
-            <div class="flex justify-between text-gray-700 mb-4">
-                <span>Tax (8%)</span>
-                <span>$159.84</span>
-            </div>
+{{--            <div class="flex justify-between text-gray-700 mb-2">--}}
+{{--                <span>Subtotal</span>--}}
+{{--                <span>{{ number_format($total, 0, ',', ',') }}đ</span>--}}
+{{--            </div>--}}
+{{--            <div class="flex justify-between text-gray-700 mb-4">--}}
+{{--                <span>Tax (8%)</span>--}}
+{{--                <span>$159.84</span>--}}
+{{--            </div>--}}
             <hr class="border-gray-200 mb-4"/>
             <div class="flex justify-between font-semibold mb-6">
                 <span>Total</span>
