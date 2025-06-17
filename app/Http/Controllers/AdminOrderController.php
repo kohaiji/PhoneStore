@@ -36,6 +36,10 @@ class AdminOrderController extends Controller
     {
         $order = DB::table("orders")->where("id", $id)->first();
 
+        if (!$order) {
+            return redirect()->back()->with('error', 'Order not found');
+        }
+
         // Logic kiem soat chuyen status
         $allowedTransitions = [
             'Pending' => ['Confirmed', 'Cancelled'],
@@ -45,15 +49,29 @@ class AdminOrderController extends Controller
             'Cancelled' => []
         ];
 
-        if (!in_array($request->status, $allowedTransitions[$order->status])) {
-            return redirect()->back()->with('error', 'Unable to change order status');
+        $newStatus = $request->status;
+
+        if (!in_array($newStatus, $allowedTransitions[$order->status])) {
+            return redirect()->back()->with('error', 'Invalid status transition');
+        }
+
+        if ($newStatus === 'Cancelled') {
+            $orderDetails = DB::table('order_details')->where('order_id', $id)->get();
+
+            foreach ($orderDetails as $detail) {
+                DB::table('product_variants')
+                    ->where('id', $detail->product_variants_id)
+                    ->increment('stock', $detail->quantity);
+            }
         }
 
         DB::table("orders")
             ->where("id", $id)
-            ->update(["status" => $request->status]);
+            ->update([
+                "status" => $newStatus,
+            ]);
 
-        return redirect()->back()->with('success', 'Order status update successful');
+        return redirect()->back()->with('success', 'Order status updated successfully');
     }
 
     public function orderDetails($id)
