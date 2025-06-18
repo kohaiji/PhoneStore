@@ -44,7 +44,7 @@
     <div class="flex flex-col md:flex-row" style="gap: 160px;">
         <!-- Cart Items -->
         <div class="flex-1 space-y-4">
-            <a class="text-red-600 mb-4 inline-block underline hover:text-blue-500" href="/cartRemoveAll">
+            <a onclick="return confirm('Are you sure to remove all products?')" class="text-red-600 mb-4 inline-block underline hover:text-blue-500" href="/cartRemoveAll">
                 Remove All
             </a>
 
