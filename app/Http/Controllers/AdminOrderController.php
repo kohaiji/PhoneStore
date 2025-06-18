@@ -176,7 +176,7 @@ class AdminOrderController extends Controller
             'payment_method' => $paymentMethod,
         ]);
 
-        return view("admin.order-List", [
+        return view("admin.order-list", [
             "orders" => $orders,
             "activeMenu" => $activeMenu,
             "currentFilter" => $status,
