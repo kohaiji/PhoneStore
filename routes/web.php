@@ -64,6 +64,7 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::post('/order-update-status/{id}', [AdminOrderController::class, "updateStatus"]);
     Route::get('/order-details/{id}', [AdminOrderController::class, "orderDetails"]);
     Route::get("/order-search", [AdminOrderController::class, "orderSearch"])->name('admin.order.search');
+    Route::get('/cancel-expired-payos', [AdminOrderController::class, 'cancelExpiredPayosOrders'])->name('admin.orders.cancelExpiredPayos');
 
 // ADMIN STATS
     Route::get('/stats', [AdminStatsController::class, "statistics"]);
@@ -90,8 +91,6 @@ Route::post('/cart/checkout', [CartController::class, "cartCheckout"])->name('ch
 // PayOS callback routes
 Route::get('/checkout/success', [CartController::class, "checkoutSuccess"])->name('checkout.success');
 Route::get('/checkout/cancel', [CartController::class, "checkoutCancel"])->name('checkout.cancel');
-// PayOS webhook route
-Route::post('/payos/webhook', [CartController::class, 'handlePayOSWebhook'])->name('payos.webhook');
 
 Route::get('/order', [ClientIndexController::class, "order"]);
 Route::patch('/orders/{id}/update-status', [ClientIndexController::class, 'updateStatus'])->name('orders.updateStatus');

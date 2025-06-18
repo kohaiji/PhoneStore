@@ -378,6 +378,10 @@ class CartController extends Controller
             abort(404);
         }
 
+        DB::table('orders')
+            ->where('id', $orderId)
+            ->update(['status' => 'Paid']);
+
         $orderDetails = DB::table('order_details')
             ->where('order_id', $orderId)
             ->get();
@@ -415,47 +419,6 @@ class CartController extends Controller
 
         return redirect('/cart')->with('error', 'Payment was cancelled');
     }
-
-//    public function handlePayOSWebhook(Request $request)
-//    {
-//        $webhookData = $request->all();
-//        $payOS = new PayOS(
-//            env('PAYOS_CLIENT_ID'),
-//            env('PAYOS_API_KEY'),
-//            env('PAYOS_CHECKSUM_KEY')
-//        );
-//
-//        try {
-//            // Xác minh chữ ký webhook
-//            $payOS->verifyPaymentWebhookData($webhookData);
-//
-//            $orderId = $webhookData['data']['orderCode'];
-//            $status = $webhookData['data']['status'];
-//
-//            if ($status === 'PAID') {
-//                DB::table('orders')
-//                    ->where('id', $orderId)
-//                    ->update(['status' => 'Paid']);
-//
-//                // Trừ tồn kho
-//                $orderDetails = DB::table('order_details')
-//                    ->where('order_id', $orderId)
-//                    ->get();
-//
-//                foreach ($orderDetails as $detail) {
-//                    DB::table('product_variants')
-//                        ->where('id', $detail->product_variants_id)
-//                        ->decrement('stock', $detail->quantity);
-//                }
-//            }
-//
-//            return response()->json(['message' => 'Webhook processed']);
-//
-//        } catch (\Exception $e) {
-//            Log::error('Webhook error: ' . $e->getMessage());
-//            return response()->json(['error' => $e->getMessage()], 400);
-//        }
-//    }
 
 
     public function test () {

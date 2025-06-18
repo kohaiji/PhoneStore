@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class AdminOrderController extends Controller
 {
@@ -28,6 +30,7 @@ class AdminOrderController extends Controller
             "orders" => $orders,
             "activeMenu" => $activeMenu,
             "currentFilter" => $request->input('status', 'all'),
+            "currentPaymentMethod" => $request->input('payment_method', 'all'),
             "data" => $data,
         ]);
     }
@@ -42,6 +45,7 @@ class AdminOrderController extends Controller
 
         // Logic kiem soat chuyen status
         $allowedTransitions = [
+            'Paid' => ['Shipping'],
             'Pending' => ['Confirmed', 'Cancelled'],
             'Confirmed' => ['Shipping', 'Cancelled'],
             'Shipping' => ['Completed'],
@@ -72,6 +76,37 @@ class AdminOrderController extends Controller
             ]);
 
         return redirect()->back()->with('success', 'Order status updated successfully');
+    }
+
+    public function cancelExpiredPayosOrders()
+    {
+        $expiredTime = Carbon::now()->subMinutes(20);
+
+        $orders = DB::table('orders')
+            ->where('status', 'Pending')
+            ->where('payment_method', 'payos')
+            ->where('order_date', '<=', $expiredTime)
+            ->get();
+
+        foreach ($orders as $order) {
+            $orderDetails = DB::table('order_details')
+                ->where('order_id', $order->id)
+                ->get();
+
+            foreach ($orderDetails as $detail) {
+                DB::table('product_variants')
+                    ->where('id', $detail->product_variants_id)
+                    ->increment('stock', $detail->quantity);
+            }
+
+            DB::table('orders')
+                ->where('id', $order->id)
+                ->update([
+                    'status' => 'Cancelled'
+                ]);
+        }
+
+        return back()->with('success', 'Canceled all overdue orders.');
     }
 
     public function orderDetails($id)
@@ -116,11 +151,16 @@ class AdminOrderController extends Controller
         $activeMenu = "order";
         $data = trim($request->data);
         $status = $request->input('status', 'all');
+        $paymentMethod = $request->input('payment_method', 'all');
 
         $query = DB::table("orders")->orderBy("order_date", "DESC");
 
         if ($status !== 'all') {
             $query->where('status', $status);
+        }
+
+        if ($paymentMethod !== 'all') {
+            $query->where('payment_method', $paymentMethod);
         }
 
         if (!empty($data)) {
@@ -133,6 +173,7 @@ class AdminOrderController extends Controller
         $orders = $query->paginate(10)->appends([
             'data' => $data,
             'status' => $status,
+            'payment_method' => $paymentMethod,
         ]);
 
         return view("admin.order-List", [
@@ -140,6 +181,7 @@ class AdminOrderController extends Controller
             "activeMenu" => $activeMenu,
             "currentFilter" => $status,
             "data" => $data,
+            "currentPaymentMethod" => $paymentMethod,
         ]);
     }
 

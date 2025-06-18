@@ -56,8 +56,8 @@
                     </div>
 
                         <form action="{{ route('admin.order.search') }}" method="get">
-                            <div class="row">
-                                <div class="col-10">
+                            <div class="row mt-2">
+                                <div class="col-9">
                                     <input placeholder="Search By Customer Name..." class="form-control" type="text" name="data" value="{{ $data ?? '' }}">
                                 </div>
                                 <div class="col-auto">
@@ -66,11 +66,15 @@
                                 <div class="col-auto">
                                     <a class="btn btn-success btn-sm rounded-pill" href="/admin/order-list">View All</a>
                                 </div>
+                                <div class="col-auto">
+                                    <a href="/admin/cancel-expired-payos" onclick="return confirm('Are you sure you want to cancel all orders that have expired?')" class="btn btn-danger btn-sm rounded-pill">Cancel overdue orders</a>
+                                </div>
 
-                                <div class="row mt-1">
-                                    <div class="col-2">
+                                <div class="row mt-2">
+                                    <div class="col-4">
                                         <select class="form-select" name="status" onchange="this.form.submit()">
                                             <option value="all" {{ $currentFilter === 'all' ? 'selected' : '' }}>All Status</option>
+                                            <option value="Paid" {{ $currentFilter === 'Paid' ? 'selected' : '' }}>Paid</option>
                                             <option value="Pending" {{ $currentFilter === 'Pending' ? 'selected' : '' }}>Pending</option>
                                             <option value="Confirmed" {{ $currentFilter === 'Confirmed' ? 'selected' : '' }}>Confirmed</option>
                                             <option value="Shipping" {{ $currentFilter === 'Shipping' ? 'selected' : '' }}>Shipping</option>
@@ -78,13 +82,21 @@
                                             <option value="Cancelled" {{ $currentFilter === 'Cancelled' ? 'selected' : '' }}>Cancelled</option>
                                         </select>
                                     </div>
+
+                                    <div class="col-4">
+                                        <select class="form-select" name="payment_method" onchange="this.form.submit()">
+                                            <option value="all" {{ $currentPaymentMethod === 'all' ? 'selected' : '' }}>All Methods</option>
+                                            <option value="cod" {{ $currentPaymentMethod === 'cod' ? 'selected' : '' }}>COD</option>
+                                            <option value="payos" {{ $currentPaymentMethod === 'payos' ? 'selected' : '' }}>PayOS</option>
+                                        </select>
+                                    </div>
+
                                 </div>
                             </div>
                         </form>
 
                 </div>
             </div>
-
 {{--            <div class="row mt-3">--}}
 {{--                <div class="col-md-3">--}}
 {{--                    <form method="GET" action="{{ route('admin.orders.list') }}">--}}
@@ -134,6 +146,7 @@
                                     <form action="/admin/order-update-status/{{$obj->id}}" method="POST">
                                         @csrf
                                         <select name="status" onchange="this.form.submit()" class="form-select form-select-sm">
+                                            <option value="Paid" {{ $obj->status == 'Paid' ? 'selected' : '' }}>Paid</option>
                                             <option value="Pending" {{ $obj->status == 'Pending' ? 'selected' : '' }}>Pending</option>
                                             <option value="Confirmed" {{ $obj->status == 'Confirmed' ? 'selected' : '' }}>Confirmed</option>
                                             <option value="Shipping" {{ $obj->status == 'Shipping' ? 'selected' : '' }}>Shipping</option>
