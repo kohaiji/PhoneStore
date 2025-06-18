@@ -84,7 +84,7 @@
                             data-id="{{ $obj['variant_id'] }}"
                             data-stock="{{ $obj['stock'] }}"
                             oninput="validateQuantity(this)"/>
-                        <a href="javascript:void(0);" class="text-red-600 font-normal text-base hover:text-blue-500 btn-remove" data-id="{{ $obj['variant_id'] }}">
+                        <a onclick="return handleRemove(event, {{ $obj['variant_id'] }})" href="javascript:void(0);" class="text-red-600 font-normal text-base hover:text-blue-500 btn-remove" data-id="{{ $obj['variant_id'] }}">
                             Remove
                         </a>
                     </div>
@@ -222,6 +222,16 @@
             });
         });
     });
+</script>
+
+<script>
+    function handleRemove(e, variantId) {
+        if (!confirm('Are you sure to remove this product from your cart?')) {
+            e.stopImmediatePropagation();
+            return false;
+        }
+        return true;
+    }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
