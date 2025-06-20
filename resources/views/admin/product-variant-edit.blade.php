@@ -74,7 +74,7 @@
 
                 <div class="input-group mb-3">
                     <span class="input-group-text"><b>Stock</b></span>
-                    <input type="text" name="stock" value="{{$product_variants->stock}}" class="form-control form-control-sm">
+                    <input type="text" name="stock" value="{{$product_variants->stock}}" class="form-control form-control-sm" required>
                 </div>
 
 

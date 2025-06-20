@@ -69,7 +69,7 @@
 
                 <div class="mt-2 mb-2">
                     <label for="">Stock</label>
-                    <input type="text" name="stock" class="form-control form-control-sm"/>
+                    <input type="text" name="stock" class="form-control form-control-sm" required/>
                 </div>
 
                 <div class="mt-2 mb-2">
