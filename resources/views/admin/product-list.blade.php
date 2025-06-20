@@ -85,37 +85,19 @@
                         </td>
 
                         <td class="text-center">
-                            <a href="#" class="btn btn-outline-info btn-sm" onclick="postVariantForm({{ $obj->id }})">Variants</a>
-
-                            <form id="post-variant-form-{{ $obj->id }}" action="/admin/product-variant/{{ $obj->id }}" method="POST" style="display: none;">
-                                @csrf
-                                <input type="hidden" name="return_url" value="{{ request()->fullUrl() }}">
-                            </form>
+                            <a href="{{ route('product.variants', ['id' => $obj->id, 'return_url' => request()->fullUrl()]) }}"
+                               class="btn btn-outline-info btn-sm">
+                                Variants
+                            </a>
                         </td>
-
-                        <script>
-                            function postVariantForm(id) {
-                                const form = document.getElementById('post-variant-form-' + id);
-                                form.submit();
-                            }
-                        </script>
 
                         <td class="text-center">
-                            <a href="#" class="btn btn-outline-warning btn-sm" onclick="postImageForm({{ $obj->id }}, '{{ request()->fullUrl() }}')">Images</a>
-
-                            <form id="post-image-form-{{ $obj->id }}" action="/admin/product-images/{{ $obj->id }}" method="POST" style="display: none;">
-                                @csrf
-                                <input type="hidden" name="return_url" value="{{ request()->fullUrl() }}">
-                            </form>
+                            <a href="{{ route('product.images', ['id' => $obj->id, 'return_url' => request()->fullUrl()]) }}"
+                               class="btn btn-outline-warning btn-sm">
+                                Images
+                            </a>
                         </td>
 
-                        <script>
-                            function postImageForm(id, returnUrl) {
-                                const form = document.getElementById('post-image-form-' + id);
-                                form.querySelector('input[name="return_url"]').value = returnUrl;
-                                form.submit();
-                            }
-                        </script>
                         <td class="text-center">
                             <a href="/admin/product-edit/{{$obj->id}}" class="btn btn-outline-primary btn-sm">Edit</a>
                         </td>
