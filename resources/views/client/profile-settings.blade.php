@@ -55,9 +55,9 @@
             </label>
             <div class="md:col-span-3 flex items-center space-x-8">
                 <div class="w-32 h-32 rounded-xl border border-gray-300 overflow-hidden bg-gray-100 flex items-center justify-center shadow-sm">
-                    <img alt="User profile image preview" class="object-cover w-32 h-32 rounded-xl" height="128" id="profileImagePreview" src="{{ \Illuminate\Support\Facades\Auth::user()->avatar
-                            ? '/avatar_user/' . \Illuminate\Support\Facades\Auth::user()->avatar
-                            : 'https://storage.googleapis.com/a1aa/image/73729077-3a08-4714-0116-18a0a6a74e9f.jpg' }}" width="128"/>
+                    <img alt="User profile image preview" class="object-cover w-32 h-32 rounded-xl" height="128" id="profileImagePreview"
+                         src="{{ Auth::user()->avatar ? asset('avatar_user/' . Auth::user()->avatar) : 'https://storage.googleapis.com/a1aa/image/73729077-3a08-4714-0116-18a0a6a74e9f.jpg' }}"
+                         width="128"/>
                 </div>
                 <div class="flex flex-col space-y-2">
                     <input
