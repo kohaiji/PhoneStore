@@ -231,9 +231,13 @@ class AdminProductController extends Controller
             ->paginate(10);
 
         if (!$productId || $products->isEmpty()) {
-            return redirect(request()->input('return_url'))
-                ->with("no_variant", true)
-                ->with("product_id", $id);
+            $returnUrl = request()->input('return_url');
+
+            if (!$returnUrl) {
+                $returnUrl = "/admin/product-list";
+            }
+
+            return redirect($returnUrl)->with('no_variant', true)->with('product_id', $id);
         }
 
         return view("admin/product-variant", [
@@ -351,7 +355,13 @@ class AdminProductController extends Controller
             ->paginate(10);
 
         if (!$productId || $products->isEmpty()) {
-            return redirect(request()->input('return_url'))->with('no_image', true)->with('product_id', $id);
+            $returnUrl = request()->input('return_url');
+
+            if (!$returnUrl) {
+                $returnUrl = "/admin/product-list";
+            }
+
+            return redirect($returnUrl)->with('no_image', true)->with('product_id', $id);
         }
 
         return view("admin/product-images", [
