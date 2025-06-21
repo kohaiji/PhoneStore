@@ -181,22 +181,22 @@
 @include('client.header')
 
 <!-- Menu button for mobile -->
-<button id="menu-button" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
-    <i class="fas fa-bars"></i>
-</button>
+{{--<button id="menu-button" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">--}}
+{{--    <i class="fas fa-bars"></i>--}}
+{{--</button>--}}
 
 <!-- Mobile menu -->
-<nav id="mobile-menu" aria-label="Mobile menu" role="menu">
-    <a href="/" role="menuitem" tabindex="0">Home</a>
-    <a href="/products" role="menuitem" tabindex="0">Products</a>
-    <a href="/about" role="menuitem" tabindex="0">About</a>
-    <a href="/services" role="menuitem" tabindex="0">Services</a>
-    <a href="/new" role="menuitem" tabindex="0">New</a>
-    <a href="/contact" role="menuitem" tabindex="0">Contact</a>
-    <a href="/cart" role="menuitem" tabindex="0" class="cart-link">
-        <i class="fas fa-shopping-cart" aria-hidden="true"></i> Cart
-    </a>
-</nav>
+{{--<nav id="mobile-menu" aria-label="Mobile menu" role="menu">--}}
+{{--    <a href="/" role="menuitem" tabindex="0">Home</a>--}}
+{{--    <a href="/products" role="menuitem" tabindex="0">Products</a>--}}
+{{--    <a href="/about" role="menuitem" tabindex="0">About</a>--}}
+{{--    <a href="/services" role="menuitem" tabindex="0">Services</a>--}}
+{{--    <a href="/new" role="menuitem" tabindex="0">New</a>--}}
+{{--    <a href="/contact" role="menuitem" tabindex="0">Contact</a>--}}
+{{--    <a href="/cart" role="menuitem" tabindex="0" class="cart-link">--}}
+{{--        <i class="fas fa-shopping-cart" aria-hidden="true"></i> Cart--}}
+{{--    </a>--}}
+{{--</nav>--}}
 
 <div class="bg-gradient-to-r from-[#3b82f6] to-[#60a5fa] h-36 mb-6 flex items-end" style="margin-top: 50px;">
     <h1 class="products-title px-10 pb-4 text-center w-full">

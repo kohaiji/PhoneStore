@@ -21,7 +21,9 @@
 <!-- Mobile menu container (hidden by default) -->
 <nav id="mobile-menu" class="hidden fixed top-16 right-0 left-0 bg-white shadow-md border-t border-gray-200 z-50 md:hidden">
     <div class="flex flex-col px-6 py-4 space-y-4 font-semibold text-gray-700">
-        <a href="ClientIndex" class="hover:text-blue-600 transition">Home</a>
+        <a href="/login" class="bg-blue-500 text-white px-4 py-2 rounded-md text-center hover:bg-blue-600 transition">Sign In</a>
+        <a href="/register" class="bg-green-500 text-white px-4 py-2 rounded-md text-center hover:bg-green-600 transition">Sign Up</a>
+        <a href="/ClientIndex" class="hover:text-blue-600 transition">Home</a>
         <a href="/shop" class="hover:text-blue-600 transition">Products</a>
         <a href="/ClientIndex/#about" class="hover:text-blue-600 transition">About</a>
         <a href="/ClientIndex/#services" class="hover:text-blue-600 transition">Services</a>
