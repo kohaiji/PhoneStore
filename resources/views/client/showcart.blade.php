@@ -36,12 +36,12 @@
 <body class="bg-white text-gray-900 flex flex-col min-h-screen">
 <!-- Header -->
 @include('client.header')
-<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow">
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10 flex-grow">
     <h2 class="text-center font-semibold text-lg mb-6" style="margin-top: 60px; font-size:35px">
         Your Shopping Cart
     </h2>
 
-    <div class="flex flex-col md:flex-row" style="gap: 160px;">
+    <div class="flex flex-col lg:flex-row gap-6 lg:gap-16">
         <!-- Cart Items -->
         <div class="flex-1 space-y-4">
             <a onclick="return confirm('Are you sure to remove all products?')" class="text-red-600 mb-4 inline-block underline hover:text-blue-500" href="/cartRemoveAll">
@@ -49,14 +49,14 @@
             </a>
 
             @foreach($cart as $obj)
-                <div class="grid grid-cols-12 items-center bg-white rounded-lg p-4 shadow-sm border border-transparent hover:border-gray-100 gap-4" id="item-{{ $obj['variant_id'] }}" data-variant="{{ $obj['variant_id'] }}">
+                <div class="grid grid-cols-1 sm:grid-cols-5 lg:grid-cols-12 gap-4 items-start sm:items-center bg-white rounded-lg p-4 shadow-sm border border-transparent hover:border-gray-100 gap-4" id="item-{{ $obj['variant_id'] }}" data-variant="{{ $obj['variant_id'] }}">
                     <!-- Image -->
-                    <div class="col-span-2 flex justify-center bg-[#F9F0F7] rounded-md p-2">
-                        <img alt="{{$obj["product_name"]}}" class="w-16 h-16 object-contain" src="{{$obj["image_url"] ? '/image_product/' . $obj["image_url"] : $obj["image_url"]}}"/>
+                    <div class="sm:col-span-1 lg:col-span-2 flex justify-center bg-[#F9F0F7] rounded-md p-2">
+                        <img alt="{{$obj["product_name"]}}" class="w-14 h-14 sm:w-16 sm:h-16 object-contain" src="{{$obj["image_url"] ? '/image_product/' . $obj["image_url"] : $obj["image_url"]}}"/>
                     </div>
 
                     <!-- Info -->
-                    <div class="col-span-4 text-gray-700 space-y-1">
+                    <div class="sm:col-span-2 lg:col-span-4 text-gray-700 space-y-1">
                         <a class="text-[#0057FF] font-semibold text-sm leading-tight block" href="/product-details/{{$obj["product_id"]}}">
                             {{$obj["product_name"]}} {{$obj["color"]}}
                         </a>
@@ -66,14 +66,14 @@
                     </div>
 
                     <!-- Price -->
-                    <div class="col-span-2 font-semibold text-gray-900 text-base text-center">
+                    <div class="sm:col-span-1 lg:col-span-2 font-semibold text-center">
                 <span class="font-bold item-total" id="item-total-{{ $obj['variant_id'] }}" data-price="{{ $obj['price'] }}">
                     {{ number_format($obj["price"] * $obj["quantity"], 0, ',', ',') }}đ
                 </span>
                     </div>
 
                     <!-- Quantity & Remove -->
-                    <div class="col-span-4 flex items-center justify-center space-x-2">
+                    <div class="sm:col-span-1 lg:col-span-4 flex flex-col sm:flex-row sm:items-center justify-center space-y-2 sm:space-y-0 sm:space-x-2">
                         <label class="text-sm">Quantity:</label>
                         <input
                             class="w-16 border border-gray-300 rounded px-1 py-0.5 text-base item-quantity text-center"
@@ -94,7 +94,7 @@
 
 
         <!-- Order Summary -->
-        <div class="mt-8 md:mt-0 w-full md:w-80 bg-white rounded-lg p-6 shadow-sm border border-transparent hover:border-gray-100 text-base">
+        <div class="mt-8 lg:mt-0 w-full max-w-md mx-auto lg:mx-0 lg:w-80 bg-white rounded-lg p-6 shadow-sm border border-transparent hover:border-gray-100 text-base">
             <h3 class="font-semibold mb-4">Order Summary</h3>
 {{--            <div class="flex justify-between text-gray-700 mb-2">--}}
 {{--                <span>Subtotal</span>--}}
