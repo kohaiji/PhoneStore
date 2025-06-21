@@ -49,9 +49,9 @@
 <div class="w-full h-36 bg-gradient-to-r from-[#3B82F6] to-[#60A5FA]">
 </div>
 <!-- Product Detail Section -->
-<section class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 -mt-20 pb-20 space-y-16">
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 pb-20 space-y-16">
     <div class="pt-24">
-        <div class="bg-white rounded-lg shadow-lg p-8 flex flex-col md:flex-row gap-10">
+        <div class="bg-white rounded-lg shadow-lg p-6 md:p-8 flex flex-col md:flex-row gap-8 md:gap-12">
             <!-- Product Images -->
             <div class="md:w-1/2 flex flex-col space-y-4">
                 <div class="image-slider-wrapper relative">
@@ -60,7 +60,7 @@
                             @foreach($images as $index => $img)
                                 <img
                                     alt="Product Image"
-                                    class="rounded-lg shadow-md object-contain w-full max-h-[400px] slider-image {{ $index === 0 ? '' : 'hidden' }}"
+                                    class="rounded-lg shadow-md object-contain w-full max-h-[300px] sm:max-h-[350px] md:max-h-[400px] slider-image {{ $index === 0 ? '' : 'hidden' }}"
                                     src="{{ '/image_product/' . $img->image_url }}"
                                     data-index="{{ $index }}"
                                 />
@@ -96,11 +96,11 @@
                     </button>
                 </div>
                 <!-- Variants and Capacity options combined -->
-                <div class="mt-4 grid grid-cols-3 gap-4">
+                <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
                     <!-- Variant 1 -->
                     @foreach($variants as $obj)
                         <button type="button"
-                                class="variant-btn border border-gray-200 rounded-md flex flex-col items-center p-2 hover:border-[#2563eb] focus:outline-none"
+                                class="variant-btn text-xs sm:text-sm border border-gray-200 rounded-md p-2 hover:border-[#2563eb] focus:outline-none flex flex-col items-center text-center"
                                 data-variant-id="{{ $obj->id }}"
                                 data-stock="{{ $obj->stock }}">
                             <span class="text-xs text-gray-700">{{ $obj->color }} - {{ $obj->storage }}</span>
@@ -122,15 +122,15 @@
             <!-- Product Info -->
             <div class="md:w-1/2 flex flex-col justify-between">
                 <div>
-                    <h1 class="text-3xl font-extrabold text-[#2563EB] mb-4">
+                    <h1 class="text-2xl sm:text-3xl font-extrabold text-[#2563EB] mb-4 break-words">
                         {{$product->product_name}}
                     </h1>
-                    <p class="text-gray-700 text-base mb-6 leading-relaxed">
+                    <p class="text-gray-700 text-sm sm:text-base mb-6 leading-relaxed">
                         {{$product->description}}
                     </p>
-                    <ul class="text-gray-700 space-y-3 mb-8">
-                        <li class="flex items-center">
-                            <i class="fas fa-check-circle text-[#2563EB] mr-3">
+                    <ul class="text-gray-700 text-sm sm:text-base space-y-3 mb-8">
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check-circle text-[#2563EB] mt-1">
                             </i>
                             <span>
          Brand: {{$product->brand_name}}
@@ -202,10 +202,10 @@
                         </li>
                     </ul>
                 </div>
-                <div class="mt-6 flex items-center justify-center md:justify-start space-x-6">
-      <span class="font-extrabold text-lg">
-       Base Price: {{ number_format($product->price, 0, ',', ',') }}đ
-      </span>
+                <div class="mt-6 flex flex-col sm:flex-row items-center sm:justify-start gap-4">
+                  <span class="font-extrabold text-lg">
+                   Base Price: {{ number_format($product->price, 0, ',', ',') }}đ
+                  </span>
                     <div class="flex items-center border border-gray-300 rounded">
                         <button aria-label="Decrease quantity"
                                 class="px-3 py-2 text-gray-600 hover:text-gray-900 focus:outline-none" id="decreaseBtn"
@@ -226,7 +226,7 @@
                         </button>
                     </div>
                     <a href="#" id="btnAddToCart"
-                       class="bg-[#2563eb] text-white font-semibold px-5 py-2 rounded hover:bg-[#1e40af] mt-3 inline-block"
+                       class="w-full sm:w-auto bg-[#2563eb] text-white font-semibold px-5 py-2 rounded hover:bg-[#1e40af] transition text-sm sm:text-base text-center"
                        attrId="">
                         Add to cart
                     </a>
