@@ -5,8 +5,7 @@
     <title>
         Phone Store
     </title>
-    <script src="https://cdn.tailwindcss.com">
-    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
     <style>
@@ -17,7 +16,23 @@
 </head>
 <body class="bg-white text-gray-800">
 <!-- Header -->
-    @include('client.header')
+@include('client.header')
+
+<!-- Mobile menu container (hidden by default) -->
+<nav id="mobile-menu" class="hidden fixed top-16 right-0 left-0 bg-white shadow-md border-t border-gray-200 z-50 md:hidden">
+    <div class="flex flex-col px-6 py-4 space-y-4 font-semibold text-gray-700">
+        <a href="ClientIndex" class="hover:text-blue-600 transition">Home</a>
+        <a href="/shop" class="hover:text-blue-600 transition">Products</a>
+        <a href="/ClientIndex/#about" class="hover:text-blue-600 transition">About</a>
+        <a href="/ClientIndex/#services" class="hover:text-blue-600 transition">Services</a>
+        <a href="/ClientIndex/#news" class="hover:text-blue-600 transition">News</a>
+        <a href="/ClientIndex/#contact" class="hover:text-blue-600 transition">Contact</a>
+        <a href="/cart" class="hover:text-blue-600 transition flex items-center">
+            <i class="fas fa-shopping-cart mr-2"></i> Cart
+        </a>
+    </div>
+</nav>
+
 <!-- Hero Section -->
 <section aria-label="Hero section with phone sales promotion" class="pt-24 bg-gradient-to-r from-blue-600 to-blue-400 text-white">
     <div class="container mx-auto px-6 flex flex-col md:flex-row items-center md:space-x-12 py-20 max-w-7xl">
@@ -41,15 +56,13 @@
 
         <!-- Slideshow with Fade Effect -->
         <div class="md:w-1/2 mt-12 md:mt-0">
-                <div class="relative w-full max-w-md h-[400px] mx-auto overflow-hidden rounded-lg shadow-lg">
+            <div class="relative w-full max-w-md h-[400px] mx-auto overflow-hidden rounded-lg shadow-lg">
                 <img id="slide-img-1"
                      class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100"
                      src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-16-pro-max.png" alt="Slide 1"/>
-
                 <img id="slide-img-2"
                      class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0"
                      src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/1/5/15_2_7_2_5.jpg" alt="Slide 2"/>
-
             </div>
         </div>
     </div>
@@ -65,25 +78,25 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
         @foreach($products as $obj)
-        <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition flex flex-col">
-            <a href="/product-details/{{$obj->id}}"><img alt="{{$obj->product_name}}" class="w-full h-full object-cover" height="300" src="{{ $obj->image_url ? '/image_product/' . $obj->image_url : 'https://storage.googleapis.com/a1aa/image/aa88dfbe-ab80-4fca-db94-141b7c08ed91.jpg' }}" width="400"/></a>
-            <div class="p-6 flex flex-col flex-grow">
-                <a class="text-xl font-semibold mb-2 text-blue-600" href="/product-details/{{$obj->id}}">
-                    {{$obj->product_name}}
-                </a>
-                <p class="text-gray-600 flex-grow">
-                    {{$obj->description}}
-                </p>
-                <div class="mt-4 flex items-center justify-between">
+            <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition flex flex-col">
+                <a href="/product-details/{{$obj->id}}"><img alt="{{$obj->product_name}}" class="w-full h-full object-cover" height="300" src="{{ $obj->image_url ? '/image_product/' . $obj->image_url : 'https://storage.googleapis.com/a1aa/image/aa88dfbe-ab80-4fca-db94-141b7c08ed91.jpg' }}" width="400"/></a>
+                <div class="p-6 flex flex-col flex-grow">
+                    <a class="text-xl font-semibold mb-2 text-blue-600" href="/product-details/{{$obj->id}}">
+                        {{$obj->product_name}}
+                    </a>
+                    <p class="text-gray-600 flex-grow">
+                        {{$obj->description}}
+                    </p>
+                    <div class="mt-4 flex items-center justify-between">
        <span class="text-lg font-bold text-gray-900">
         {{ number_format($obj->price, 0, ',', ',') }}đ
        </span>
-                    <a class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="/product-details/{{$obj->id}}">
-                        Buy Now
-                    </a>
+                        <a class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition" href="/product-details/{{$obj->id}}">
+                            Buy Now
+                        </a>
+                    </div>
                 </div>
-            </div>
-        </article>
+            </article>
         @endforeach
 
     </div>
@@ -268,13 +281,18 @@
     </div>
 </section>
 <!-- Footer -->
-    @include('client.footer')
+@include('client.footer')
 <script>
-    const mobileMenuButton = document.getElementById("mobile-menu-button");
-    const mobileMenu = document.getElementById("mobile-menu");
+    // Toggle mobile menu visibility
+    document.addEventListener('DOMContentLoaded', function () {
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
 
-    mobileMenuButton.addEventListener("click", () => {
-        mobileMenu.classList.toggle("hidden");
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener("click", () => {
+                mobileMenu.classList.toggle("hidden");
+            });
+        }
     });
 </script>
 <script>
