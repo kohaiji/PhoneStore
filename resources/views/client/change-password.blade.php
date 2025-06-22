@@ -51,6 +51,7 @@
 
         <form action="{{ route('client.postChangePassword') }}" method="POST" class="space-y-6 max-w-lg">
             @csrf
+
             @if(session('error'))
                 <div class="text-red-500 text-sm">{{ session('error') }}</div>
             @endif
@@ -58,44 +59,81 @@
                 <div class="text-green-500 text-sm">{{ session('success') }}</div>
             @endif
 
-            <div>
-                <input
-                    name="old_password"
-                    type="password"
-                    placeholder="Old Password"
-                    class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400"
-                />
+            <!-- Old Password -->
+            <div class="relative">
+                <input id="old_password" name="old_password" type="password"
+                       placeholder="Old Password"
+                       class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-400"/>
+                <i class="fas fa-eye absolute right-3 top-3.5 cursor-pointer text-blue-500 toggle-password" toggle="#old_password"></i>
                 @error('old_password') <div class="text-red-500 text-xs mt-1">{{ $message }}</div> @enderror
             </div>
 
-            <div>
-                <input
-                    name="password"
-                    type="password"
-                    placeholder="New Password"
-                    class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400"
-                />
+            <!-- New Password -->
+            <div class="relative">
+                <input id="password" name="password" type="password"
+                       placeholder="New Password"
+                       class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                       onkeyup="checkPasswordMatch()"/>
+                <i class="fas fa-eye absolute right-3 top-3.5 cursor-pointer text-blue-500 toggle-password" toggle="#password"></i>
                 @error('password') <div class="text-red-500 text-xs mt-1">{{ $message }}</div> @enderror
             </div>
 
-            <div>
-                <input
-                    name="password_confirmation"
-                    type="password"
-                    placeholder="Confirm New Password"
-                    class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400"
-                />
+            <!-- Confirm Password -->
+            <div class="relative">
+                <input id="password_confirmation" name="password_confirmation" type="password"
+                       placeholder="Confirm New Password"
+                       class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                       onkeyup="checkPasswordMatch()"/>
+                <i class="fas fa-eye absolute right-3 top-3.5 cursor-pointer text-blue-500 toggle-password" toggle="#password_confirmation"></i>
             </div>
 
-            <button
-                type="submit"
-                class="bg-blue-500 bg-opacity-80 text-white text-sm font-extrabold px-12 py-3 rounded-full shadow-md hover:bg-blue-600 transition"
-            >
+            <!-- Match message -->
+            <div id="message" class="text-sm font-semibold"></div>
+
+            <!-- Submit button -->
+            <button type="submit"
+                    id="submitBtn"
+                    class="bg-blue-500 bg-opacity-80 text-white text-sm font-extrabold px-12 py-3 rounded-full shadow-md hover:bg-blue-600 transition"
+                    disabled>
                 CHANGE PASSWORD
             </button>
         </form>
 
     </div>
 </div>
+
+<script>
+    // Toggle eye icon
+    document.querySelectorAll('.toggle-password').forEach(function (icon) {
+        icon.addEventListener('click', function () {
+            const input = document.querySelector(icon.getAttribute('toggle'));
+            const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+            input.setAttribute('type', type);
+            icon.classList.toggle('fa-eye-slash');
+        });
+    });
+
+    // Check password match
+    function checkPasswordMatch() {
+        const password = document.getElementById('password').value;
+        const confirmation = document.getElementById('password_confirmation').value;
+        const message = document.getElementById('message');
+        const submitButton = document.getElementById('submitBtn');
+
+        if (password === "" || confirmation === "") {
+            message.style.color = 'gray';
+            message.innerHTML = 'Please fill in both password fields';
+            submitButton.disabled = true;
+        } else if (password === confirmation) {
+            message.style.color = 'green';
+            message.innerHTML = 'Password matches';
+            submitButton.disabled = false;
+        } else {
+            message.style.color = 'red';
+            message.innerHTML = 'Passwords do not match';
+            submitButton.disabled = true;
+        }
+    }
+</script>
 </body>
 </html>
