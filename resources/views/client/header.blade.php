@@ -31,12 +31,12 @@
             <a class="hover:text-blue-600 transition" href="/ClientIndex/#services">
                 Services
             </a>
-            <a class="hover:text-blue-600 transition" href="/ClientIndex/#news">
-                News
-            </a>
-            <a class="hover:text-blue-600 transition" href="/ClientIndex/#contact">
-                Contact
-            </a>
+{{--            <a class="hover:text-blue-600 transition" href="/ClientIndex/#news">--}}
+{{--                News--}}
+{{--            </a>--}}
+{{--            <a class="hover:text-blue-600 transition" href="/ClientIndex/#contact">--}}
+{{--                Contact--}}
+{{--            </a>--}}
         </nav>
         @if(\Illuminate\Support\Facades\Auth::check())
             @if(\Illuminate\Support\Facades\Auth::user()->role == 0)

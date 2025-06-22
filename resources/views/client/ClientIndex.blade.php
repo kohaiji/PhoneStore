@@ -165,123 +165,123 @@
     </div>
 </section>
 <!-- News Section -->
-<section aria-label="Latest news and articles about phones and technology" class="bg-gray-50 py-20" id="news">
-    <div class="container mx-auto px-6 max-w-7xl">
-        <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">
-            News
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-            <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
-                <img alt="Image showing a new smartphone launch event with stage and audience" class="w-full h-48 object-cover" height="400" src="https://storage.googleapis.com/a1aa/image/a952fa81-da07-4549-26f4-baf4c8463bd2.jpg" width="600"/>
-                <div class="p-6">
-                    <h3 class="text-xl font-semibold mb-2 text-blue-600">
-                        New Phone Launch: Galaxy X Pro
-                    </h3>
-                    <p class="text-gray-600 mb-4">
-                        Discover the features and specs of the new Galaxy X Pro, now
-                        available in our store.
-                    </p>
-                    <a class="text-blue-600 font-semibold hover:underline flex items-center" href="#">
-                        Read More
-                        <i class="fas fa-arrow-right ml-2">
-                        </i>
-                    </a>
-                </div>
-            </article>
-            <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
-                <img alt="Image of a person holding a smartphone with tips displayed on screen" class="w-full h-48 object-cover" height="400" src="https://storage.googleapis.com/a1aa/image/4f2213ba-c07b-4628-0b38-4a8d34c2e214.jpg" width="600"/>
-                <div class="p-6">
-                    <h3 class="text-xl font-semibold mb-2 text-blue-600">
-                        Top 5 Tips to Extend Your Phone Battery Life
-                    </h3>
-                    <p class="text-gray-600 mb-4">
-                        Learn how to maximize your smartphone battery life with these
-                        simple tips.
-                    </p>
-                    <a class="text-blue-600 font-semibold hover:underline flex items-center" href="#">
-                        Read More
-                        <i class="fas fa-arrow-right ml-2">
-                        </i>
-                    </a>
-                </div>
-            </article>
-            <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
-                <img alt="Image of a technician repairing a smartphone screen with tools" class="w-full h-48 object-cover" height="400" src="https://storage.googleapis.com/a1aa/image/d8337116-c3a4-4588-2fca-8154b913762f.jpg" width="600"/>
-                <div class="p-6">
-                    <h3 class="text-xl font-semibold mb-2 text-blue-600">
-                        How to Choose a Reliable Phone Repair Service
-                    </h3>
-                    <p class="text-gray-600 mb-4">
-                        Tips on selecting trustworthy repair shops for your smartphone.
-                    </p>
-                    <a class="text-blue-600 font-semibold hover:underline flex items-center" href="#">
-                        Read More
-                        <i class="fas fa-arrow-right ml-2">
-                        </i>
-                    </a>
-                </div>
-            </article>
-        </div>
-    </div>
-</section>
+{{--<section aria-label="Latest news and articles about phones and technology" class="bg-gray-50 py-20" id="news">--}}
+{{--    <div class="container mx-auto px-6 max-w-7xl">--}}
+{{--        <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">--}}
+{{--            News--}}
+{{--        </h2>--}}
+{{--        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">--}}
+{{--            <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">--}}
+{{--                <img alt="Image showing a new smartphone launch event with stage and audience" class="w-full h-48 object-cover" height="400" src="https://storage.googleapis.com/a1aa/image/a952fa81-da07-4549-26f4-baf4c8463bd2.jpg" width="600"/>--}}
+{{--                <div class="p-6">--}}
+{{--                    <h3 class="text-xl font-semibold mb-2 text-blue-600">--}}
+{{--                        New Phone Launch: Galaxy X Pro--}}
+{{--                    </h3>--}}
+{{--                    <p class="text-gray-600 mb-4">--}}
+{{--                        Discover the features and specs of the new Galaxy X Pro, now--}}
+{{--                        available in our store.--}}
+{{--                    </p>--}}
+{{--                    <a class="text-blue-600 font-semibold hover:underline flex items-center" href="#">--}}
+{{--                        Read More--}}
+{{--                        <i class="fas fa-arrow-right ml-2">--}}
+{{--                        </i>--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--            </article>--}}
+{{--            <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">--}}
+{{--                <img alt="Image of a person holding a smartphone with tips displayed on screen" class="w-full h-48 object-cover" height="400" src="https://storage.googleapis.com/a1aa/image/4f2213ba-c07b-4628-0b38-4a8d34c2e214.jpg" width="600"/>--}}
+{{--                <div class="p-6">--}}
+{{--                    <h3 class="text-xl font-semibold mb-2 text-blue-600">--}}
+{{--                        Top 5 Tips to Extend Your Phone Battery Life--}}
+{{--                    </h3>--}}
+{{--                    <p class="text-gray-600 mb-4">--}}
+{{--                        Learn how to maximize your smartphone battery life with these--}}
+{{--                        simple tips.--}}
+{{--                    </p>--}}
+{{--                    <a class="text-blue-600 font-semibold hover:underline flex items-center" href="#">--}}
+{{--                        Read More--}}
+{{--                        <i class="fas fa-arrow-right ml-2">--}}
+{{--                        </i>--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--            </article>--}}
+{{--            <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">--}}
+{{--                <img alt="Image of a technician repairing a smartphone screen with tools" class="w-full h-48 object-cover" height="400" src="https://storage.googleapis.com/a1aa/image/d8337116-c3a4-4588-2fca-8154b913762f.jpg" width="600"/>--}}
+{{--                <div class="p-6">--}}
+{{--                    <h3 class="text-xl font-semibold mb-2 text-blue-600">--}}
+{{--                        How to Choose a Reliable Phone Repair Service--}}
+{{--                    </h3>--}}
+{{--                    <p class="text-gray-600 mb-4">--}}
+{{--                        Tips on selecting trustworthy repair shops for your smartphone.--}}
+{{--                    </p>--}}
+{{--                    <a class="text-blue-600 font-semibold hover:underline flex items-center" href="#">--}}
+{{--                        Read More--}}
+{{--                        <i class="fas fa-arrow-right ml-2">--}}
+{{--                        </i>--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--            </article>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</section>--}}
 <!-- Contact Section -->
-<section aria-label="Contact form and company contact information" class="container mx-auto px-6 py-20 max-w-4xl" id="contact">
-    <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">
-        Contact Us
-    </h2>
-    <div class="bg-white rounded-lg shadow-md p-8">
-        <form action="#" aria-label="Contact form to order or ask questions" class="space-y-6" method="POST">
-            <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="name">
-                    Full Name
-                </label>
-                <input class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600" id="name" name="name" placeholder="Your full name" required="" type="text"/>
-            </div>
-            <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="email">
-                    Email Address
-                </label>
-                <input class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600" id="email" name="email" placeholder="you@example.com" required="" type="email"/>
-            </div>
-            <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="phone">
-                    Phone Number
-                </label>
-                <input class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600" id="phone" name="phone" placeholder="+1 800 123 4567" type="tel"/>
-            </div>
-            <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="message">
-                    Message
-                </label>
-                <textarea class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600" id="message" name="message" placeholder="Write your message here" required="" rows="4"></textarea>
-            </div>
-            <button class="bg-blue-600 text-white font-semibold px-6 py-3 rounded-md hover:bg-blue-700 transition w-full" type="submit">
-                Send Message
-            </button>
-        </form>
-        <div class="mt-10 text-center text-gray-700 space-y-2">
-            <p>
-                <i class="fas fa-map-marker-alt mr-2 text-blue-600">
-                </i>
-                A17, No. 17 Ta Quang Buu
-            </p>
-            <p>
-                <i class="fas fa-phone-alt mr-2 text-blue-600">
-                </i>
-                <a class="hover:underline" href="tel:+18001234567">
-                    +84 904577324
-                </a>
-            </p>
-            <p>
-                <i class="fas fa-envelope mr-2 text-blue-600">
-                </i>
-                <a class="hover:underline" href="mailto:ntg1611@gmail.com">
-                    ntg1611@gmail.com
-                </a>
-            </p>
-        </div>
-    </div>
-</section>
+{{--<section aria-label="Contact form and company contact information" class="container mx-auto px-6 py-20 max-w-4xl" id="contact">--}}
+{{--    <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">--}}
+{{--        Contact Us--}}
+{{--    </h2>--}}
+{{--    <div class="bg-white rounded-lg shadow-md p-8">--}}
+{{--        <form action="#" aria-label="Contact form to order or ask questions" class="space-y-6" method="POST">--}}
+{{--            <div>--}}
+{{--                <label class="block text-gray-700 font-semibold mb-2" for="name">--}}
+{{--                    Full Name--}}
+{{--                </label>--}}
+{{--                <input class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600" id="name" name="name" placeholder="Your full name" required="" type="text"/>--}}
+{{--            </div>--}}
+{{--            <div>--}}
+{{--                <label class="block text-gray-700 font-semibold mb-2" for="email">--}}
+{{--                    Email Address--}}
+{{--                </label>--}}
+{{--                <input class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600" id="email" name="email" placeholder="you@example.com" required="" type="email"/>--}}
+{{--            </div>--}}
+{{--            <div>--}}
+{{--                <label class="block text-gray-700 font-semibold mb-2" for="phone">--}}
+{{--                    Phone Number--}}
+{{--                </label>--}}
+{{--                <input class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600" id="phone" name="phone" placeholder="+1 800 123 4567" type="tel"/>--}}
+{{--            </div>--}}
+{{--            <div>--}}
+{{--                <label class="block text-gray-700 font-semibold mb-2" for="message">--}}
+{{--                    Message--}}
+{{--                </label>--}}
+{{--                <textarea class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600" id="message" name="message" placeholder="Write your message here" required="" rows="4"></textarea>--}}
+{{--            </div>--}}
+{{--            <button class="bg-blue-600 text-white font-semibold px-6 py-3 rounded-md hover:bg-blue-700 transition w-full" type="submit">--}}
+{{--                Send Message--}}
+{{--            </button>--}}
+{{--        </form>--}}
+{{--        <div class="mt-10 text-center text-gray-700 space-y-2">--}}
+{{--            <p>--}}
+{{--                <i class="fas fa-map-marker-alt mr-2 text-blue-600">--}}
+{{--                </i>--}}
+{{--                A17, No. 17 Ta Quang Buu--}}
+{{--            </p>--}}
+{{--            <p>--}}
+{{--                <i class="fas fa-phone-alt mr-2 text-blue-600">--}}
+{{--                </i>--}}
+{{--                <a class="hover:underline" href="tel:+18001234567">--}}
+{{--                    +84 904577324--}}
+{{--                </a>--}}
+{{--            </p>--}}
+{{--            <p>--}}
+{{--                <i class="fas fa-envelope mr-2 text-blue-600">--}}
+{{--                </i>--}}
+{{--                <a class="hover:underline" href="mailto:ntg1611@gmail.com">--}}
+{{--                    ntg1611@gmail.com--}}
+{{--                </a>--}}
+{{--            </p>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</section>--}}
 <!-- Footer -->
 @include('client.footer')
 <script>
