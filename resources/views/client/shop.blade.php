@@ -252,7 +252,7 @@
                 <!-- Brand -->
                 <div class="mb-4">
                     <label class="block font-semibold text-xs mb-1">Brand</label>
-                    <div class="space-y-1 text-xs text-gray-600 font-normal max-h-48 overflow-y-auto">
+                    <div class="space-y-1 text-xs text-gray-600 font-normal max-h-48 overflow-y-auto brand-group">
                         @foreach($brands as $brand)
                             <label class="flex items-center space-x-2">
                                 <input type="checkbox" name="brands[]" value="{{ $brand->id }}"
@@ -266,7 +266,7 @@
                 <!-- Screen Size -->
                 <div class="mb-4">
                     <label class="block font-semibold text-xs mb-1">Screen Size</label>
-                    <div class="space-y-1 text-xs text-gray-600 font-normal">
+                    <div class="space-y-1 text-xs text-gray-600 font-normal screen-size-group">
                         <label class="flex items-center space-x-2">
                             <input type="checkbox" name="screen_size_group[]" value="under6" {{ in_array('under6', (array)request('screen_size_group')) ? 'checked' : '' }}>
                             <span>Under 6 inches</span>
@@ -281,7 +281,7 @@
                 <!-- Refresh Rate -->
                 <div class="mb-4">
                     <label class="block font-semibold text-xs mb-1">Refresh Rate</label>
-                    <div class="space-y-1 text-xs text-gray-600 font-normal">
+                    <div class="space-y-1 text-xs text-gray-600 font-normal refresh-rate-group">
                         @foreach($refresh_rates as $rate)
                             @if(!is_null($rate->refresh_rate))
                                 <label class="flex items-center space-x-2">
@@ -297,7 +297,7 @@
                 <!-- RAM -->
                 <div class="mb-4">
                     <label class="block font-semibold text-xs mb-1">RAM</label>
-                    <div class="space-y-1 text-xs text-gray-600 font-normal">
+                    <div class="space-y-1 text-xs text-gray-600 font-normal ram-group">
                         <label class="flex items-center space-x-2">
                             <input type="checkbox" name="ram_group[]" value="under4" {{ in_array('under4', (array)request('ram_group')) ? 'checked' : '' }}>
                             <span>Under 4GB</span>
@@ -477,6 +477,37 @@
             menuButton.setAttribute('aria-expanded', 'false');
             menuButton.innerHTML = '<i class="fas fa-bars"></i>';
         });
+    });
+</script>
+
+<script>
+    function setupCheckboxGroups() {
+        // Các nhóm filter cần quản lý
+        const groups = [
+            { name: 'brands[]', className: 'brand-group' },
+            { name: 'screen_size_group[]', className: 'screen-size-group' },
+            { name: 'refresh_rates[]', className: 'refresh-rate-group' },
+            { name: 'ram_group[]', className: 'ram-group' }
+        ];
+
+        groups.forEach(group => {
+            const checkboxes = document.querySelectorAll(`input[name="${group.name}"]`);
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        // Uncheck tất cả các checkbox khác trong cùng nhóm
+                        checkboxes.forEach(other => {
+                            if (other !== this) other.checked = false;
+                        });
+                    }
+                });
+            });
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        setupCheckboxGroups();
     });
 </script>
 </body>
