@@ -92,35 +92,30 @@ class UserController extends Controller
 
     public function postChangePassword(Request $request) {
         $validated = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|exists:users,email',
+            'old_password' => 'required|string',
             'password' => 'required|string|min:3|confirmed',
         ], [
-            'name.required' => 'Name is required.',
-            'email.required' => 'Email is required.',
-            'email.exists' => 'Email not found.',
-            'password.required' => 'Password is required.',
+            'old_password.required' => 'Old password is required.',
+            'password.required' => 'New password is required.',
             'password.confirmed' => 'Password confirmation does not match.',
         ]);
 
         try {
-            $user = User::where('email', $request->email)
-                ->where('name', $request->name)
-                ->first();
+            $user = Auth::user();
 
-            if (!$user) {
-                return back()->withInput()->with('error', 'User not found with the provided name and email.');
+            if (!$user || !Hash::check($request->old_password, $user->password)) {
+                return back()->withInput()->with('error', 'Old password is incorrect.');
             }
 
-            $newPassword = Hash::make($request->password);
             DB::table('users')
-                ->where('email', $request->email)
+                ->where('id', $user->id)
                 ->update([
-                    "password" => $newPassword,
+                    'password' => Hash::make($request->password),
                 ]);
             Auth::logout();
             Session::flush();
-            return redirect('/login')->with('success', 'Password has been reset successfully.');
+
+            return redirect('/login')->with('success', 'Password changed successfully. Please log in again.');
         } catch (\Throwable $e) {
             return back()->withInput()->with('error', 'System error: ' . $e->getMessage());
         }

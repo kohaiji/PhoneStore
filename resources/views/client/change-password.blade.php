@@ -24,12 +24,12 @@
     <div
         class="relative flex flex-col items-center justify-center w-1/3 bg-blue-100 bg-opacity-20 p-14"
     >
-        <h2 class="text-blue-900 font-extrabold text-2xl mb-3">Reset Password</h2>
+        <h2 class="text-blue-900 font-extrabold text-2xl mb-3">Change Password</h2>
         <p class="text-blue-700 text-sm text-center mb-6 leading-tight">
-            Enter your details below to reset your password
+            Enter your details below to change your password
         </p>
         <span class="text-blue-700 text-lg text-center max-w-[280px]">
-        Remembered your password? <a href="/login" class="text-blue-900 font-bold underline hover:text-blue-700 transition">Sign In</a>
+        Wanna change your mind, go to <a href="/" class="text-blue-900 font-bold underline hover:text-blue-700 transition">Home Page</a>
       </span>
 
         <!-- Top circle -->
@@ -46,8 +46,8 @@
 
     <!-- Right side -->
     <div class="flex flex-col w-2/3 p-14">
-        <h2 class="text-blue-900 font-extrabold text-2xl mb-6">Reset Password</h2>
-        <p class="text-blue-700 text-sm mb-8">Please fill in all fields to reset your password</p>
+        <h2 class="text-blue-900 font-extrabold text-2xl mb-6">Change Password</h2>
+        <p class="text-blue-700 text-sm mb-8">Please fill in all fields to change your password</p>
 
         <form action="{{ route('client.postChangePassword') }}" method="POST" class="space-y-6 max-w-lg">
             @csrf
@@ -60,24 +60,12 @@
 
             <div>
                 <input
-                    type="text"
-                    name="name"
-                    placeholder="Name"
-                    value="{{ old('name') }}"
+                    name="old_password"
+                    type="password"
+                    placeholder="Old Password"
                     class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400"
                 />
-                @error('name') <div class="text-red-500 text-xs mt-1">{{ $message }}</div> @enderror
-            </div>
-
-            <div>
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    value="{{ old('email') }}"
-                    class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400"
-                />
-                @error('email') <div class="text-red-500 text-xs mt-1">{{ $message }}</div> @enderror
+                @error('old_password') <div class="text-red-500 text-xs mt-1">{{ $message }}</div> @enderror
             </div>
 
             <div>
@@ -94,7 +82,7 @@
                 <input
                     name="password_confirmation"
                     type="password"
-                    placeholder="Confirm Password"
+                    placeholder="Confirm New Password"
                     class="w-full rounded-md border border-blue-300 bg-blue-50 bg-opacity-40 text-sm text-blue-700 py-3 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400"
                 />
             </div>
@@ -103,7 +91,7 @@
                 type="submit"
                 class="bg-blue-500 bg-opacity-80 text-white text-sm font-extrabold px-12 py-3 rounded-full shadow-md hover:bg-blue-600 transition"
             >
-                RESET PASSWORD
+                CHANGE PASSWORD
             </button>
         </form>
 

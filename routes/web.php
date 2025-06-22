@@ -95,18 +95,24 @@ Route::get('/checkout/cancel', [CartController::class, "checkoutCancel"])->name(
 Route::get('/order', [ClientIndexController::class, "order"]);
 Route::patch('/orders/{id}/update-status', [ClientIndexController::class, 'updateStatus'])->name('orders.updateStatus');
 Route::get("/order-details/{id}", [ClientIndexController::class, "orderDetails"]);
-Route::match(['GET', 'POST'], '/profile-setting', [ClientIndexController::class, "profileSetting"])->name('profile.setting');
 
 });
 
+// CHANGE PASSWORD
+Route::middleware(['auth'])->group(function () {
+Route::get('/change-password', [UserController::class, 'changePassword'])->name('client.changePassword');
+Route::post('/change-password', [UserController::class, 'postChangePassword'])->name('client.postChangePassword');
+Route::match(['GET', 'POST'], '/profile-setting', [ClientIndexController::class, "profileSetting"])->name('profile.setting');
+});
+
 // CLIENT LOGIN & REGISTER
-Route::get('/login', [UserController::class, "login"]);
+Route::get('/login', [UserController::class, "login"])->name('login');
 Route::post('/login', [UserController::class, "postLogin"]);
 Route::get('/register', [UserController::class, "register"]);
 Route::post('/register', [UserController::class, "postRegister"]);
 Route::get('/logout', [UserController::class, "logout"]);
-Route::get('/change-password', [UserController::class, 'changePassword'])->name('client.changePassword');
-Route::post('/change-password', [UserController::class, 'postChangePassword'])->name('client.postChangePassword');
+
+
 
 
 
