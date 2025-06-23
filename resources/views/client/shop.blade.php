@@ -369,19 +369,21 @@
                     </article>
                 @endforeach
             @endif
-            <div class="col-span-full flex justify-center mt-6">
-                @if(count($allProducts) > $perPage)
-                    <button
-                        id="loadMoreBtn"
-                        class="bg-blue-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-blue-700 transition"
-                        data-per-page="{{ $perPage }}"
-                    >
-                        See more
-                    </button>
-                @endif
-            </div>
         </section>
+        <div class="col-span-full flex justify-end mt-6">
+            @if(count($allProducts) > $perPage)
+                <button
+                    id="loadMoreBtn"
+                    class="bg-blue-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-blue-700 transition"
+                    style="margin-right: 31rem;"
+                    data-per-page="{{ $perPage }}"
+                >
+                    See more
+                </button>
+            @endif
+        </div>
     </div>
+
 </main>
 <!-- Footer -->
 @include('client.footer')
