@@ -24,7 +24,7 @@
 @include('client.header')
 
 <!-- Main content container -->
-<main class="flex-grow flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 mt-6 mb-12 max-w-7xl mx-auto text-center">
+<main class="flex-grow flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 mt-6 mb-12 max-w-7xl mx-auto text-center" style="margin-top: 100  px">
     <h2 class="text-2xl font-semibold mb-6 select-none self-start">Order History</h2>
     <div class="overflow-x-auto rounded-lg bg-white shadow w-full max-w-6xl">
         <!-- Responsive table for md and up -->
