@@ -27,7 +27,8 @@
 <main class="flex-grow flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 mt-6 mb-12 max-w-7xl mx-auto text-center">
     <h2 class="text-2xl font-semibold mb-6 select-none self-start">Order History</h2>
     <div class="overflow-x-auto rounded-lg bg-white shadow w-full max-w-6xl">
-        <table class="min-w-full divide-y divide-gray-200 text-lg">
+        <!-- Responsive table for md and up -->
+        <table class="min-w-full divide-y divide-gray-200 text-lg hidden md:table">
             <thead class="bg-gray-100">
             <tr>
                 <th
@@ -64,14 +65,14 @@
             </thead>
             <tbody class="divide-y divide-gray-200">
             @foreach($orders as $index => $obj)
-            <tr>
-                <td class="px-8 py-6 whitespace-nowrap text-gray-900 select-text">
-                    {{$obj->full_name}}
-                </td>
-                <td class="px-8 py-6 whitespace-nowrap text-gray-900 select-text">
-                    {{$obj->order_date}}
-                </td>
-                <td class="px-8 py-6 whitespace-nowrap">
+                <tr>
+                    <td class="px-8 py-6 whitespace-nowrap text-gray-900 select-text">
+                        {{$obj->full_name}}
+                    </td>
+                    <td class="px-8 py-6 whitespace-nowrap text-gray-900 select-text">
+                        {{$obj->order_date}}
+                    </td>
+                    <td class="px-8 py-6 whitespace-nowrap">
                     <span class="inline-block px-3 py-1 text-sm font-semibold rounded select-none
                         {{ $obj->status == 'Completed' ? 'text-green-700 bg-green-100' :
                            ($obj->status == 'Cancelled' ? 'text-red-700 bg-red-100' :
@@ -79,40 +80,85 @@
                            ($obj->status == 'Pending' ? 'text-yellow-700 bg-yellow-100' : 'text-orange-500 bg-orange-100'))) }}">
                         {{ $obj->status }}
                     </span>
-                </td>
-                <td class="px-8 py-6 whitespace-nowrap font-bold text-gray-900 select-text">
-                    {{ number_format($obj->total, 0, ',', ',') }}đ
-                </td>
-                <td class="px-8 py-6 whitespace-nowrap">
-                    <a href="/order-details/{{$obj->id}}" class="text-blue-600 hover:underline select-text">
-                        View Details
-                    </a>
+                    </td>
+                    <td class="px-8 py-6 whitespace-nowrap font-bold text-gray-900 select-text">
+                        {{ number_format($obj->total, 0, ',', ',') }}đ
+                    </td>
+                    <td class="px-8 py-6 whitespace-nowrap">
+                        <a href="/order-details/{{$obj->id}}" class="text-blue-600 hover:underline select-text">
+                            View Details
+                        </a>
 
-                    @if($obj->status === 'Pending' || $obj->status === 'Confirmed')
-                        <form method="POST" action="{{ route('orders.updateStatus', $obj->id) }}" class="inline-block ml-6"
-                              onsubmit="return confirm('Are you sure you want to cancel this order?');">
-                            @csrf
-                            @method('PATCH')
-                            <input type="hidden" name="action" value="cancel">
-                            <button type="submit" class="text-red-600 hover:underline">Cancel</button>
-                        </form>
-                    @endif
+                        @if($obj->status === 'Pending' || $obj->status === 'Confirmed')
+                            <form method="POST" action="{{ route('orders.updateStatus', $obj->id) }}" class="inline-block ml-6"
+                                  onsubmit="return confirm('Are you sure you want to cancel this order?');">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="action" value="cancel">
+                                <button type="submit" class="text-red-600 hover:underline">Cancel</button>
+                            </form>
+                        @endif
 
-                    @if($obj->status === 'Shipping')
-                        <form method="POST" action="{{ route('orders.updateStatus', $obj->id) }}" class="inline-block ml-6"
-                              onsubmit="return confirm('Confirm you received the order?');">
-                            @csrf
-                            @method('PATCH')
-                            <input type="hidden" name="action" value="complete">
-                            <button type="submit" class="text-green-600 hover:underline">Mark as Received</button>
-                        </form>
-                    @endif
-                </td>
+                        @if($obj->status === 'Shipping')
+                            <form method="POST" action="{{ route('orders.updateStatus', $obj->id) }}" class="inline-block ml-6"
+                                  onsubmit="return confirm('Confirm you received the order?');">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="action" value="complete">
+                                <button type="submit" class="text-green-600 hover:underline">Mark as Received</button>
+                            </form>
+                        @endif
+                    </td>
 
-            </tr>
+                </tr>
             @endforeach
             </tbody>
         </table>
+
+        <!-- Mobile friendly card list for small screens -->
+        <div class="md:hidden space-y-4 p-2">
+            @foreach($orders as $obj)
+                <div class="bg-white rounded-lg shadow p-4 text-left">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-semibold text-lg text-gray-900 select-text">{{$obj->full_name}}</h3>
+                        <span class="inline-block px-3 py-1 text-sm font-semibold rounded select-none
+                        {{ $obj->status == 'Completed' ? 'text-green-700 bg-green-100' :
+                           ($obj->status == 'Cancelled' ? 'text-red-700 bg-red-100' :
+                           ($obj->status == 'Shipping' ? 'text-blue-700 bg-blue-100' :
+                           ($obj->status == 'Pending' ? 'text-yellow-700 bg-yellow-100' : 'text-orange-500 bg-orange-100'))) }}">
+                        {{ $obj->status }}
+                    </span>
+                    </div>
+                    <p class="text-gray-700 select-text"><span class="font-semibold">Date:</span> {{$obj->order_date}}</p>
+                    <p class="text-gray-900 font-bold select-text mt-1"><span class="font-semibold">Total:</span> {{ number_format($obj->total, 0, ',', ',') }}đ</p>
+                    <div class="mt-4 flex flex-wrap gap-4">
+                        <a href="/order-details/{{$obj->id}}" class="text-blue-600 hover:underline select-text">
+                            View Details
+                        </a>
+
+                        @if($obj->status === 'Pending' || $obj->status === 'Confirmed')
+                            <form method="POST" action="{{ route('orders.updateStatus', $obj->id) }}" class="inline-block"
+                                  onsubmit="return confirm('Are you sure you want to cancel this order?');">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="action" value="cancel">
+                                <button type="submit" class="text-red-600 hover:underline">Cancel</button>
+                            </form>
+                        @endif
+
+                        @if($obj->status === 'Shipping')
+                            <form method="POST" action="{{ route('orders.updateStatus', $obj->id) }}" class="inline-block"
+                                  onsubmit="return confirm('Confirm you received the order?');">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="action" value="complete">
+                                <button type="submit" class="text-green-600 hover:underline">Mark as Received</button>
+                            </form>
+                        @endif
+                    </div>
+                </div>
+            @endforeach
+        </div>
     </div>
 </main>
 
