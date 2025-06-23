@@ -283,7 +283,7 @@ class AdminProductController extends Controller
             ->select("products.id")
             ->first();
 
-        if($color == "" || $storage == "" || $priceAdjustment == 0) {
+        if($color == "" || $storage == "") {
             return redirect("/admin/product-variant-edit/$id");
         }
         else{
