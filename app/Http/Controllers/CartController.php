@@ -142,10 +142,17 @@ class CartController extends Controller
             return redirect("/shop")->with('cart_empty', 'You have no products in your cart, go shopping!');
         }
 
+
         $total = 0;
         foreach ($cart as $item) {
             $total += $item['price'] * $item['quantity'];
         }
+
+        foreach ($cart as &$item) {
+            $variant = DB::table("product_variants")->where("id", $item['variant_id'])->first();
+            $item['stock'] = $variant->stock ?? 0;
+        }
+        session(['cart' => $cart]);
 
         return view("client/showcart", [
             'cart' => $cart,
