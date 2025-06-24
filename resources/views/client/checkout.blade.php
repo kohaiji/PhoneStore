@@ -40,13 +40,13 @@
                             <p class="text-xs text-gray-600">Storage: {{$obj['storage']}}</p>
                         </div>
                     </div>
-                    <div class="text-sm font-semibold text-gray-900 whitespace-nowrap">{{ number_format($obj['price'] * $obj['quantity'], 0, ',', ',') }}đ</div>
+                    <div class="text-sm font-semibold text-gray-900 whitespace-nowrap">{{ number_format($obj['price'] * $obj['quantity'], 0, ',', '.') }}đ</div>
                 </div>
             @endforeach
             <!-- Subtotal -->
 {{--            <div class="flex justify-between items-center border-t border-gray-300 pt-5 mt-5">--}}
 {{--                <span class="font-semibold text-gray-900 text-base">Subtotal</span>--}}
-{{--                <span class="font-semibold text-gray-900 text-base">{{ number_format($total, 0, ',', ',') }}đ</span>--}}
+{{--                <span class="font-semibold text-gray-900 text-base">{{ number_format($total, 0, ',', '.') }}đ</span>--}}
 {{--            </div>--}}
             <!-- Tax -->
 {{--            <div class="flex justify-between items-center mt-2">--}}
@@ -56,7 +56,7 @@
             <!-- Total -->
             <div class="flex justify-between items-center mt-6 border-t border-gray-300 pt-5">
                 <span class="text-xl font-bold text-gray-900">Total</span>
-                <span class="text-xl font-bold text-gray-900">{{ number_format($total, 0, ',', ',') }}đ</span>
+                <span class="text-xl font-bold text-gray-900">{{ number_format($total, 0, ',', '.') }}đ</span>
             </div>
         </div>
     </section>

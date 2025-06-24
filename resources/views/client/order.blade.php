@@ -82,7 +82,7 @@
                     </span>
                     </td>
                     <td class="px-8 py-6 whitespace-nowrap font-bold text-gray-900 select-text">
-                        {{ number_format($obj->total, 0, ',', ',') }}đ
+                        {{ number_format($obj->total, 0, ',', '.') }}đ
                     </td>
                     <td class="px-8 py-6 whitespace-nowrap">
                         <a href="/order-details/{{$obj->id}}" class="text-blue-600 hover:underline select-text">
@@ -130,7 +130,7 @@
                     </span>
                     </div>
                     <p class="text-gray-700 select-text"><span class="font-semibold">Date:</span> {{$obj->order_date}}</p>
-                    <p class="text-gray-900 font-bold select-text mt-1"><span class="font-semibold">Total:</span> {{ number_format($obj->total, 0, ',', ',') }}đ</p>
+                    <p class="text-gray-900 font-bold select-text mt-1"><span class="font-semibold">Total:</span> {{ number_format($obj->total, 0, ',', '.') }}đ</p>
                     <div class="mt-4 flex flex-wrap gap-4">
                         <a href="/order-details/{{$obj->id}}" class="text-blue-600 hover:underline select-text">
                             View Details

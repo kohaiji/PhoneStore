@@ -64,7 +64,7 @@
                 </tr>
                 <tr>
                     <th>Price</th>
-                    <td>{{ number_format($products->price, 0, ',', ',') }}đ</td>
+                    <td>{{ number_format($products->price, 0, ',', '.') }}đ</td>
                 </tr>
                 <tr>
                     <th>Screen Size</th>

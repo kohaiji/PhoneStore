@@ -62,13 +62,13 @@
                         </div>
                         <p class="text-sm text-gray-600 mt-1 select-none">Quantity: {{$obj->quantity}}</p>
                     </div>
-                    <div class="text-sm font-semibold text-gray-900 text-right w-20 select-none">{{ number_format($obj->price, 0, ',', ',') }}đ</div>
-                    <div class="text-sm font-semibold text-gray-900 text-right w-24 select-none">{{ number_format($obj->price*$obj->quantity, 0, ',', ',') }}đ</div>
+                    <div class="text-sm font-semibold text-gray-900 text-right w-20 select-none">{{ number_format($obj->price, 0, ',', '.') }}đ</div>
+                    <div class="text-sm font-semibold text-gray-900 text-right w-24 select-none">{{ number_format($obj->price*$obj->quantity, 0, ',', '.') }}đ</div>
                 </div>
             @endforeach
             <div class="flex justify-between border-t border-gray-300 pt-5 text-lg font-bold text-gray-900 select-none">
                 <span>Total</span>
-                <span>{{ number_format($order->total, 0, ',', ',') }}đ</span>
+                <span>{{ number_format($order->total, 0, ',', '.') }}đ</span>
             </div>
         </div>
     </section>

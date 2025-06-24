@@ -105,7 +105,7 @@
                                 data-stock="{{ $obj->stock }}">
                             <span class="text-xs text-gray-700">{{ $obj->color }} - {{ $obj->storage }}</span>
                             <span class="text-xs text-gray-700 font-bold">
-                                    Price: {{ number_format($product->price + $obj->price_adjustment, 0, ',', ',') }}đ
+                                    Price: {{ number_format($product->price + $obj->price_adjustment, 0, ',', '.') }}đ
                                 </span>
                             <span class="text-xs text-gray-700">
                                     @if($obj->stock > 0)
@@ -204,7 +204,7 @@
                 </div>
                 <div class="mt-6 flex flex-col sm:flex-row items-center sm:justify-start gap-4">
                   <span class="font-extrabold text-lg">
-                   Base Price: {{ number_format($product->price, 0, ',', ',') }}đ
+                   Base Price: {{ number_format($product->price, 0, ',', '.') }}đ
                   </span>
                     <div class="flex items-center border border-gray-300 rounded">
                         <button aria-label="Decrease quantity"
@@ -356,7 +356,7 @@
                         {{$obj->description}}
                     </p>
                     <div class="flex items-center justify-between mt-auto">
-                        <span class="font-extrabold text-gray-900 text-md">{{ number_format($obj->price, 0, ',', ',') }}đ</span>
+                        <span class="font-extrabold text-gray-900 text-md">{{ number_format($obj->price, 0, ',', '.') }}đ</span>
                         <a class="bg-[#2563EB] text-white text-sm font-semibold px-4 py-2 rounded-md hover:bg-[#1e4bb8] transition"
                            href="/product-details/{{$obj->id}}">
                             Buy Now

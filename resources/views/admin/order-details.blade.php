@@ -58,7 +58,7 @@
                             <p><strong>Phone:</strong> {{ $order->phone }}</p>
                         </div>
                         <div class="col-md-6">
-                            <p><strong>Total Amount:</strong> {{ number_format($order->total, 0, ',', ',') }}đ</p>
+                            <p><strong>Total Amount:</strong> {{ number_format($order->total, 0, ',', '.') }}đ</p>
                             <p><strong>Status:</strong>
                                 <span class="badge bg-{{
                                     $order->status == 'Completed' ? 'success' :
@@ -112,16 +112,16 @@
                                         <div><strong>Color:</strong> {{ $item->color ?? 'N/A' }}</div>
                                         <div><strong>Storage:</strong> {{ $item->storage ?? 'N/A' }}</div>
                                     </td>
-                                    <td>{{ number_format($item->price, 0, ',', ',') }}đ</td>
+                                    <td>{{ number_format($item->price, 0, ',', '.') }}đ</td>
                                     <td>{{ $item->quantity }}</td>
-                                    <td>{{ number_format($item->price*$item->quantity, 0, ',', ',') }}đ</td>
+                                    <td>{{ number_format($item->price*$item->quantity, 0, ',', '.') }}đ</td>
                                 </tr>
                             @endforeach
                             </tbody>
                             <tfoot>
                             <tr>
                                 <td colspan="5" class="text-end"><strong>Grand Total:</strong></td>
-                                <td><strong>{{ number_format($order->total, 0, ',', ',') }}đ</strong></td>
+                                <td><strong>{{ number_format($order->total, 0, ',', '.') }}đ</strong></td>
                             </tr>
                             </tfoot>
                         </table>

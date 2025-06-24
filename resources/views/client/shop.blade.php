@@ -356,7 +356,7 @@
                             </p>
                             <div class="mt-4 flex items-center justify-between">
                                 <span class="text-base font-bold text-gray-900">
-                                    {{ number_format($obj->price, 0, ',', ',') }}đ
+                                    {{ number_format($obj->price, 0, ',', '.') }}đ
                                 </span>
                                 <a
                                     class="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition text-xs"

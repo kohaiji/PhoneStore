@@ -138,7 +138,7 @@
                             <td>{{$obj->full_name}}</td>
                             <td>{{$obj->address}}</td>
                             <td>{{$obj->phone}}</td>
-                            <td>{{ number_format($obj->total, 0, ',', ',') }}đ</td>
+                            <td>{{ number_format($obj->total, 0, ',', '.') }}đ</td>
                             <td>
                                 @if(in_array($obj->status, ['Completed', 'Cancelled']))
                                     {{ $obj->status }}

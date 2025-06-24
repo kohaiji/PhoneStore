@@ -117,7 +117,7 @@
                             <div class="row">
                                 <div class="col-md-8">
                                     <h6 class="text-muted font-semibold">Monthly revenue</h6>
-                                    <h3 class="font-extrabold mb-0">{{ number_format($currentMonthStats['revenue']) }}đ</h3>
+                                    <h3 class="font-extrabold mb-0">{{ number_format($currentMonthStats['revenue'], 0, ',', '.') }}đ</h3>
                                     <small class="{{ $growthRate >= 0 ? 'text-success' : 'text-danger' }}">
                                         <i class="bi bi-arrow-{{ $growthRate >= 0 ? 'up' : 'down' }}"></i>
                                         {{ abs($growthRate) }}%
@@ -257,7 +257,7 @@
             yaxis: {
                 labels: {
                     formatter: function(val) {
-                        return val.toLocaleString() + 'đ';
+                        return val.toLocaleString('de-DE') + 'đ';
                     }
                 }
             },
@@ -265,7 +265,7 @@
             tooltip: {
                 y: {
                     formatter: function(val) {
-                        return val.toLocaleString() + 'đ';
+                        return val.toLocaleString('de-DE') + 'đ';
                     }
                 }
             }
@@ -288,7 +288,7 @@
             yaxis: {
                 labels: {
                     formatter: function(val) {
-                        return val.toLocaleString() + 'đ';
+                        return val.toLocaleString('de-DE') + 'đ';
                     }
                 }
             },
@@ -301,7 +301,7 @@
             dataLabels: {
                 enabled: true,
                 formatter: function (val) {
-                    return val.toLocaleString() + 'đ';
+                    return val.toLocaleString('de-DE') + 'đ';
                 },
                 style: {
                     fontSize: '12px',
@@ -311,7 +311,7 @@
             tooltip: {
                 y: {
                     formatter: function(val) {
-                        return val.toLocaleString() + 'đ';
+                        return val.toLocaleString('de-DE') + 'đ';
                     }
                 }
             }

@@ -68,7 +68,7 @@
                     <!-- Price -->
                     <div class="sm:col-span-1 lg:col-span-2 font-semibold text-center">
                 <span class="font-bold item-total" id="item-total-{{ $obj['variant_id'] }}" data-price="{{ $obj['price'] }}">
-                    {{ number_format($obj["price"] * $obj["quantity"], 0, ',', ',') }}đ
+                    {{ number_format($obj["price"] * $obj["quantity"], 0, ',', '.') }}đ
                 </span>
                     </div>
 
@@ -98,7 +98,7 @@
             <h3 class="font-semibold mb-4">Order Summary</h3>
 {{--            <div class="flex justify-between text-gray-700 mb-2">--}}
 {{--                <span>Subtotal</span>--}}
-{{--                <span>{{ number_format($total, 0, ',', ',') }}đ</span>--}}
+{{--                <span>{{ number_format($total, 0, ',', '.') }}đ</span>--}}
 {{--            </div>--}}
 {{--            <div class="flex justify-between text-gray-700 mb-4">--}}
 {{--                <span>Tax (8%)</span>--}}
@@ -107,7 +107,7 @@
             <hr class="border-gray-200 mb-4"/>
             <div class="flex justify-between font-semibold mb-6">
                 <span>Total</span>
-                <span id="cart-total">{{ number_format($total, 0, ',', ',') }}đ</span>
+                <span id="cart-total">{{ number_format($total, 0, ',', '.') }}đ</span>
             </div>
             <a
                 href="/checkout"

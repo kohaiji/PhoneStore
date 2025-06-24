@@ -177,7 +177,7 @@ class CartController extends Controller
 
         return response()->json([
             'success' => true,
-            'total' => number_format($total, 0, ',', ',') . 'đ',
+            'total' => number_format($total, 0, ',', '.') . 'đ',
             'count' => count($cart),
         ]);
     }
@@ -214,8 +214,8 @@ class CartController extends Controller
 
         return response()->json([
             'success' => true,
-            'item_total' => number_format($itemTotal, 0, ',', ','),
-            'cart_total' => number_format($cartTotal, 0, ',', ',')
+            'item_total' => number_format($itemTotal, 0, ',', '.'),
+            'cart_total' => number_format($cartTotal, 0, ',', '.')
         ]);
     }
 
