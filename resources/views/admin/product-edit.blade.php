@@ -153,12 +153,18 @@
 
         let errorMsg = '';
 
-        if (price && isNaN(price)) {
-            errorMsg += 'Price must be a number.\n';
+        if (price) {
+            if (isNaN(price)) {
+                errorMsg += 'Price must be a number.\n';
+            } else if (Number(price) < 0) {
+                errorMsg += 'Price cannot be negative.\n';
+            }
         }
+
         if (screenSize && isNaN(screenSize)) {
             errorMsg += 'Screen Size must be a number.\n';
         }
+
         if (batteryCap && isNaN(batteryCap)) {
             errorMsg += 'Battery Capacity must be a number.\n';
         }

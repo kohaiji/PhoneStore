@@ -95,8 +95,12 @@
 
         let errorMsg = '';
 
-        if (priceAdjustment && isNaN(priceAdjustment)) {
-            errorMsg += 'Price Adjustment must be a number.\n';
+        if (priceAdjustment) {
+            if (isNaN(priceAdjustment)) {
+                errorMsg += 'Price must be a number.\n';
+            } else if (Number(priceAdjustment) < 0) {
+                errorMsg += 'Price cannot be negative.\n';
+            }
         }
 
         if (stock && isNaN(stock)) {
