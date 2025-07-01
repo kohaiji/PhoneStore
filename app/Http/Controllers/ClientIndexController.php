@@ -301,7 +301,11 @@ class ClientIndexController extends Controller
     {
         $cart = Session::get("cart");
 
-        $order = DB::table('orders')->where('id', $id)->first();
+        $order = DB::table('orders')
+            ->where('id', $id)
+            ->where('user_id', Auth::id())
+            ->first();
+
         if (!$order) {
             abort(404);
         }
