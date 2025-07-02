@@ -80,7 +80,7 @@ class AdminOrderController extends Controller
 
     public function cancelExpiredPayosOrders()
     {
-        $expiredTime = Carbon::now()->subMinutes(20);
+        $expiredTime = Carbon::now()->subMinutes(15);
 
         $orders = DB::table('orders')
             ->where('status', 'Pending')
